@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twiga RH — Expérience Interactive</title>
+  <link rel="icon" href="assets/girafe-geometrique-favicon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@300;400;600;700;800;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --magenta: #9B2D5E;
+      --navy: #1a1a2e;
+      --gold: #C8962E;
+      --white: #ffffff;
+      --bg: #fafafa;
+      --text: #2c2c2c;
+      --text-light: #555;
+      --text-muted: #888;
+      --border: #eaeaea;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ============================================
+       NAVBAR
+    ============================================ */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(250,250,250,.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      transition: all .3s;
+    }
+    .navbar-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .navbar-logo img { height: 36px; }
+    .navbar-logo span {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.2rem; color: var(--magenta);
+    }
+    .navbar-cta {
+      font-size: .78rem; font-weight: 600; letter-spacing: .5px;
+      padding: 10px 24px; border-radius: 4px;
+      background: var(--magenta); color: #fff;
+      text-decoration: none; transition: all .2s;
+    }
+    .navbar-cta:hover { background: #7E2048; transform: translateY(-1px); }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 120px 48px 80px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(155,45,94,.15) 0%, transparent 60%);
+    }
+    .hero-inner {
+      max-width: 900px; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .hero-overtitle {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; font-weight: 700;
+      color: #fff; line-height: 1.25;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--gold);
+    }
+    .hero-text {
+      font-size: 1.05rem; color: rgba(255,255,255,.6);
+      max-width: 600px; margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+    .hero-visual {
+      margin-top: 48px;
+    }
+    .hero-visual img {
+      max-height: 320px; width: auto;
+      filter: drop-shadow(0 20px 60px rgba(155,45,94,.3));
+    }
+    .scroll-hint {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      font-size: .72rem; color: rgba(255,255,255,.3);
+      letter-spacing: 2px; text-transform: uppercase;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: .3; transform: translateX(-50%) translateY(0); }
+      50% { opacity: .6; transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ============================================
+       SPLIT SECTIONS (content + game)
+    ============================================ */
+    .split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+    }
+    .split-content {
+      padding: 96px 64px;
+      display: flex; flex-direction: column;
+      justify-content: center;
+    }
+    .split-game {
+      display: flex; align-items: center; justify-content: center;
+      padding: 48px 40px;
+      position: sticky; top: 0; height: 100vh;
+    }
+    .split:nth-child(odd) .split-game { background: #f4f2f0; }
+    .split:nth-child(even) .split-game { background: var(--navy); }
+
+    .split-label {
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 16px;
+    }
+    .split-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.9rem; font-weight: 700;
+      color: var(--navy); line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .split-text {
+      font-size: .95rem; color: var(--text-light);
+      line-height: 1.8; margin-bottom: 24px;
+    }
+    .split-text .data {
+      font-weight: 700; color: var(--magenta);
+    }
+    .split-list {
+      list-style: none; padding: 0;
+    }
+    .split-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: .9rem; color: var(--text-light);
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .split-list li::before {
+      content: '';
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .split-list li strong {
+      color: var(--text); font-weight: 600;
+    }
+
+    /* ============================================
+       GAME PANELS (shared)
+    ============================================ */
+    .game-panel {
+      width: 100%; max-width: 400px;
+      text-align: center;
+    }
+    .game-emoji {
+      font-size: 2.2rem; margin-bottom: 12px;
+    }
+    .game-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .game-subtitle {
+      font-size: .82rem; color: var(--text-muted);
+      margin-bottom: 28px; line-height: 1.5;
+    }
+
+    /* Insight reveal */
+    .game-insight {
+      margin-top: 24px; padding: 24px;
+      background: var(--white);
+      border-radius: 8px;
+      border-left: 4px solid var(--gold);
+      text-align: left;
+      opacity: 0; transform: translateY(12px);
+      transition: all .5s ease;
+      display: none;
+    }
+    .game-insight.visible {
+      display: block;
+      opacity: 1; transform: translateY(0);
+    }
+    .game-insight .insight-label {
+      font-size: .65rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    .game-insight .insight-text {
+      font-size: .88rem; color: var(--text);
+      line-height: 1.7; font-style: italic;
+    }
+
+    /* dark game panel variant */
+    .split:nth-child(even) .game-title { color: #fff; }
+    .split:nth-child(even) .game-subtitle { color: rgba(255,255,255,.5); }
+    .split:nth-child(even) .game-insight {
+      background: rgba(255,255,255,.08);
+      border-left-color: var(--gold);
+    }
+    .split:nth-child(even) .game-insight .insight-text { color: rgba(255,255,255,.85); }
+
+    /* ============================================
+       GAME 1: MEMORY
+    ============================================ */
+    .memory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .memory-card {
+      aspect-ratio: 1;
+      cursor: pointer;
+      perspective: 800px;
+    }
+    .memory-card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transition: transform .5s;
+      transform-style: preserve-3d;
+    }
+    .memory-card.flipped .memory-card-inner {
+      transform: rotateY(180deg);
+    }
+    .memory-card-front,
+    .memory-card-back {
+      position: absolute; inset: 0;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .72rem;
+      letter-spacing: .3px;
+    }
+    .memory-card-front {
+      background: linear-gradient(135deg, var(--magenta), #C82870);
+      color: rgba(255,255,255,.3);
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.2rem;
+    }
+    .memory-card-back {
+      transform: rotateY(180deg);
+      background: var(--white);
+      color: var(--navy);
+      border: 2px solid var(--border);
+      padding: 4px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .memory-card.matched .memory-card-back {
+      border-color: var(--gold);
+      background: #fdf8ef;
+      color: var(--gold);
+    }
+    .memory-counter {
+      font-size: .78rem; color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ============================================
+       GAME 2: QUIZ
+    ============================================ */
+    .quiz-progress {
+      display: flex; gap: 6px; margin-bottom: 24px; justify-content: center;
+    }
+    .quiz-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,.2); transition: all .3s;
+    }
+    .quiz-dot.active { background: var(--gold); transform: scale(1.3); }
+    .quiz-dot.done { background: rgba(255,255,255,.5); }
+
+    .quiz-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px;
+      padding: 32px 24px;
+      min-height: 240px;
+      display: flex; flex-direction: column;
+      justify-content: center;
+    }
+    .quiz-statement {
+      font-size: 1rem; color: #fff;
+      line-height: 1.7; margin-bottom: 24px;
+      font-style: italic;
+    }
+    .quiz-buttons {
+      display: flex; gap: 12px; justify-content: center;
+    }
+    .quiz-btn {
+      padding: 12px 32px; border-radius: 4px;
+      font-family: inherit; font-size: .85rem; font-weight: 700;
+      cursor: pointer; border: 2px solid rgba(255,255,255,.2);
+      background: transparent; color: #fff;
+      transition: all .2s; letter-spacing: .5px;
+    }
+    .quiz-btn:hover { border-color: #fff; }
+    .quiz-btn.correct {
+      background: rgba(76,175,80,.3); border-color: #4caf50; color: #fff;
+    }
+    .quiz-btn.wrong {
+      background: rgba(244,67,54,.2); border-color: #f44336; color: #fff;
+    }
+    .quiz-explanation {
+      margin-top: 20px; padding: 16px;
+      background: rgba(255,255,255,.06);
+      border-radius: 6px;
+      font-size: .82rem; color: rgba(255,255,255,.7);
+      line-height: 1.6;
+      display: none;
+    }
+    .quiz-explanation.visible { display: block; }
+    .quiz-next {
+      margin-top: 16px;
+      padding: 10px 24px; border-radius: 4px;
+      background: var(--gold); color: #fff;
+      border: none; font-family: inherit;
+      font-size: .82rem; font-weight: 700;
+      cursor: pointer; transition: all .2s;
+      display: none;
+    }
+    .quiz-next.visible { display: inline-block; }
+    .quiz-next:hover { background: #b5850a; }
+    .quiz-score {
+      font-size: 1.1rem; color: #fff; font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    /* ============================================
+       GAME 3: CALCULATOR
+    ============================================ */
+    .calc-form {
+      text-align: left;
+    }
+    .calc-field {
+      margin-bottom: 20px;
+    }
+    .calc-label {
+      display: flex; justify-content: space-between; align-items: baseline;
+      font-size: .78rem; font-weight: 600; color: var(--text);
+      margin-bottom: 8px;
+    }
+    .calc-value {
+      font-weight: 700; color: var(--magenta);
+      font-size: .88rem;
+    }
+    .calc-slider {
+      width: 100%; height: 6px;
+      -webkit-appearance: none; appearance: none;
+      background: var(--border); border-radius: 3px;
+      outline: none;
+    }
+    .calc-slider::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--magenta); cursor: pointer;
+      border: 3px solid var(--white);
+      box-shadow: 0 2px 8px rgba(0,0,0,.15);
+    }
+    .calc-result-box {
+      background: var(--navy); color: #fff;
+      border-radius: 8px; padding: 28px;
+      text-align: center; margin-top: 24px;
+    }
+    .calc-result-label {
+      font-size: .72rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 8px;
+    }
+    .calc-result-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 700;
+      color: #fff; margin-bottom: 4px;
+    }
+    .calc-result-sub {
+      font-size: .78rem; color: rgba(255,255,255,.5);
+    }
+    .calc-result-bar {
+      margin-top: 16px; height: 6px;
+      background: rgba(255,255,255,.1); border-radius: 3px;
+      overflow: hidden;
+    }
+    .calc-result-bar-fill {
+      height: 100%; border-radius: 3px;
+      background: linear-gradient(90deg, var(--gold), #f44336);
+      transition: width .6s ease;
+    }
+
+    /* ============================================
+       TESTIMONIALS
+    ============================================ */
+    .testimonials-section {
+      padding: 100px 48px;
+      max-width: 960px; margin: 0 auto;
+    }
+    .testi-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem; font-weight: 700;
+      color: var(--navy); text-align: center;
+      margin-bottom: 56px;
+    }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .testi-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px 24px;
+      position: relative;
+    }
+    .testi-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 3px;
+      border-radius: 4px 4px 0 0;
+    }
+    .testi-card:nth-child(1)::before { background: var(--gold); }
+    .testi-card:nth-child(2)::before { background: var(--magenta); }
+    .testi-card:nth-child(3)::before { background: var(--navy); }
+    .testi-card blockquote {
+      font-size: .85rem; color: var(--text-light);
+      line-height: 1.7; font-style: italic;
+      margin-bottom: 20px;
+    }
+    .testi-card blockquote strong {
+      color: var(--text); font-style: normal;
+    }
+    .testi-author {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .testi-avatar {
+      width: 40px; height: 40px; border-radius: 50%; overflow: hidden;
+    }
+    .testi-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .testi-name { font-weight: 700; font-size: .82rem; color: var(--navy); }
+    .testi-role { font-size: .72rem; color: var(--text-muted); }
+
+    /* ============================================
+       CTA
+    ============================================ */
+    .cta-section {
+      background: var(--navy); padding: 100px 48px;
+      text-align: center; position: relative;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(200,150,46,.08) 0%, transparent 60%);
+    }
+    .cta-inner {
+      max-width: 560px; margin: 0 auto; position: relative;
+    }
+    .cta-section h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 2.2rem; color: #fff;
+      margin-bottom: 16px;
+    }
+    .cta-section .cta-text {
+      font-size: .95rem; color: rgba(255,255,255,.55);
+      line-height: 1.8; margin-bottom: 32px;
+    }
+    .cta-buttons {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-gold {
+      display: inline-block;
+      padding: 14px 36px; border-radius: 4px;
+      background: var(--gold); color: #fff;
+      text-decoration: none; font-weight: 700;
+      font-size: .88rem; transition: all .2s;
+    }
+    .btn-gold:hover { background: #b5850a; transform: translateY(-2px); }
+    .btn-outline-white {
+      display: inline-block;
+      padding: 14px 36px; border-radius: 4px;
+      border: 2px solid rgba(255,255,255,.25); color: #fff;
+      text-decoration: none; font-weight: 600;
+      font-size: .88rem; transition: all .2s;
+    }
+    .btn-outline-white:hover { border-color: #fff; }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    .footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 24px 40px;
+      background: #0d0d1a; color: rgba(255,255,255,.35);
+      font-size: .75rem;
+    }
+    .footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 992px) {
+      .split { grid-template-columns: 1fr; }
+      .split-game { position: relative; height: auto; min-height: 500px; }
+      .split-content { padding: 64px 32px; }
+      .hero h1 { font-size: 2.2rem; }
+      .testi-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+    }
+    @media (max-width: 768px) {
+      .split-content { padding: 48px 24px; }
+      .split-game { padding: 40px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .hero h1 { font-size: 1.8rem; }
+      .navbar { padding: 12px 20px; }
+      .cta-section { padding: 64px 24px; }
+      .footer { flex-direction: column; gap: 8px; text-align: center; }
+    }
+
+    /* ============================================
+       BACK TO HUB
+    ============================================ */
+    .back-hub {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      background: var(--navy); color: #fff;
+      text-decoration: none; padding: 10px 20px;
+      border-radius: 4px; font-size: .78rem;
+      font-weight: 600; letter-spacing: .5px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+      transition: all .2s;
+    }
+    .back-hub:hover { background: var(--magenta); }
+
+    /* ============================================
+       SKIN SWITCHER
+    ============================================ */
+    .skin-switcher {
+      position: fixed; bottom: 24px; left: 24px; z-index: 300;
+      display: flex; background: #fff; border-radius: 10px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.15);
+      overflow: hidden; border: 1px solid #e0e0e0;
+    }
+    .skin-btn {
+      padding: 10px 16px; font-size: .72rem;
+      font-weight: 700; letter-spacing: .5px;
+      text-transform: uppercase; cursor: pointer;
+      border: none; background: #fff; color: #888;
+      font-family: inherit; transition: all .25s;
+      border-right: 1px solid #eee; white-space: nowrap;
+    }
+    .skin-btn:last-child { border-right: none; }
+    .skin-btn:hover { background: #f5f5f5; color: #333; }
+    .skin-btn.active { color: #fff; }
+    .skin-btn[data-skin="da1"].active { background: #E8A817; }
+    .skin-btn[data-skin="da2"].active { background: #9B2D5E; }
+    .skin-btn[data-skin="da3"].active { background: linear-gradient(135deg,#A61E5C,#E8A817); }
+
+    /* ============================================
+       DA1 — CHALEUR & HUMANITÉ
+    ============================================ */
+    body.da1 { font-family: 'Poppins', sans-serif; background: #fdf6e3; }
+    body.da1 .navbar { background: rgba(253,246,227,.97); }
+    body.da1 .navbar-logo span { color: #B51E6B; }
+    body.da1 .navbar-cta { background: #E8A817; border-radius: 30px; }
+    body.da1 .navbar-cta:hover { background: #d49a10; }
+
+    body.da1 .hero { background: #2D2D2D; }
+    body.da1 .hero h1 { font-family: 'Dancing Script', cursive; }
+    body.da1 .hero h1 em { color: #E8A817; }
+    body.da1 .hero-overtitle { color: #E8A817; }
+
+    body.da1 .split-label { color: #B51E6B; }
+    body.da1 .split-title { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: #2D2D2D; }
+    body.da1 .split-text .data { color: #B51E6B; }
+    body.da1 .split-list li::before { background: #E8A817; }
+    body.da1 .split:nth-child(odd) .split-game { background: #fdf6e3; }
+    body.da1 .split:nth-child(even) .split-game { background: #2D2D2D; }
+
+    body.da1 .game-title { font-family: 'Dancing Script', cursive; }
+    body.da1 .memory-card-front { background: linear-gradient(135deg, #B51E6B, #E8A817); }
+    body.da1 .memory-card.matched .memory-card-back { border-color: #E8A817; color: #E8A817; }
+
+    body.da1 .quiz-dot.active { background: #E8A817; }
+    body.da1 .quiz-next { background: #E8A817; }
+
+    body.da1 .calc-slider::-webkit-slider-thumb { background: #B51E6B; }
+    body.da1 .calc-value { color: #B51E6B; }
+    body.da1 .calc-result-box { background: #2D2D2D; }
+    body.da1 .calc-result-label { color: #E8A817; }
+
+    body.da1 .testi-title { font-family: 'Dancing Script', cursive; color: #2D2D2D; }
+    body.da1 .testi-card { border-radius: 16px; }
+    body.da1 .testi-card:nth-child(1)::before { background: #E8A817; }
+    body.da1 .testi-card:nth-child(2)::before { background: #B51E6B; }
+
+    body.da1 .cta-section { background: #2D2D2D; }
+    body.da1 .cta-section h2 { font-family: 'Kaushan Script', cursive; }
+    body.da1 .btn-gold { background: #E8A817; border-radius: 30px; }
+    body.da1 .btn-outline-white { border-radius: 30px; }
+
+    body.da1 .game-insight { border-radius: 12px; }
+    body.da1 .back-hub { background: #2D2D2D; border-radius: 30px; }
+    body.da1 .back-hub:hover { background: #B51E6B; }
+    body.da1 .footer { background: #1a1a1a; }
+
+    /* ============================================
+       DA3 — IMPACT & DONNÉES
+    ============================================ */
+    body.da3 { font-family: 'Source Sans 3', sans-serif; background: #f5f5f7; }
+    body.da3 .navbar { background: rgba(245,245,247,.97); }
+    body.da3 .navbar-logo span { color: #A61E5C; }
+    body.da3 .navbar-cta { background: linear-gradient(135deg,#A61E5C,#C82870); border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; font-size: .75rem; }
+
+    body.da3 .hero { background: linear-gradient(135deg, #2a2a3a, #1a1a28); }
+    body.da3 .hero h1 { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; font-size: 2.4rem; }
+    body.da3 .hero h1 em { color: #E8A817; font-style: normal; }
+    body.da3 .hero-overtitle { color: #E8A817; letter-spacing: 4px; }
+
+    body.da3 .split-label { color: #E8A817; font-family: 'Montserrat', sans-serif; font-weight: 700; letter-spacing: 3px; }
+    body.da3 .split-title { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: .5px; font-size: 1.5rem; color: #2a2a3a; }
+    body.da3 .split-text .data { color: #A61E5C; font-weight: 800; }
+    body.da3 .split:nth-child(even) .split-game { background: linear-gradient(135deg, #2a2a3a, #1a1a28); }
+
+    body.da3 .game-title { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; font-size: 1rem; letter-spacing: .5px; }
+    body.da3 .memory-card-front { background: linear-gradient(135deg, #A61E5C, #E8A817); }
+    body.da3 .memory-card-back { font-family: 'Montserrat', sans-serif; font-weight: 800; text-transform: uppercase; font-size: .62rem; letter-spacing: .5px; }
+
+    body.da3 .quiz-btn { border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; }
+    body.da3 .quiz-next { background: linear-gradient(135deg,#E8A817,#F0C030); border-radius: 8px; font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 1px; }
+
+    body.da3 .calc-slider::-webkit-slider-thumb { background: #A61E5C; }
+    body.da3 .calc-value { color: #A61E5C; font-family: 'Montserrat', sans-serif; font-weight: 800; }
+    body.da3 .calc-result-box { background: linear-gradient(135deg, #2a2a3a, #1a1a28); }
+    body.da3 .calc-result-label { color: #E8A817; font-family: 'Montserrat', sans-serif; }
+    body.da3 .calc-result-number { font-family: 'Montserrat', sans-serif; font-weight: 900; }
+
+    body.da3 .testi-title { font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: #2a2a3a; }
+    body.da3 .testi-card { border-radius: 8px; }
+    body.da3 .testi-card:nth-child(1)::before { background: linear-gradient(90deg,#A61E5C,#C82870); }
+    body.da3 .testi-card:nth-child(2)::before { background: linear-gradient(90deg,#E8A817,#F0C030); }
+
+    body.da3 .cta-section { background: linear-gradient(135deg, #2a2a3a, #1a1a28); }
+    body.da3 .btn-gold { background: linear-gradient(135deg,#E8A817,#F0C030); border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; font-family: 'Montserrat', sans-serif; }
+    body.da3 .btn-outline-white { border-radius: 8px; }
+
+    body.da3 .game-insight { border-radius: 8px; }
+    body.da3 .back-hub { background: #2a2a3a; border-radius: 8px; }
+    body.da3 .back-hub:hover { background: #A61E5C; }
+    body.da3 .footer { background: #1a1a28; }
+  </style>
+</head>
+<body>
+
+<a href="hub.html" class="back-hub">&larr; Hub</a>
+
+<div class="skin-switcher">
+  <button class="skin-btn" data-skin="da1">DA1 · Chaleur</button>
+  <button class="skin-btn active" data-skin="da2">DA2 · Corporate</button>
+  <button class="skin-btn" data-skin="da3">DA3 · Impact</button>
+</div>
+
+<!-- ============================================
+     NAVBAR
+============================================ -->
+<nav class="navbar">
+  <a href="#" class="navbar-logo">
+    <img src="girafe_val.png" alt="Twiga RH" style="height:36px;">
+    <span>Twiga RH</span>
+  </a>
+  <a href="#contact" class="navbar-cta">Échangeons</a>
+</nav>
+
+<!-- ============================================
+     HERO
+============================================ -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-overtitle">Twiga RH · Expérience interactive</div>
+    <h1>Votre entreprise a un<br>potentiel <em>caché</em>.</h1>
+    <p class="hero-text">Il se trouve dans vos équipes. Scrollez, jouez, découvrez ce que vos ressources humaines révèlent vraiment.</p>
+    <div class="hero-visual">
+      <img src="girafe_val.png" alt="Girafe géométrique Twiga RH">
+    </div>
+  </div>
+  <div class="scroll-hint">&#9660; Explorez</div>
+</section>
+
+<!-- ============================================
+     SPLIT 1: CONSTAT + MEMORY GAME
+============================================ -->
+<div class="split">
+  <div class="split-content">
+    <div class="split-label">Le constat</div>
+    <h2 class="split-title">Les valeurs affichées ne sont pas toujours les valeurs vécues.</h2>
+    <p class="split-text">
+      Toutes les entreprises revendiquent la <span class="data">bienveillance</span>, l'<span class="data">écoute</span>, l'<span class="data">agilité</span>. Mais combien les pratiquent vraiment au quotidien ?
+    </p>
+    <p class="split-text">
+      Ce décalage entre valeurs déclarées et valeurs vécues est l'une des premières causes de désengagement. <span class="data">85 %</span> des salariés dans le monde ne se sentent pas engagés dans leur travail (Gallup).
+    </p>
+    <p class="split-text">
+      L'alignement commence par une prise de conscience. Et si on commençait par un jeu ?
+    </p>
+  </div>
+  <div class="split-game">
+    <div class="game-panel" id="game-memory">
+      <div class="game-emoji">&#x1F0CF;</div>
+      <div class="game-title">Alignez vos valeurs</div>
+      <div class="game-subtitle">Retrouvez les 4 paires de valeurs. Attention à la mémoire...</div>
+      <div class="memory-grid" id="memoryGrid"></div>
+      <div class="memory-counter">Coups : <span id="memoryMoves">0</span></div>
+      <div class="game-insight" id="memoryInsight">
+        <div class="insight-label">Ce que le jeu révèle</div>
+        <div class="insight-text">
+          Aligner les valeurs déclarées avec les valeurs vécues demande de l'attention, de la méthode, et parfois... plusieurs essais. C'est exactement ce que fait un audit RH : identifier les écarts pour les réduire.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SPLIT 2: MÉTHODE + QUIZ
+============================================ -->
+<div class="split">
+  <div class="split-content">
+    <div class="split-label">Les réalités cachées</div>
+    <h2 class="split-title">Ce que vous ne voyez pas coûte plus cher que ce que vous voyez.</h2>
+    <p class="split-text">
+      Le désengagement, le turnover silencieux, les conflits latents... Ces réalités invisibles érodent la performance sans que personne ne tire la sonnette d'alarme.
+    </p>
+    <ul class="split-list">
+      <li><strong>97 milliards d'euros</strong> — le coût annuel du désengagement en France</li>
+      <li><strong>1 salarié sur 2</strong> — a déjà quitté un poste à cause de son manager</li>
+      <li><strong>20 %</strong> — des nouveaux arrivants veulent partir dès le premier jour</li>
+    </ul>
+    <p class="split-text" style="margin-top:24px;">
+      Pensez-vous bien connaître ces réalités ? Testez-vous.
+    </p>
+  </div>
+  <div class="split-game">
+    <div class="game-panel" id="game-quiz">
+      <div class="game-emoji">&#x2753;</div>
+      <div class="game-title" style="color:#fff;">Le saviez-vous ?</div>
+      <div class="game-subtitle">3 affirmations sur les RH. Vrai ou faux ?</div>
+      <div class="quiz-progress" id="quizProgress"></div>
+      <div class="quiz-card" id="quizCard">
+        <div class="quiz-statement" id="quizStatement"></div>
+        <div class="quiz-buttons" id="quizButtons">
+          <button class="quiz-btn" onclick="answerQuiz(true)">Vrai</button>
+          <button class="quiz-btn" onclick="answerQuiz(false)">Faux</button>
+        </div>
+        <div class="quiz-explanation" id="quizExplanation"></div>
+        <button class="quiz-next" id="quizNext" onclick="nextQuiz()">Question suivante &rarr;</button>
+      </div>
+      <div class="game-insight" id="quizInsight">
+        <div class="insight-label">Ce que le quiz révèle</div>
+        <div class="insight-text">
+          Ces réalités invisibles coûtent cher, mais elles ne sont pas une fatalité. Un regard RH structuré les transforme en leviers de performance et de bien-être.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     SPLIT 3: PORTRAIT + CALCULATOR
+============================================ -->
+<div class="split">
+  <div class="split-content">
+    <div class="split-label">L'accompagnement</div>
+    <h2 class="split-title">Valérie Gaudel — 20 ans au service de l'humain en entreprise.</h2>
+    <div style="max-width:160px; margin-bottom:24px;">
+      <img src="assets/photo-portrait-valerie.png" alt="Valérie Gaudel" style="width:100%; border-radius:4px;">
+    </div>
+    <p class="split-text">
+      Passionnée par le potentiel humain, convaincue qu'il est le moteur de la réussite des entreprises. Un regard extérieur, neutre et bienveillant, pour transformer vos défis RH en leviers de performance.
+    </p>
+    <ul class="split-list">
+      <li><strong>+400 recrutements</strong> accompagnés en France et en Europe</li>
+      <li><strong>Création de services RH</strong> dans des secteurs variés</li>
+      <li><strong>Approche neutre</strong> et bienveillante, jamais porte-parole de la direction</li>
+    </ul>
+    <p class="split-text" style="margin-top:24px;">
+      Et si vous calculiez ce que l'inaction coûte à votre entreprise ?
+    </p>
+  </div>
+  <div class="split-game">
+    <div class="game-panel" id="game-calc">
+      <div class="game-emoji">&#x1F4CA;</div>
+      <div class="game-title">Le coût de l'invisible</div>
+      <div class="game-subtitle">Calculez l'impact financier du turnover dans votre entreprise.</div>
+      <div class="calc-form">
+        <div class="calc-field">
+          <div class="calc-label">
+            <span>Nombre de salariés</span>
+            <span class="calc-value" id="calcEmplVal">25</span>
+          </div>
+          <input type="range" class="calc-slider" id="calcEmpl" min="5" max="200" value="25" step="5">
+        </div>
+        <div class="calc-field">
+          <div class="calc-label">
+            <span>Taux de turnover annuel</span>
+            <span class="calc-value" id="calcTurnVal">15 %</span>
+          </div>
+          <input type="range" class="calc-slider" id="calcTurn" min="5" max="40" value="15">
+        </div>
+        <div class="calc-field">
+          <div class="calc-label">
+            <span>Salaire moyen brut annuel</span>
+            <span class="calc-value" id="calcSalVal">35 000 €</span>
+          </div>
+          <input type="range" class="calc-slider" id="calcSal" min="20000" max="80000" value="35000" step="1000">
+        </div>
+      </div>
+      <div class="calc-result-box">
+        <div class="calc-result-label">Coût annuel estimé du turnover</div>
+        <div class="calc-result-number" id="calcResult">65 625 €</div>
+        <div class="calc-result-sub">soit <span id="calcPerHead">17 500 €</span> par départ</div>
+        <div class="calc-result-bar">
+          <div class="calc-result-bar-fill" id="calcBar" style="width:30%"></div>
+        </div>
+      </div>
+      <div class="game-insight" id="calcInsight" style="display:block; opacity:1; transform:none; margin-top:20px;">
+        <div class="insight-label">Ce que le calcul révèle</div>
+        <div class="insight-text">
+          Chaque départ coûte entre 50 % et 200 % du salaire annuel. Investir dans la fidélisation et l'engagement est souvent bien moins cher que de recruter.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================
+     TESTIMONIALS
+============================================ -->
+<section class="testimonials-section">
+  <h2 class="testi-title">Ils ont fait confiance à Twiga RH</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <blockquote>Notre collaboration s'est concentrée sur <strong>le développement de la marque employeur et le recrutement de plus de 400 personnes</strong>. Un accompagnement structuré et humain.</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="assets/avatar-magalie.png" alt=""></div>
+        <div>
+          <div class="testi-name">Magalie Houllier</div>
+          <div class="testi-role">RSE, Communication, CODIR</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <blockquote>Valérie a su <strong>structurer notre service RH de A à Z</strong>, avec une approche pragmatique et bienveillante qui a fédéré nos équipes.</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="assets/avatar-aude.png" alt=""></div>
+        <div>
+          <div class="testi-name">Aude Martin</div>
+          <div class="testi-role">Directrice Générale</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <blockquote>Ce qui m'a frappé, c'est <strong>sa capacité à s'adapter à notre rythme de startup</strong> tout en apportant la rigueur RH nécessaire.</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="assets/avatar-frederic.png" alt=""></div>
+        <div>
+          <div class="testi-name">Frédéric Dupont</div>
+          <div class="testi-role">CEO & Co-fondateur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA
+============================================ -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <h2>Rencontrons-nous</h2>
+    <p class="cta-text">
+      En face à face près de Toulouse ou en visio, discutons de vos enjeux RH. Le premier échange est toujours sans engagement.
+    </p>
+    <div class="cta-buttons">
+      <a href="tel:+33756999249" class="btn-gold">07 56 99 92 49</a>
+      <a href="mailto:contact@twigarh.fr" class="btn-outline-white">contact@twigarh.fr</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+============================================ -->
+<footer class="footer">
+  <span>&copy; 2024 Twiga RH — Tous droits réservés</span>
+  <a href="hub.html">Hub projet</a>
+</footer>
+
+<!-- ============================================
+     JAVASCRIPT
+============================================ -->
+<script>
+// ============================
+// GAME 1: MEMORY
+// ============================
+const memoryValues = ['Écoute', 'Confiance', 'Agilité', 'Humanité'];
+let memoryCards = [];
+let flippedCards = [];
+let matchedPairs = 0;
+let memoryMoves = 0;
+let memoryLocked = false;
+
+function initMemory() {
+  const pairs = [...memoryValues, ...memoryValues];
+  memoryCards = pairs.sort(() => Math.random() - 0.5);
+  const grid = document.getElementById('memoryGrid');
+  grid.innerHTML = '';
+  memoryCards.forEach((value, i) => {
+    const card = document.createElement('div');
+    card.className = 'memory-card';
+    card.dataset.index = i;
+    card.dataset.value = value;
+    card.innerHTML = `
+      <div class="memory-card-inner">
+        <div class="memory-card-front">?</div>
+        <div class="memory-card-back">${value}</div>
+      </div>`;
+    card.addEventListener('click', () => flipCard(card));
+    grid.appendChild(card);
+  });
+  matchedPairs = 0;
+  memoryMoves = 0;
+  flippedCards = [];
+  document.getElementById('memoryMoves').textContent = '0';
+}
+
+function flipCard(card) {
+  if (memoryLocked || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  flippedCards.push(card);
+
+  if (flippedCards.length === 2) {
+    memoryMoves++;
+    document.getElementById('memoryMoves').textContent = memoryMoves;
+    memoryLocked = true;
+
+    const [a, b] = flippedCards;
+    if (a.dataset.value === b.dataset.value) {
+      a.classList.add('matched');
+      b.classList.add('matched');
+      matchedPairs++;
+      flippedCards = [];
+      memoryLocked = false;
+      if (matchedPairs === memoryValues.length) {
+        setTimeout(() => {
+          const insight = document.getElementById('memoryInsight');
+          insight.style.display = 'block';
+          requestAnimationFrame(() => insight.classList.add('visible'));
+        }, 500);
+      }
+    } else {
+      setTimeout(() => {
+        a.classList.remove('flipped');
+        b.classList.remove('flipped');
+        flippedCards = [];
+        memoryLocked = false;
+      }, 800);
+    }
+  }
+}
+
+initMemory();
+
+// ============================
+// GAME 2: QUIZ
+// ============================
+const quizData = [
+  {
+    statement: "Le coût d'un recrutement raté est estimé entre 30 000 € et 150 000 €.",
+    answer: true,
+    explanation: "Entre le salaire versé, la formation, la baisse de productivité et le nouveau recrutement, un mauvais recrutement coûte en moyenne 45 000 € (HR Voice). Le processus de recrutement est un investissement, pas une dépense."
+  },
+  {
+    statement: "Le salaire est le premier critère de choix d'un emploi pour les Français.",
+    answer: false,
+    explanation: "Le sens du travail et l'équilibre vie pro/perso devancent systématiquement le salaire dans les études récentes. Les collaborateurs veulent d'abord comprendre pourquoi ils travaillent."
+  },
+  {
+    statement: "1 salarié sur 2 a déjà quitté un emploi à cause de son manager direct.",
+    answer: true,
+    explanation: "Selon Gallup, la qualité du management est le premier facteur de rétention. On ne quitte pas une entreprise — on quitte un manager."
+  }
+];
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function initQuiz() {
+  const progress = document.getElementById('quizProgress');
+  progress.innerHTML = quizData.map((_, i) =>
+    `<div class="quiz-dot${i === 0 ? ' active' : ''}" id="qd${i}"></div>`
+  ).join('');
+  showQuestion();
+}
+
+function showQuestion() {
+  if (quizIndex >= quizData.length) {
+    showQuizEnd();
+    return;
+  }
+  quizAnswered = false;
+  const q = quizData[quizIndex];
+  document.getElementById('quizStatement').textContent = `« ${q.statement} »`;
+  document.getElementById('quizExplanation').classList.remove('visible');
+  document.getElementById('quizExplanation').textContent = '';
+  document.getElementById('quizNext').classList.remove('visible');
+  const btns = document.getElementById('quizButtons');
+  btns.innerHTML = `
+    <button class="quiz-btn" onclick="answerQuiz(true)">Vrai</button>
+    <button class="quiz-btn" onclick="answerQuiz(false)">Faux</button>`;
+  btns.style.display = 'flex';
+}
+
+function answerQuiz(answer) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const q = quizData[quizIndex];
+  const isCorrect = answer === q.answer;
+  if (isCorrect) quizScore++;
+
+  const btns = document.querySelectorAll('#quizButtons .quiz-btn');
+  btns.forEach(btn => {
+    const val = btn.textContent === 'Vrai';
+    if (val === q.answer) btn.classList.add('correct');
+    else if (val === answer && !isCorrect) btn.classList.add('wrong');
+  });
+
+  const expl = document.getElementById('quizExplanation');
+  expl.textContent = (isCorrect ? '✓ Correct ! ' : '✗ Raté ! ') + q.explanation;
+  expl.classList.add('visible');
+
+  const dot = document.getElementById('qd' + quizIndex);
+  dot.classList.remove('active');
+  dot.classList.add('done');
+
+  if (quizIndex < quizData.length - 1) {
+    document.getElementById('quizNext').classList.add('visible');
+    document.getElementById('quizNext').textContent = 'Question suivante →';
+  } else {
+    document.getElementById('quizNext').classList.add('visible');
+    document.getElementById('quizNext').textContent = 'Voir le bilan →';
+  }
+}
+
+function nextQuiz() {
+  quizIndex++;
+  if (quizIndex < quizData.length) {
+    const dot = document.getElementById('qd' + quizIndex);
+    if (dot) dot.classList.add('active');
+    showQuestion();
+  } else {
+    showQuizEnd();
+  }
+}
+
+function showQuizEnd() {
+  const card = document.getElementById('quizCard');
+  card.innerHTML = `
+    <div class="quiz-score">${quizScore} / ${quizData.length}</div>
+    <div style="font-size:.88rem; color:rgba(255,255,255,.6); line-height:1.7;">
+      ${quizScore === 3 ? 'Impressionnant ! Vous connaissez bien les réalités RH.'
+        : quizScore >= 2 ? 'Pas mal ! Certaines réalités sont plus surprenantes qu\'on ne le pense.'
+        : 'Ces chiffres surprennent, n\'est-ce pas ? C\'est normal — ces réalités sont souvent invisibles.'}
+    </div>`;
+  setTimeout(() => {
+    const insight = document.getElementById('quizInsight');
+    insight.style.display = 'block';
+    requestAnimationFrame(() => insight.classList.add('visible'));
+  }, 600);
+}
+
+initQuiz();
+
+// ============================
+// GAME 3: CALCULATOR
+// ============================
+const calcEmpl = document.getElementById('calcEmpl');
+const calcTurn = document.getElementById('calcTurn');
+const calcSal = document.getElementById('calcSal');
+
+function updateCalc() {
+  const empl = parseInt(calcEmpl.value);
+  const turn = parseInt(calcTurn.value);
+  const sal = parseInt(calcSal.value);
+
+  document.getElementById('calcEmplVal').textContent = empl;
+  document.getElementById('calcTurnVal').textContent = turn + ' %';
+  document.getElementById('calcSalVal').textContent = sal.toLocaleString('fr-FR') + ' €';
+
+  const departures = Math.round(empl * turn / 100);
+  const costPerHead = Math.round(sal * 0.5);
+  const totalCost = departures * costPerHead;
+
+  document.getElementById('calcResult').textContent = totalCost.toLocaleString('fr-FR') + ' €';
+  document.getElementById('calcPerHead').textContent = costPerHead.toLocaleString('fr-FR') + ' €';
+
+  const maxCost = 200 * 0.4 * 80000 * 0.5;
+  const pct = Math.min(100, (totalCost / maxCost) * 100);
+  document.getElementById('calcBar').style.width = pct + '%';
+}
+
+calcEmpl.addEventListener('input', updateCalc);
+calcTurn.addEventListener('input', updateCalc);
+calcSal.addEventListener('input', updateCalc);
+updateCalc();
+
+// ============================
+// SKIN SWITCHER
+// ============================
+const skinBtns = document.querySelectorAll('.skin-btn');
+skinBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const skin = btn.dataset.skin;
+    document.body.classList.remove('da1', 'da2', 'da3');
+    if (skin !== 'da2') document.body.classList.add(skin);
+    skinBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    localStorage.setItem('twiga-skin', skin);
+  });
+});
+const saved = localStorage.getItem('twiga-skin');
+if (saved && saved !== 'da2') {
+  document.body.classList.add(saved);
+  skinBtns.forEach(b => b.classList.toggle('active', b.dataset.skin === saved));
+}
+</script>
+</body>
+</html>

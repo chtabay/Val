@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twiga RH — Guidelines, Analyse & Critique</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#fff;color:#2c2c2c;line-height:1.7}
+    a{color:#A61E5C;text-decoration:none}a:hover{text-decoration:underline}
+
+    .doc-header{background:#0f0f1a;color:#fff;padding:48px 40px}
+    .doc-header .back{font-size:.82rem;color:rgba(255,255,255,.4);display:inline-block;margin-bottom:16px}
+    .doc-header h1{font-family:'Kaushan Script',cursive;font-size:2.4rem}
+    .doc-header p{color:rgba(255,255,255,.5);font-size:.9rem;margin-top:8px;max-width:700px}
+
+    .doc-nav{background:#fafafa;border-bottom:1px solid #eee;padding:16px 40px;position:sticky;top:0;z-index:10}
+    .doc-nav ul{display:flex;gap:24px;list-style:none;flex-wrap:wrap}
+    .doc-nav a{font-size:.82rem;font-weight:600;color:#666}
+    .doc-nav a:hover{color:#A61E5C;text-decoration:none}
+
+    .section{max-width:860px;margin:0 auto;padding:48px 40px}
+    .section+.section{border-top:1px solid #eee}
+    .section h2{font-size:1.5rem;font-weight:700;color:#1a1a2e;margin-bottom:6px}
+    .section h2 .num{color:#E8A817;font-family:'Kaushan Script',cursive;font-size:1.8rem;margin-right:8px}
+    .section .subtitle{font-size:.85rem;color:#999;margin-bottom:28px;font-style:italic}
+    .section h3{font-size:1.1rem;font-weight:700;color:#2c2c2c;margin:28px 0 10px}
+    .section h4{font-size:.95rem;font-weight:700;color:#A61E5C;margin:20px 0 8px}
+    .section p,.section li{font-size:.92rem;color:#555;line-height:1.8}
+    .section ul{padding-left:20px;margin-bottom:16px}
+    .section li{margin-bottom:6px}
+
+    .highlight-box{background:#fdf6e3;border-left:4px solid #E8A817;padding:20px 24px;border-radius:0 8px 8px 0;margin:20px 0}
+    .highlight-box strong{color:#2c2c2c}
+    .highlight-box p{color:#666;font-size:.88rem}
+
+    .critique-box{border-radius:8px;padding:24px;margin:16px 0}
+    .critique-box.positive{background:#edf7ed;border-left:4px solid #2e7d32}
+    .critique-box.negative{background:#fdecea;border-left:4px solid #c62828}
+    .critique-box.warning{background:#fff8e1;border-left:4px solid #f9a825}
+    .critique-box h5{font-size:.85rem;font-weight:700;margin-bottom:6px}
+    .critique-box.positive h5{color:#2e7d32}
+    .critique-box.negative h5{color:#c62828}
+    .critique-box.warning h5{color:#f9a825}
+    .critique-box p,.critique-box li{font-size:.85rem;color:#555}
+    .critique-box ul{padding-left:18px;margin-top:6px}
+
+    .comparison-table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.85rem}
+    .comparison-table th{background:#f5f5f7;padding:12px 16px;text-align:left;font-weight:600;color:#1a1a2e;border-bottom:2px solid #ddd}
+    .comparison-table td{padding:12px 16px;border-bottom:1px solid #eee;color:#555;vertical-align:top}
+    .comparison-table tr:hover td{background:#fafafa}
+    .grade{display:inline-block;padding:2px 10px;border-radius:4px;font-weight:700;font-size:.78rem}
+    .grade.a{background:#e8f5e9;color:#2e7d32}
+    .grade.b{background:#fff8e1;color:#f57f17}
+    .grade.c{background:#fce4ec;color:#c62828}
+    .grade.d{background:#f3e5f5;color:#6a1b9a}
+
+    .font-demo{display:flex;gap:24px;align-items:baseline;flex-wrap:wrap;margin:16px 0;padding:20px;background:#fafafa;border-radius:8px}
+    .font-demo .sample{font-family:'Kaushan Script',cursive;font-size:2.2rem;color:#A61E5C}
+    .font-demo .meta{font-size:.78rem;color:#999}
+
+    .color-row{display:flex;gap:12px;margin:12px 0;flex-wrap:wrap}
+    .color-dot{display:flex;align-items:center;gap:8px;padding:6px 14px;background:#fafafa;border-radius:8px}
+    .color-dot .dot{width:24px;height:24px;border-radius:50%;flex-shrink:0}
+    .color-dot .name{font-size:.78rem;font-weight:600;color:#333}
+
+    .score-bar{height:8px;border-radius:4px;background:#eee;margin:6px 0 16px;overflow:hidden}
+    .score-bar .fill{height:100%;border-radius:4px}
+
+    @media(max-width:768px){.section{padding:32px 20px}.doc-header{padding:32px 20px}}
+  </style>
+</head>
+<body>
+
+<div class="doc-header">
+  <a href="hub.html" class="back">&larr; Retour au Hub</a>
+  <h1>Guidelines, Analyse & Critique</h1>
+  <p>Analyse de la proposition de valeur Twiga RH, guidelines de marque, et critique experte des deux maquettes de landing page.</p>
+</div>
+
+<nav class="doc-nav">
+  <ul>
+    <li><a href="#proposition">Proposition de valeur</a></li>
+    <li><a href="#guidelines">Guidelines</a></li>
+    <li><a href="#font">Police Kaushan</a></li>
+    <li><a href="#critique-v2">Critique V2</a></li>
+    <li><a href="#critique-v1">Critique V1</a></li>
+    <li><a href="#synthese">Synthèse</a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================ -->
+<!-- 1. PROPOSITION DE VALEUR -->
+<!-- ============================================================ -->
+<div class="section" id="proposition">
+  <h2><span class="num">1.</span> Proposition de valeur</h2>
+  <div class="subtitle">Extraite du PPTX, des maquettes et du contenu site</div>
+
+  <h3>Positionnement fondamental</h3>
+  <div class="highlight-box">
+    <strong>Twiga RH — Réussir par l'Humain</strong>
+    <p>Conseil RH externalisé qui réconcilie bien-être des collaborateurs et performance de l'entreprise. Un regard extérieur, neutre et bienveillant, porté par 20 ans d'expérience terrain.</p>
+  </div>
+
+  <h3>Les 5 piliers de la proposition</h3>
+  <ul>
+    <li><strong>Externalisation stratégique</strong> — Ni charge salariale supplémentaire, ni poste interne. Un partenaire flexible et investi, ajusté au rythme de l'entreprise.</li>
+    <li><strong>Humanisme pragmatique</strong> — Concilier bien-être et résultats n'est pas un paradoxe. C'est la méthode Twiga : sécuriser les aspects légaux, accompagner avec bienveillance, capitaliser sur le bien-être.</li>
+    <li><strong>Expérience multisectorielle</strong> — 20 ans dans des secteurs variés (startups, PME, grands groupes) permettant d'identifier les solutions adaptées à chaque contexte.</li>
+    <li><strong>Méthodologie structurée</strong> — Un process en 5 étapes claires : Écoute → Diagnostic → Stratégie → Actions → Réajustements. Jamais de solution toute faite.</li>
+    <li><strong>Flexibilité du format</strong> — Conseil ponctuel, DRH à temps partagé, coaching 1:1 ou de groupe. L'offre s'adapte au besoin, pas l'inverse.</li>
+  </ul>
+
+  <h3>Public cible identifié</h3>
+  <ul>
+    <li><strong>Startups/jeunes entreprises</strong> sans service RH, qui doivent sécuriser les fondamentaux (contrats, recrutement, juridique)</li>
+    <li><strong>PME en croissance</strong> avec un défi RH ponctuel (recrutement massif, CSE, accident du travail, image employeur)</li>
+    <li><strong>Entreprises établies</strong> avec service RH existant mais un projet à mener (QVT, stratégie RH, gestion des compétences, accompagnement du changement)</li>
+  </ul>
+
+  <h3>Différenciateurs clés</h3>
+  <ul>
+    <li>La <strong>neutralité</strong> — Valérie n'est pas "porte-parole de la direction", elle est une voix indépendante</li>
+    <li>L'<strong>approche humaine</strong> dans un domaine souvent perçu comme administratif — le nom "Twiga" (girafe en swahili) symbolise la vision à long terme et l'élégance</li>
+    <li>Le <strong>coût maîtrisé</strong> vs un poste RH à temps plein — action limitée dans le temps, ajustée aux capacités</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<!-- 2. GUIDELINES DE MARQUE -->
+<!-- ============================================================ -->
+<div class="section" id="guidelines">
+  <h2><span class="num">2.</span> Guidelines de marque</h2>
+  <div class="subtitle">Règles directrices pour le site web Twiga RH</div>
+
+  <h3>Personnalité de marque</h3>
+  <p>La communication Twiga RH doit véhiculer 4 traits :</p>
+  <ul>
+    <li><strong>Chaleureuse</strong> — On parle à des humains, de sujets humains. Pas de jargon froid.</li>
+    <li><strong>Experte</strong> — 20 ans d'expérience doivent transparaître sans arrogance. Crédibilité par les faits.</li>
+    <li><strong>Accessible</strong> — Le conseil RH n'est pas réservé aux grands groupes. Le ton est inclusif.</li>
+    <li><strong>Rassurante</strong> — Le prospect qui cherche un conseil RH est souvent en difficulté. Il a besoin de confiance.</li>
+  </ul>
+
+  <h3>Ton éditorial</h3>
+  <ul>
+    <li>Tutoyer/vouvoyer : <strong>Vouvoyer systématiquement</strong> (cible B2B, dirigeants)</li>
+    <li>Phrases courtes. Paragraphes de 3-4 lignes maximum.</li>
+    <li>Privilégier les verbes d'action : <em>accompagner, structurer, optimiser, sécuriser, transformer</em></li>
+    <li>Éviter : le jargon RH technique (GPEC, BDES...) sans explication, le ton institutionnel sans âme</li>
+  </ul>
+
+  <h4>Hiérarchie des messages</h4>
+  <ul>
+    <li><strong>Message 1 (hero)</strong> : L'humain au cœur de la réussite</li>
+    <li><strong>Message 2 (méthode)</strong> : Une approche personnalisée, pas de solution toute faite</li>
+    <li><strong>Message 3 (preuves)</strong> : Témoignages, chiffres, expérience concrète</li>
+    <li><strong>Message 4 (offre)</strong> : Des formats flexibles pour chaque besoin</li>
+    <li><strong>Message 5 (CTA)</strong> : Rencontrons-nous</li>
+  </ul>
+</div>
+
+<!-- ============================================================ -->
+<!-- 3. POLICE KAUSHAN SCRIPT -->
+<!-- ============================================================ -->
+<div class="section" id="font">
+  <h2><span class="num">3.</span> Police Kaushan Script</h2>
+  <div class="subtitle">Choix validé par la cliente — Analyse et recommandations d'usage</div>
+
+  <div class="font-demo">
+    <div>
+      <div class="sample">Twiga RH</div>
+      <div class="meta">Kaushan Script · Regular 400</div>
+    </div>
+    <div>
+      <div class="sample" style="font-size:1.6rem;color:#E8A817">Réussir par l'Humain</div>
+      <div class="meta">Taille réduite · Couleur accent</div>
+    </div>
+  </div>
+
+  <h3>Pourquoi Kaushan fonctionne pour Twiga RH</h3>
+  <ul>
+    <li><strong>Chaleur manuscrite sans infantilisme</strong> — Kaushan est plus structurée que Dancing Script, avec un meilleur ancrage sur la ligne de base. Elle donne un côté "signature personnelle" sans paraître amateur.</li>
+    <li><strong>Lisibilité supérieure</strong> — Contrairement à beaucoup de polices script, Kaushan reste lisible jusqu'à ~18px, ce qui permet son utilisation sur les titres de section.</li>
+    <li><strong>Personnalité forte</strong> — L'empattement calligraphique évoque l'engagement personnel de Valérie, cohérent avec le positionnement "l'humain d'abord".</li>
+  </ul>
+
+  <h3>Règles d'utilisation</h3>
+  <table class="comparison-table">
+    <tr><th>Usage</th><th>Police</th><th>Taille</th><th>Note</th></tr>
+    <tr><td>Titre principal (H1)</td><td>Kaushan Script</td><td>3-4rem</td><td>Réservé au nom "Twiga RH" et aux accroches hero</td></tr>
+    <tr><td>Titre section (H2)</td><td>Kaushan Script</td><td>2-2.5rem</td><td>Titres de sections poétiques ("Une méthode adaptée...")</td></tr>
+    <tr><td>Sous-titre (H3)</td><td>Inter / Poppins Bold</td><td>1.2-1.5rem</td><td>Ne PAS utiliser Kaushan sur les H3 — trop petit, perd sa lisibilité</td></tr>
+    <tr><td>Corps de texte</td><td>Inter / Poppins</td><td>0.92-1rem</td><td>JAMAIS de Kaushan en corps de texte</td></tr>
+    <tr><td>Boutons</td><td>Inter / Poppins Semibold</td><td>0.85-0.95rem</td><td>Kaushan en bouton = illisible en petit</td></tr>
+    <tr><td>Logo</td><td>Kaushan Script</td><td>1.2-1.4rem</td><td>Cohérent avec le logo "Logo avec titre.png"</td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>Règle d'or :</strong>
+    <p>Kaushan Script = signature de la marque. Elle ne doit apparaître que 2 à 4 fois par page (logo + H1 + 1-2 titres de section). Au-delà, elle perd son impact et fatigue la lecture.</p>
+  </div>
+
+  <h3>Palette de couleurs recommandée</h3>
+  <div class="color-row">
+    <div class="color-dot"><div class="dot" style="background:#E8A817"></div><div class="name">Or #E8A817</div></div>
+    <div class="color-dot"><div class="dot" style="background:#B51E6B"></div><div class="name">Magenta #B51E6B</div></div>
+    <div class="color-dot"><div class="dot" style="background:#1A3A8A"></div><div class="name">Bleu #1A3A8A</div></div>
+    <div class="color-dot"><div class="dot" style="background:#2D2D2D"></div><div class="name">Sombre #2D2D2D</div></div>
+    <div class="color-dot"><div class="dot" style="background:#F8F8F8;border:1px solid #ddd"></div><div class="name">Fond #F8F8F8</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 4. CRITIQUE MAQUETTE V2 -->
+<!-- ============================================================ -->
+<div class="section" id="critique-v2">
+  <h2><span class="num">4.</span> Critique — Maquette V2 (Landing Page unique)</h2>
+  <div class="subtitle">La page que le screenshot initial représente — Single-page avec girafe hero</div>
+
+  <h3>Vue d'ensemble</h3>
+  <p>C'est la version la plus aboutie visuellement. Une seule page scrollable avec : hero + méthode + témoignages + prestations + footer. L'approche est celle d'une landing page moderne de consultant indépendant.</p>
+
+  <h3>Scoring</h3>
+  <table class="comparison-table">
+    <tr><th>Critère</th><th>Note</th><th>Commentaire</th></tr>
+    <tr><td>Impact visuel</td><td><span class="grade a">8/10</span></td><td>La girafe géométrique est un asset fort et différenciant. Elle ancre l'identité immédiatement.</td></tr>
+    <tr><td>Clarté du message</td><td><span class="grade b">6/10</span></td><td>Le titre "Twiga RH" ne dit rien en soi. "Réussir par l'Humain" est bien mais reste vague. On ne comprend qu'on est sur du conseil RH qu'au paragraphe.</td></tr>
+    <tr><td>Hiérarchie visuelle</td><td><span class="grade a">7/10</span></td><td>Bonne progression : identité → méthode → preuves → offre. Mais la section méthode arrive trop vite sans contexte "pourquoi".</td></tr>
+    <tr><td>CTA / Conversion</td><td><span class="grade c">4/10</span></td><td>Un seul CTA visible ("En savoir plus") qui renvoie... vers le bas de la même page. Aucun formulaire, aucun numéro de téléphone en hero.</td></tr>
+    <tr><td>Preuve sociale</td><td><span class="grade a">7/10</span></td><td>3 témoignages nommés et titrés. C'est bien. Manque une photo des témoins et un logo d'entreprise.</td></tr>
+    <tr><td>Mobile / Responsive</td><td><span class="grade b">5/10</span></td><td>Non vérifié sur la maquette. Le layout 2 colonnes hero risque de mal passer en mobile.</td></tr>
+    <tr><td>SEO / Contenu</td><td><span class="grade c">3/10</span></td><td>Très peu de texte. Pas de mention "Toulouse", "conseil RH externalisé", "DRH temps partagé" — aucune ancre SEO locale.</td></tr>
+  </table>
+
+  <div class="critique-box positive">
+    <h5>Points forts</h5>
+    <ul>
+      <li>Identité visuelle mémorable (girafe = asset différenciant dans un secteur RH souvent austère)</li>
+      <li>Typographie manuscrite qui humanise la marque — cohérent avec le positionnement</li>
+      <li>Les 3 cartes de prestations sont claires et bien structurées</li>
+      <li>Les témoignages sont authentiques et détaillés</li>
+    </ul>
+  </div>
+
+  <div class="critique-box negative">
+    <h5>Points faibles critiques</h5>
+    <ul>
+      <li><strong>Pas de proposition de valeur explicite en hero</strong> — Un visiteur qui arrive doit comprendre en 3 secondes : "Qui êtes-vous ? Que faites-vous ? Pour qui ?" Ici, on comprend "Twiga RH" et "Réussir par l'Humain" mais pas "conseil RH externalisé pour PME".</li>
+      <li><strong>Absence de CTA fort</strong> — "En savoir plus" est le CTA le plus faible possible. Il faut un "Discutons de vos enjeux RH" ou "Prenez rendez-vous" avec un formulaire ou un numéro visible.</li>
+      <li><strong>Pas de section "Pourquoi"</strong> — On passe directement du hero à la méthode. Le visiteur n'a pas encore compris pourquoi il aurait besoin de Twiga RH.</li>
+      <li><strong>Pas de visage humain</strong> — Pour un positionnement "l'humain d'abord", ne pas montrer Valérie est une incohérence. La photo portrait est dans les assets mais n'est pas utilisée.</li>
+      <li><strong>Footer non personnalisé</strong> — Le footer contient des reliquats du template original ("Company Info", "About Us", "Carrier", "Business Marketing", "IOS & Android"...). Erreur rédhibitoire pour la crédibilité.</li>
+    </ul>
+  </div>
+
+  <div class="critique-box warning">
+    <h5>Recommandations d'amélioration</h5>
+    <ul>
+      <li>Ajouter un <strong>surtitre explicite</strong> en hero : "Conseil RH externalisé à Toulouse"</li>
+      <li>Remplacer "En savoir plus" par un <strong>CTA concret</strong> : "Planifier un échange" ou "07 56 99 92 49"</li>
+      <li>Insérer une <strong>section "Pourquoi"</strong> entre le hero et la méthode, avec 3-4 situations problèmes (conflit, recrutement, audit...)</li>
+      <li>Ajouter la <strong>photo de Valérie</strong> dans une section "Qui suis-je" ou en sidebar de la méthode</li>
+      <li>Nettoyer le footer et le remplacer par un footer métier avec téléphone, email, LinkedIn</li>
+      <li>Ajouter des <strong>mots-clés SEO locaux</strong> dans le contenu</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 5. CRITIQUE MAQUETTE V1 -->
+<!-- ============================================================ -->
+<div class="section" id="critique-v1">
+  <h2><span class="num">5.</span> Critique — Maquette V1 (Site multi-pages)</h2>
+  <div class="subtitle">3 pages : Accueil, Prestations, Présentation de Valérie</div>
+
+  <h3>Vue d'ensemble</h3>
+  <p>La V1 est plus ambitieuse en contenu : 3 pages avec une vraie page "Présentation" (bio, vision, engagements de Valérie) et une page "Prestations" détaillée. C'est un vrai site vitrine, pas juste une landing page.</p>
+
+  <h3>Scoring</h3>
+  <table class="comparison-table">
+    <tr><th>Critère</th><th>Note</th><th>Commentaire</th></tr>
+    <tr><td>Impact visuel</td><td><span class="grade b">5/10</span></td><td>Moins de "wow factor" que la V2. La girafe est moins mise en avant. Le design est plus template-like.</td></tr>
+    <tr><td>Clarté du message</td><td><span class="grade a">8/10</span></td><td>Bien meilleure ! "Des services RH flexibles et adaptés à vos besoins" est clair. La page Prestations détaille DRH temps partagé vs Conseil.</td></tr>
+    <tr><td>Hiérarchie visuelle</td><td><span class="grade b">6/10</span></td><td>La page Accueil est bonne (hero → pourquoi → méthode → prestations → témoignages). Mais la navigation entre pages casse le flow.</td></tr>
+    <tr><td>CTA / Conversion</td><td><span class="grade b">6/10</span></td><td>Mieux que V2 : "Contactez-moi" + section "Vous avez des questions sur nos prestations ?". Mais pas de formulaire ni de booking.</td></tr>
+    <tr><td>Preuve sociale</td><td><span class="grade a">7/10</span></td><td>Mêmes 3 témoignages. La page Présentation avec bio de Valérie ajoute de la crédibilité.</td></tr>
+    <tr><td>Profondeur de contenu</td><td><span class="grade a">8/10</span></td><td>La page Présentation est riche : vision, engagements, expériences. La page Prestations différencie bien les 2 offres.</td></tr>
+    <tr><td>SEO / Contenu</td><td><span class="grade b">6/10</span></td><td>Plus de texte = plus de surface SEO. Mais toujours pas d'ancrage géographique ni de mots-clés structurés.</td></tr>
+  </table>
+
+  <div class="critique-box positive">
+    <h5>Points forts</h5>
+    <ul>
+      <li><strong>Architecture multi-pages pertinente</strong> — Accueil / Présentation / Prestations reflète bien le parcours décisionnel du prospect B2B</li>
+      <li>La page Présentation humanise fortement Valérie (bio, vision, engagements) — c'est le point fort majeur vs V2</li>
+      <li>La page Prestations différencie clairement "DRH à temps partagé" vs "Conseil ponctuel" — très utile pour la conversion</li>
+      <li>La section "Pourquoi faire appel à Twiga RH" avec les situations-problèmes (conflit, recrutement, audit) parle directement au prospect</li>
+      <li>La section accordéon est un bon pattern UX pour les questions fréquentes</li>
+    </ul>
+  </div>
+
+  <div class="critique-box negative">
+    <h5>Points faibles critiques</h5>
+    <ul>
+      <li><strong>Design générique</strong> — L'habillage visuel est clairement un template retouché. Il manque l'identité forte de la girafe. Un concurrent pourrait avoir le même site.</li>
+      <li><strong>La page Présentation est trop longue</strong> — 3 sous-sections (bio, vision, engagements) avec beaucoup de texte. En B2B, un décideur scanne en diagonale. Il faut des bullet points et des éléments visuels.</li>
+      <li><strong>Pas de page "Méthode" dédiée</strong> — Le menu promet "Notre méthode" mais le contenu est encore en Lorem Ipsum. C'est pourtant un différenciateur clé.</li>
+      <li><strong>Incohérence des CTA</strong> — "En savoir plus", "Prestations", "Contactez-moi" se disputent l'attention. Il faut une hiérarchie claire : 1 CTA principal par section.</li>
+      <li><strong>Pas de donnée chiffrée sur l'accueil</strong> — Contrairement au PPTX qui a des stats puissantes (97 Mds€, 20% veulent quitter dès J1), la landing ne chiffre rien.</li>
+    </ul>
+  </div>
+
+  <div class="critique-box warning">
+    <h5>Recommandations d'amélioration</h5>
+    <ul>
+      <li>Injecter l'<strong>identité visuelle forte</strong> de la V2 (girafe, Kaushan Script, couleurs vives) dans cette structure multi-pages</li>
+      <li><strong>Ajouter les chiffres clés du PPTX</strong> en hero ou en section dédiée — ils sont très convaincants</li>
+      <li>Compléter la page <strong>"Notre méthode"</strong> avec le process en 5 étapes (Écoute → Diagnostic → Stratégie → Actions → Réajustements)</li>
+      <li><strong>Condenser la page Présentation</strong> : photo + 1 paragraphe + 3 bullet points engagements. Le reste peut aller dans un PDF téléchargeable.</li>
+      <li>Ajouter un <strong>formulaire de contact</strong> sur la page Contact (pas juste les coordonnées)</li>
+      <li>Ajouter <strong>"Toulouse" et "31"</strong> dans le contenu pour le SEO local</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 6. SYNTHÈSE -->
+<!-- ============================================================ -->
+<div class="section" id="synthese">
+  <h2><span class="num">6.</span> Synthèse & Recommandation</h2>
+  <div class="subtitle">La direction optimale pour le site final</div>
+
+  <h3>Comparaison directe</h3>
+  <table class="comparison-table">
+    <tr><th>Critère</th><th>V1 (Multi-pages)</th><th>V2 (Landing)</th><th>Gagnant</th></tr>
+    <tr><td>Impact visuel</td><td>5/10</td><td>8/10</td><td><span class="grade d">V2</span></td></tr>
+    <tr><td>Clarté du message</td><td>8/10</td><td>6/10</td><td><span class="grade d">V1</span></td></tr>
+    <tr><td>CTA / Conversion</td><td>6/10</td><td>4/10</td><td><span class="grade d">V1</span></td></tr>
+    <tr><td>Preuve sociale</td><td>7/10</td><td>7/10</td><td><span class="grade d">Égalité</span></td></tr>
+    <tr><td>Profondeur contenu</td><td>8/10</td><td>3/10</td><td><span class="grade d">V1</span></td></tr>
+    <tr><td>Identité de marque</td><td>5/10</td><td>8/10</td><td><span class="grade d">V2</span></td></tr>
+    <tr><td>SEO</td><td>6/10</td><td>3/10</td><td><span class="grade d">V1</span></td></tr>
+  </table>
+
+  <div class="highlight-box">
+    <strong>Recommandation finale</strong>
+    <p>La version idéale combine la <strong>structure et la profondeur de contenu de la V1</strong> (multi-pages, page Présentation, différenciation des offres, section "Pourquoi") avec l'<strong>identité visuelle et l'impact de la V2</strong> (girafe en hero, Kaushan Script, couleurs vives, cartes arrondies) et les <strong>données chiffrées du PPTX</strong> (97 Mds€, 20%, 6%).</p>
+  </div>
+
+  <h3>Architecture idéale du site</h3>
+  <ul>
+    <li><strong>Page Accueil</strong> : Hero avec girafe + surtitre explicite + CTA fort → Chiffres clés (données PPTX) → "Pourquoi Twiga RH" (3 situations) → Méthode en 5 étapes → Témoignages → CTA final</li>
+    <li><strong>Page Présentation</strong> : Photo Valérie + bio condensée + vision + 3 engagements bullet-points → Expériences passées</li>
+    <li><strong>Page Notre Méthode</strong> : Process en 5 étapes illustré → Cartographie RH → Exemples concrets</li>
+    <li><strong>Page Prestations</strong> : 2 colonnes (DRH temps partagé | Conseil ponctuel) → Cartes coaching/consultation/groupe → FAQ accordéon</li>
+    <li><strong>Page Contact</strong> : Formulaire + coordonnées + carte + "Rencontrons-nous en face à face ou en visio"</li>
+  </ul>
+
+  <h3>Checklist critique pour la version finale</h3>
+  <ul>
+    <li>Le visiteur comprend-il en 3 secondes qui est Twiga RH et ce qu'elle propose ?</li>
+    <li>Y a-t-il un numéro de téléphone visible sans scroller ?</li>
+    <li>Le CTA principal dit-il autre chose que "En savoir plus" ?</li>
+    <li>Le visage de Valérie apparaît-il au moins une fois ?</li>
+    <li>Les chiffres clés (97 Mds€, 20%...) sont-ils présents pour créer l'urgence ?</li>
+    <li>Le mot "Toulouse" (ou sa région) apparaît-il pour le SEO local ?</li>
+    <li>Kaushan Script est-elle limitée à 2-4 occurrences par page ?</li>
+    <li>Le footer contient-il les vraies informations de contact et non un template générique ?</li>
+  </ul>
+</div>
+
+</body>
+</html>

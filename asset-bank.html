@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twiga RH - Banque d'Assets</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow: #E8A817;
+      --magenta: #B51E6B;
+      --dark: #1a1a2e;
+      --card-bg: #fff;
+      --body-bg: #f4f4f8;
+      --gray: #666;
+      --border: #e8e8ec;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--body-bg);
+      color: #333;
+    }
+
+    /* Header */
+    .header {
+      background: var(--dark);
+      color: #fff;
+      padding: 32px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .header h1 {
+      font-size: 1.6rem;
+      font-weight: 700;
+    }
+
+    .header h1 span { color: var(--yellow); }
+
+    .header .stats {
+      display: flex;
+      gap: 24px;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+
+    .header .stats strong {
+      color: #fff;
+      font-size: 1.2rem;
+      display: block;
+    }
+
+    /* Filters */
+    .filters {
+      padding: 20px 40px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 20px;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      background: #fff;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: var(--gray);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--magenta);
+      color: var(--magenta);
+    }
+
+    .filter-btn.active {
+      background: var(--magenta);
+      border-color: var(--magenta);
+      color: #fff;
+    }
+
+    .search-input {
+      margin-left: auto;
+      padding: 8px 16px;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      width: 240px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus { border-color: var(--yellow); }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      padding: 32px 40px;
+    }
+
+    /* Card */
+    .card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    }
+
+    .card-preview {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #fafafa;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-preview.dark-bg { background: #2d2d3d; }
+
+    .card-preview img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .card-info {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-meta {
+      font-size: 0.75rem;
+      color: #999;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .tag-branding  { background: #fef3cd; color: #856404; }
+    .tag-icone     { background: #d1ecf1; color: #0c5460; }
+    .tag-illustration { background: #d4edda; color: #155724; }
+    .tag-photo     { background: #f8d7da; color: #721c24; }
+    .tag-schema    { background: #e2d5f1; color: #4a2080; }
+    .tag-bg        { background: #e8e8ec; color: #555; }
+
+    .card-filename {
+      font-size: 0.72rem;
+      color: #bbb;
+      font-family: 'Courier New', monospace;
+      margin-top: 6px;
+      word-break: break-all;
+    }
+
+    /* Section dividers */
+    .section-label {
+      grid-column: 1 / -1;
+      padding: 8px 0;
+      margin-top: 8px;
+    }
+
+    .section-label h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-label h2::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .section-count {
+      font-size: 0.8rem;
+      color: #999;
+      font-weight: 400;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header, .filters, .grid { padding-left: 20px; padding-right: 20px; }
+      .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .search-input { width: 100%; margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div>
+      <h1><span>Twiga RH</span> — Banque d'Assets</h1>
+      <p style="font-size:0.82rem;color:#888;margin-top:4px;">Tous les visuels extraits des documents sources</p>
+    </div>
+    <div class="stats">
+      <div><strong>33</strong> Assets totaux</div>
+      <div><strong>5</strong> Catégories</div>
+      <div><strong>3</strong> Sources</div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" onclick="filterCards('all')">Tous</button>
+    <button class="filter-btn" onclick="filterCards('branding')">Branding</button>
+    <button class="filter-btn" onclick="filterCards('icone')">Icônes</button>
+    <button class="filter-btn" onclick="filterCards('illustration')">Illustrations</button>
+    <button class="filter-btn" onclick="filterCards('photo')">Photos</button>
+    <button class="filter-btn" onclick="filterCards('schema')">Schémas</button>
+    <input type="text" class="search-input" placeholder="Rechercher un asset..." oninput="searchCards(this.value)">
+  </div>
+
+  <div class="grid" id="grid">
+
+    <!-- ========== BRANDING ========== -->
+    <div class="section-label" data-category="branding">
+      <h2>Branding & Logo <span class="section-count">3 assets</span></h2>
+    </div>
+
+    <div class="card" data-category="branding" data-keywords="logo girafe mascotte branding geometrique">
+      <div class="card-preview">
+        <img src="assets/girafe-geometrique.png" alt="Girafe géométrique">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Girafe géométrique (mascotte)</div>
+        <div class="card-meta">
+          <span>PNG &bull; 121 Ko</span>
+          <span>PPTX + fichier</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-branding">Branding</span>
+        </div>
+        <div class="card-filename">girafe-geometrique.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="branding" data-keywords="logo twiga rh complet titre texte branding">
+      <div class="card-preview">
+        <img src="assets/logo-twiga-rh-complet.png" alt="Logo Twiga RH complet">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Logo Twiga RH complet</div>
+        <div class="card-meta">
+          <span>PNG &bull; 238 Ko</span>
+          <span>Fichier source</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-branding">Branding</span>
+        </div>
+        <div class="card-filename">logo-twiga-rh-complet.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="branding photo" data-keywords="girafe photo noir blanc fond background">
+      <div class="card-preview dark-bg">
+        <img src="assets/photo-girafe-nb.jpg" alt="Photo girafe N&B">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Photo girafe noir & blanc</div>
+        <div class="card-meta">
+          <span>JPG &bull; 455 Ko</span>
+          <span>PPTX slide 1</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag tag-branding">Branding</span>
+          <span class="tag tag-photo">Photo</span>
+        </div>
+        <div class="card-filename">photo-girafe-nb.jpg</div>
+      </div>
+    </div>
+
+    <!-- ========== ICÔNES ========== -->
+    <div class="section-label" data-category="icone">
+      <h2>Icônes <span class="section-count">15 assets</span></h2>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="balance justice juridique droit legal">
+      <div class="card-preview">
+        <img src="assets/icone-balance-juridique.png" alt="Balance juridique">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Balance / Juridique</div>
+        <div class="card-meta"><span>PNG &bull; 5 Ko</span><span>Slide 5-6</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-balance-juridique.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="cv recrutement loupe document candidature">
+      <div class="card-preview">
+        <img src="assets/icone-cv-recrutement.png" alt="CV Recrutement">
+      </div>
+      <div class="card-info">
+        <div class="card-title">CV / Recrutement</div>
+        <div class="card-meta"><span>PNG &bull; 35 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-cv-recrutement.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="recherche candidats loupe personnes recrutement">
+      <div class="card-preview">
+        <img src="assets/icone-recherche-candidats.png" alt="Recherche candidats">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Recherche de candidats</div>
+        <div class="card-meta"><span>PNG &bull; 30 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-recherche-candidats.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="poignee main partenariat collaboration vert">
+      <div class="card-preview">
+        <img src="assets/icone-poignee-main-partenariat.png" alt="Partenariat">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Poignée de main / Partenariat</div>
+        <div class="card-meta"><span>PNG &bull; 16 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-poignee-main-partenariat.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="contrat signature document stylo administratif">
+      <div class="card-preview">
+        <img src="assets/icone-contrat-signature.png" alt="Contrat">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Contrat / Signature</div>
+        <div class="card-meta"><span>PNG &bull; 49 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-contrat-signature.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="equilibre rh silhouette homme femme balance">
+      <div class="card-preview">
+        <img src="assets/icone-equilibre-rh.png" alt="Équilibre RH">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Équilibre RH</div>
+        <div class="card-meta"><span>PNG &bull; 10 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-equilibre-rh.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="securite accident travail prevention risque">
+      <div class="card-preview">
+        <img src="assets/icone-securite-accident-travail.png" alt="Sécurité">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Sécurité / Accident du travail</div>
+        <div class="card-meta"><span>PNG &bull; 49 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-securite-accident-travail.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="handshake accord poignee main line art">
+      <div class="card-preview">
+        <img src="assets/icone-handshake-accord.png" alt="Handshake">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Handshake / Accord</div>
+        <div class="card-meta"><span>PNG &bull; 29 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-handshake-accord.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="competences reflexion tete engrenage cerveau rose">
+      <div class="card-preview">
+        <img src="assets/icone-competences-reflexion.png" alt="Compétences">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Compétences / Réflexion</div>
+        <div class="card-meta"><span>PNG &bull; 26 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-competences-reflexion.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="force determination poing leve motivation">
+      <div class="card-preview">
+        <img src="assets/icone-force-determination.png" alt="Détermination">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Force / Détermination</div>
+        <div class="card-meta"><span>PNG &bull; 61 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-force-determination.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="turnover rotation personnel cycle fleches">
+      <div class="card-preview">
+        <img src="assets/icone-turnover-rotation.png" alt="Turnover">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Turnover / Rotation</div>
+        <div class="card-meta"><span>PNG &bull; 5 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-turnover-rotation.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="boussole direction navigation strategie objectif">
+      <div class="card-preview">
+        <img src="assets/icone-boussole-direction.png" alt="Boussole">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Boussole / Direction</div>
+        <div class="card-meta"><span>PNG &bull; 27 Ko</span><span>Slide 11</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-boussole-direction.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="ecoute oreille attention active son">
+      <div class="card-preview">
+        <img src="assets/icone-ecoute-oreille.png" alt="Écoute">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Écoute / Oreille</div>
+        <div class="card-meta"><span>PNG &bull; 24 Ko</span><span>Slide 11</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-ecoute-oreille.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="diagnostic rapport graphique analyse clipboard">
+      <div class="card-preview">
+        <img src="assets/icone-diagnostic-rapport.png" alt="Diagnostic">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Diagnostic / Rapport</div>
+        <div class="card-meta"><span>PNG &bull; 24 Ko</span><span>Slide 11</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-diagnostic-rapport.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="strategie presentation tableau bord graphique courbe">
+      <div class="card-preview">
+        <img src="assets/icone-strategie-presentation.png" alt="Stratégie">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Stratégie / Présentation</div>
+        <div class="card-meta"><span>PNG &bull; 8 Ko</span><span>Slide 11</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-strategie-presentation.png</div>
+      </div>
+    </div>
+
+    <!-- ========== ILLUSTRATIONS ========== -->
+    <div class="section-label" data-category="illustration">
+      <h2>Illustrations <span class="section-count">10 assets</span></h2>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="creativite ampoule innovation idee equipe">
+      <div class="card-preview">
+        <img src="assets/illustration-creativite-ampoule.png" alt="Créativité">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Créativité / Innovation</div>
+        <div class="card-meta"><span>PNG &bull; 91 Ko</span><span>Slide 3</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-creativite-ampoule.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="mediation conflit resolution personnes 3d">
+      <div class="card-preview">
+        <img src="assets/illustration-mediation-conflit.png" alt="Médiation">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Médiation / Résolution de conflit</div>
+        <div class="card-meta"><span>PNG &bull; 43 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-mediation-conflit.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="pme entreprise batiment bureau economie">
+      <div class="card-preview">
+        <img src="assets/illustration-pme-entreprise.png" alt="PME">
+      </div>
+      <div class="card-info">
+        <div class="card-title">PME / Entreprise</div>
+        <div class="card-meta"><span>PNG &bull; 28 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-pme-entreprise.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="selection candidat recrutement main choix talent">
+      <div class="card-preview">
+        <img src="assets/illustration-selection-candidat.png" alt="Sélection">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Sélection de candidat</div>
+        <div class="card-meta"><span>PNG &bull; 21 Ko</span><span>Slide 5</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-selection-candidat.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="cse elections comite social economique vote">
+      <div class="card-preview">
+        <img src="assets/illustration-cse-elections.png" alt="CSE">
+      </div>
+      <div class="card-info">
+        <div class="card-title">CSE / Élections</div>
+        <div class="card-meta"><span>PNG &bull; 144 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-cse-elections.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="communication marketing megaphone reseaux sociaux">
+      <div class="card-preview">
+        <img src="assets/illustration-communication-marketing.png" alt="Communication">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Communication / Marketing</div>
+        <div class="card-meta"><span>PNG &bull; 39 Ko</span><span>Slide 6</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-communication-marketing.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="croissance performance graphiques bureau equipe kpi">
+      <div class="card-preview">
+        <img src="assets/illustration-croissance-performance.png" alt="Croissance">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Croissance / Performance</div>
+        <div class="card-meta"><span>PNG &bull; 44 Ko</span><span>Slide 9</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-croissance-performance.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="partage connaissances tetes engrenages collaboration cerveau">
+      <div class="card-preview">
+        <img src="assets/illustration-partage-connaissances.png" alt="Partage">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Partage de connaissances</div>
+        <div class="card-meta"><span>PNG &bull; 165 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-partage-connaissances.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="evolution engrenages couleurs progression equipe accompagnement">
+      <div class="card-preview">
+        <img src="assets/illustration-evolution-engrenages.png" alt="Évolution">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Évolution / Engrenages</div>
+        <div class="card-meta"><span>PNG &bull; 466 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-evolution-engrenages.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="illustration" data-keywords="accompagnement changement transformation personnes engrenages">
+      <div class="card-preview">
+        <img src="assets/illustration-accompagnement-changement.png" alt="Accompagnement">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Accompagnement du changement</div>
+        <div class="card-meta"><span>PNG &bull; 39 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-illustration">Illustration</span></div>
+        <div class="card-filename">illustration-accompagnement-changement.png</div>
+      </div>
+    </div>
+
+    <!-- ========== SCHÉMAS ========== -->
+    <div class="section-label" data-category="schema">
+      <h2>Schémas & Logos tiers <span class="section-count">3 assets</span></h2>
+    </div>
+
+    <div class="card" data-category="schema" data-keywords="cartographie rh recrutement image entreprise mindmap">
+      <div class="card-preview">
+        <img src="assets/schema-cartographie-rh.png" alt="Cartographie RH">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Cartographie RH (mind map)</div>
+        <div class="card-meta"><span>PNG &bull; 131 Ko</span><span>Slide 12</span></div>
+        <div class="card-tags"><span class="tag tag-schema">Schéma</span></div>
+        <div class="card-filename">schema-cartographie-rh.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="schema" data-keywords="qvt qualite vie travail logo bien etre">
+      <div class="card-preview">
+        <img src="assets/logo-qvt-qualite-vie-travail.png" alt="QVT">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Logo QVT (Qualité de Vie au Travail)</div>
+        <div class="card-meta"><span>PNG &bull; 134 Ko</span><span>Slide 7</span></div>
+        <div class="card-tags"><span class="tag tag-schema">Logo tiers</span></div>
+        <div class="card-filename">logo-qvt-qualite-vie-travail.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="icone" data-keywords="video formation clap cinema presentation">
+      <div class="card-preview">
+        <img src="assets/icone-video-formation.png" alt="Vidéo">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Vidéo / Formation</div>
+        <div class="card-meta"><span>PNG &bull; 50 Ko</span><span>PPTX</span></div>
+        <div class="card-tags"><span class="tag tag-icone">Icône</span></div>
+        <div class="card-filename">icone-video-formation.png</div>
+      </div>
+    </div>
+
+    <!-- ========== PHOTOS & FONDS ========== -->
+    <div class="section-label" data-category="photo">
+      <h2>Photos & Fonds <span class="section-count">2 assets</span></h2>
+    </div>
+
+    <div class="card" data-category="photo" data-keywords="portrait valerie gaudel fondatrice photo visage">
+      <div class="card-preview">
+        <img src="assets/photo-portrait-valerie.png" alt="Portrait Valérie">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Portrait Valérie Gaudel</div>
+        <div class="card-meta"><span>PNG &bull; 95 Ko</span><span>Slide 14</span></div>
+        <div class="card-tags"><span class="tag tag-photo">Photo</span></div>
+        <div class="card-filename">photo-portrait-valerie.png</div>
+      </div>
+    </div>
+
+    <div class="card" data-category="bg" data-keywords="fond background diagonal gris blanc mise en page">
+      <div class="card-preview">
+        <img src="assets/bg-diagonal-gris-blanc.png" alt="Fond diagonal">
+      </div>
+      <div class="card-info">
+        <div class="card-title">Fond diagonal gris/blanc</div>
+        <div class="card-meta"><span>PNG &bull; 114 Ko</span><span>Layout PPTX</span></div>
+        <div class="card-tags"><span class="tag tag-bg">Background</span></div>
+        <div class="card-filename">bg-diagonal-gris-blanc.png</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function filterCards(category) {
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(category === 'all' ? 'tous' : category));
+      });
+
+      document.querySelectorAll('.card, .section-label').forEach(card => {
+        const cats = card.dataset.category || '';
+        if (category === 'all') {
+          card.style.display = '';
+        } else {
+          card.style.display = cats.includes(category) ? '' : 'none';
+        }
+      });
+    }
+
+    function searchCards(query) {
+      const q = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+      document.querySelectorAll('.card').forEach(card => {
+        const keywords = (card.dataset.keywords || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const title = (card.querySelector('.card-title')?.textContent || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        const match = !q || keywords.includes(q) || title.includes(q);
+        card.style.display = match ? '' : 'none';
+      });
+
+      document.querySelectorAll('.section-label').forEach(label => {
+        if (!q) {
+          label.style.display = '';
+          return;
+        }
+        const cat = label.dataset.category;
+        const hasVisibleCard = [...document.querySelectorAll(`.card[data-category*="${cat}"]`)].some(c => c.style.display !== 'none');
+        label.style.display = hasVisibleCard ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>

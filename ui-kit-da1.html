@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DA 1 — Chaleur & Humanité | UI Kit Twiga RH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Dancing+Script:wght@400;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Poppins',sans-serif; background:#f9f9fb; color:#333; }
+
+    /* ===== KIT LAYOUT ===== */
+    .kit-header { background:linear-gradient(135deg,#fdf6e3 0%,#fff 60%); padding:48px 40px 40px; border-bottom:1px solid #eee; }
+    .kit-header h1 { font-family:'Dancing Script',cursive; font-size:2.8rem; color:#B51E6B; }
+    .kit-header .da-badge { display:inline-block; background:#B51E6B; color:#fff; padding:4px 16px; border-radius:20px; font-size:.75rem; font-weight:600; margin-bottom:12px; }
+    .kit-header p { font-size:1rem; color:#666; max-width:700px; line-height:1.7; margin-top:8px; }
+    .kit-header .da-tags { display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; }
+    .kit-header .da-tags span { background:#fff; border:1px solid #ddd; padding:4px 14px; border-radius:16px; font-size:.78rem; color:#888; }
+
+    .kit-section { max-width:1200px; margin:0 auto; padding:48px 40px; }
+    .kit-section + .kit-section { border-top:1px solid #eee; }
+    .kit-section h2 { font-size:1.3rem; font-weight:700; color:#1a1a2e; margin-bottom:8px; }
+    .kit-section .section-desc { font-size:.88rem; color:#999; margin-bottom:32px; }
+
+    .row { display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start; }
+    .col { flex:1; min-width:220px; }
+
+    /* ===== COLORS ===== */
+    .color-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:16px; }
+    .color-swatch { border-radius:12px; overflow:hidden; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .color-swatch .swatch { height:80px; }
+    .color-swatch .info { padding:10px 12px; }
+    .color-swatch .info strong { display:block; font-size:.82rem; }
+    .color-swatch .info code { font-size:.72rem; color:#999; }
+
+    /* ===== TYPOGRAPHY ===== */
+    .type-sample { background:#fff; padding:28px; border-radius:12px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    .type-sample .label { font-size:.7rem; text-transform:uppercase; letter-spacing:1px; color:#B51E6B; font-weight:600; margin-bottom:8px; }
+
+    /* ===== BUTTONS ===== */
+    .btn-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:20px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 32px; border-radius:30px; font-family:inherit; font-size:.92rem; font-weight:600; border:2px solid transparent; cursor:pointer; transition:all .25s; }
+    .btn-primary { background:#E8A817; color:#fff; }
+    .btn-primary:hover { background:#d49a10; transform:translateY(-2px); box-shadow:0 6px 20px rgba(232,168,23,.3); }
+    .btn-secondary { background:transparent; color:#B51E6B; border-color:#B51E6B; }
+    .btn-secondary:hover { background:#B51E6B; color:#fff; }
+    .btn-ghost { background:transparent; color:#E8A817; border-color:#E8A817; }
+    .btn-ghost:hover { background:#E8A817; color:#fff; }
+    .btn-sm { padding:8px 20px; font-size:.82rem; }
+    .btn-lg { padding:16px 44px; font-size:1.05rem; }
+    .btn-contact { background:#E8A817; color:#fff; border-radius:6px; padding:10px 28px; }
+
+    /* ===== CARDS ===== */
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:24px; }
+    .card { background:#fff; border-radius:16px; padding:32px 24px; box-shadow:0 4px 20px rgba(0,0,0,.05); transition:all .25s; }
+    .card:hover { transform:translateY(-4px); box-shadow:0 8px 30px rgba(0,0,0,.1); }
+    .card-icon { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+    .card-icon.yellow { background:rgba(232,168,23,.12); }
+    .card-icon.magenta { background:rgba(181,30,107,.1); }
+    .card-icon.blue { background:rgba(30,58,138,.1); }
+    .card h3 { font-size:1.05rem; font-weight:700; margin-bottom:8px; color:#1a1a2e; }
+    .card p { font-size:.88rem; color:#777; line-height:1.6; }
+
+    /* Testimonial card */
+    .testimonial { background:#fff; border-radius:16px; padding:28px; box-shadow:0 4px 20px rgba(0,0,0,.05); }
+    .testimonial blockquote { font-style:italic; font-size:.9rem; color:#666; line-height:1.7; margin-bottom:16px; }
+    .testimonial .author { font-weight:600; color:#B51E6B; font-size:.9rem; }
+    .testimonial .role { font-size:.78rem; color:#999; }
+
+    /* ===== DECORATIVE ===== */
+    .deco-marks svg { margin-bottom:12px; }
+
+    /* ===== NAVBAR DEMO ===== */
+    .navbar-demo { background:#fff; padding:14px 28px; border-radius:12px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    .navbar-demo .logo { display:flex; align-items:center; gap:8px; }
+    .navbar-demo .logo-text { font-family:'Dancing Script',cursive; font-size:1.2rem; font-weight:700; color:#B51E6B; }
+    .navbar-demo nav { display:flex; gap:24px; align-items:center; }
+    .navbar-demo nav a { font-size:.85rem; font-weight:500; color:#333; text-decoration:none; }
+    .navbar-demo nav a:hover { color:#B51E6B; }
+
+    /* ===== HERO DEMO ===== */
+    .hero-demo { background:linear-gradient(135deg,#fffbf0 0%,#fff 100%); border-radius:16px; padding:48px 36px; display:flex; gap:32px; align-items:center; }
+    .hero-demo .content { flex:1; }
+    .hero-demo .visual { flex:0 0 180px; text-align:center; }
+    .hero-demo .visual img { max-width:100%; }
+    .hero-demo h2 { font-family:'Dancing Script',cursive; font-size:2.8rem; font-weight:700; }
+    .hero-demo h2 .yellow { color:#E8A817; }
+    .hero-demo h2 .magenta { color:#B51E6B; }
+    .hero-demo h3 { font-size:1.3rem; font-weight:700; color:#1a1a2e; margin:4px 0 12px; }
+    .hero-demo p { font-size:.92rem; color:#777; line-height:1.6; margin-bottom:20px; }
+
+    /* ===== SPACING DEMO ===== */
+    .spacing-row { display:flex; gap:12px; align-items:flex-end; margin-bottom:8px; }
+    .spacing-box { background:#E8A817; border-radius:6px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:.7rem; font-weight:600; }
+
+    /* ===== SHADOW DEMO ===== */
+    .shadow-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .shadow-box { background:#fff; border-radius:12px; height:80px; display:flex; align-items:center; justify-content:center; font-size:.78rem; color:#999; }
+
+    @media(max-width:768px) {
+      .kit-section { padding:32px 20px; }
+      .hero-demo { flex-direction:column; }
+      .shadow-grid { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="kit-header">
+  <div class="da-badge">DIRECTION ARTISTIQUE 1</div>
+  <h1>Chaleur & Humanité</h1>
+  <p>Inspirée de la <strong>maquetteV2</strong> et du site de référence. Un style chaleureux, accueillant et artisanal qui met l'humain au centre. Écriture manuscrite (<strong>Kaushan Script</strong> — choix validé par la cliente), couleurs chaudes, espaces généreux.</p>
+  <div class="da-tags">
+    <span>Handwritten</span>
+    <span>Chaleureux</span>
+    <span>Aéré</span>
+    <span>Arrondi</span>
+    <span>Minimaliste</span>
+  </div>
+</div>
+
+<!-- COLORS -->
+<div class="kit-section">
+  <h2>Palette de couleurs</h2>
+  <p class="section-desc">Tons chauds dorés et magenta vif sur fond blanc. Contraste doux et accueillant.</p>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="swatch" style="background:#E8A817"></div><div class="info"><strong>Or / Jaune</strong><code>#E8A817</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#F5C623"></div><div class="info"><strong>Or clair</strong><code>#F5C623</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#B51E6B"></div><div class="info"><strong>Magenta</strong><code>#B51E6B</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#D64B8A"></div><div class="info"><strong>Rose</strong><code>#D64B8A</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#1A3A8A"></div><div class="info"><strong>Bleu marine</strong><code>#1A3A8A</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#2D2D2D"></div><div class="info"><strong>Texte sombre</strong><code>#2D2D2D</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#666666"></div><div class="info"><strong>Texte gris</strong><code>#666666</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#F8F8F8;border:1px solid #eee"></div><div class="info"><strong>Fond clair</strong><code>#F8F8F8</code></div></div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="kit-section">
+  <h2>Typographie</h2>
+  <p class="section-desc">Kaushan Script pour les titres (chaleur manuscrite — choix cliente), Poppins pour le corps (lisibilité moderne).</p>
+
+  <div class="type-sample">
+    <div class="label">H1 — Titre principal (Kaushan Script)</div>
+    <div style="font-family:'Kaushan Script',cursive;font-size:3.5rem;color:#E8A817;">Twiga R<span style="color:#B51E6B">H</span></div>
+  </div>
+  <div class="type-sample">
+    <div class="label">H1 — Comparaison avec Dancing Script</div>
+    <div style="display:flex;gap:40px;align-items:baseline;flex-wrap:wrap;">
+      <div><div style="font-family:'Kaushan Script',cursive;font-size:2.4rem;color:#B51E6B;">Kaushan Script</div><div style="font-size:.7rem;color:#999;margin-top:4px;">Choix validé ✓</div></div>
+      <div><div style="font-family:'Dancing Script',cursive;font-size:2.4rem;color:#ccc;">Dancing Script</div><div style="font-size:.7rem;color:#ccc;margin-top:4px;">Alternative</div></div>
+    </div>
+  </div>
+  <div class="type-sample">
+    <div class="label">H2 — Sous-titre</div>
+    <div style="font-size:1.8rem;font-weight:700;color:#2D2D2D;">Réussir par l'Humain</div>
+  </div>
+  <div class="type-sample">
+    <div class="label">H3 — Titre de section (Kaushan Script)</div>
+    <div style="font-family:'Kaushan Script',cursive;font-size:2.2rem;color:#B51E6B;">Une méthode adaptée à vos besoins</div>
+  </div>
+  <div class="type-sample">
+    <div class="label">Corps de texte</div>
+    <div style="font-size:1rem;color:#666;line-height:1.7;max-width:600px;">Adoptez une approche innovante de conseil RH externalisé, qui valorise les relations humaines et met le bien-être des collaborateurs au cœur du succès de votre entreprise.</div>
+  </div>
+  <div class="type-sample">
+    <div class="label">Caption / Petit texte</div>
+    <div style="font-size:.82rem;color:#999;line-height:1.5;">Réalisé par Atelier Pieko — Tous droits réservés 2024</div>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="kit-section">
+  <h2>Boutons</h2>
+  <p class="section-desc">Boutons arrondis (pill shape) pour le CTA principal, rectangulaires arrondis pour la navigation.</p>
+
+  <div class="btn-row">
+    <button class="btn btn-primary btn-lg">En savoir plus</button>
+    <button class="btn btn-primary">Découvrir</button>
+    <button class="btn btn-primary btn-sm">Détails</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-secondary">Nos prestations</button>
+    <button class="btn btn-ghost">Notre méthode</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-contact">Contact</button>
+    <button class="btn btn-contact" style="background:#B51E6B;">Contactez-moi</button>
+  </div>
+</div>
+
+<!-- DECORATIVE ELEMENTS -->
+<div class="kit-section">
+  <h2>Éléments décoratifs</h2>
+  <p class="section-desc">Marques décoratives en V (empreintes de pattes d'oiseaux) et girafe géométrique low-poly.</p>
+  <div class="row">
+    <div class="col">
+      <div class="type-sample">
+        <div class="label">Marques décoratives</div>
+        <div class="deco-marks">
+          <svg width="80" height="32" viewBox="0 0 80 32" fill="none">
+            <path d="M6 18 L14 6 L22 18" stroke="#E8A817" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M24 18 L32 6 L40 18" stroke="#E8A817" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M42 18 L50 6 L58 18" stroke="#E8A817" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div style="font-size:.82rem;color:#999;margin-top:8px;">Utilisées avant les titres de sections</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="type-sample" style="text-align:center;">
+        <div class="label">Mascotte</div>
+        <img src="assets/girafe-geometrique.png" alt="Girafe" style="max-height:200px;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CARDS -->
+<div class="kit-section">
+  <h2>Cartes</h2>
+  <p class="section-desc">Cartes à coins arrondis, ombre douce, icône en cercle coloré. Hover avec élévation.</p>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon yellow">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A817" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+      <h3>1:1 Coaching</h3>
+      <p>Un accompagnement personnalisé pour développer les compétences et atteindre les objectifs.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon magenta">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B51E6B" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Consultation</h3>
+      <p>Amélioration de la dynamique de groupe et optimisation de la performance collective.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon blue">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A3A8A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Coaching de groupe</h3>
+      <p>Renforcement de la cohésion et de l'efficacité des équipes avec des méthodes adaptées.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIAL -->
+<div class="kit-section">
+  <h2>Témoignage</h2>
+  <p class="section-desc">Carte blanche avec citation en italique et auteur en magenta.</p>
+  <div style="max-width:420px;">
+    <div class="testimonial">
+      <blockquote>"Valérie a su nous soutenir dans une phase de forte montée en charge. Elle a apporté son expérience avec enthousiasme et bonne humeur."</blockquote>
+      <div class="author">Fréderic TROMEUR</div>
+      <div class="role">Chief Digital Officer, Prométhée Earth Intelligence</div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div class="kit-section">
+  <h2>Navigation</h2>
+  <p class="section-desc">Barre fixe blanche, logo manuscrit, liens sobres, bouton Contact doré.</p>
+  <div class="navbar-demo">
+    <div class="logo">
+      <img src="assets/girafe-geometrique.png" style="height:36px;">
+      <span class="logo-text">Twiga RH</span>
+    </div>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">Présentation</a>
+      <a href="#">Notre méthode</a>
+      <a href="#">Prestations</a>
+      <button class="btn btn-contact btn-sm" style="border-radius:6px;">Contact</button>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO DEMO -->
+<div class="kit-section">
+  <h2>Section Hero</h2>
+  <p class="section-desc">Fond crème subtil, texte à gauche, illustration à droite.</p>
+  <div class="hero-demo">
+    <div class="content">
+      <svg width="60" height="28" viewBox="0 0 60 28" fill="none"><path d="M4 14 L10 4 L16 14" stroke="#E8A817" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 14 L24 4 L30 14" stroke="#E8A817" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 14 L38 4 L44 14" stroke="#E8A817" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h2><span class="yellow">Twiga R</span><span class="magenta">H</span></h2>
+      <h3>Réussir par l'Humain</h3>
+      <p>Adoptez une approche innovante de conseil RH externalisé, qui valorise les relations humaines.</p>
+      <button class="btn btn-primary">En savoir plus</button>
+    </div>
+    <div class="visual">
+      <img src="assets/girafe-geometrique.png" alt="Girafe">
+    </div>
+  </div>
+</div>
+
+<!-- SHADOWS -->
+<div class="kit-section">
+  <h2>Ombres & Rayons</h2>
+  <p class="section-desc">Ombres douces et progressives. Coins très arrondis (12-16px).</p>
+  <div class="shadow-grid">
+    <div class="shadow-box" style="box-shadow:0 1px 4px rgba(0,0,0,.04);">Subtile</div>
+    <div class="shadow-box" style="box-shadow:0 4px 12px rgba(0,0,0,.06);">Carte</div>
+    <div class="shadow-box" style="box-shadow:0 8px 24px rgba(0,0,0,.08);">Hover</div>
+    <div class="shadow-box" style="box-shadow:0 12px 36px rgba(0,0,0,.12);">Modale</div>
+  </div>
+  <div style="margin-top:24px;">
+    <div class="type-sample">
+      <div class="label">Border-radius</div>
+      <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+        <div style="width:60px;height:60px;background:#E8A817;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">6px</div>
+        <div style="width:60px;height:60px;background:#B51E6B;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">12px</div>
+        <div style="width:60px;height:60px;background:#1A3A8A;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">16px</div>
+        <div style="width:60px;height:60px;background:#E8A817;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">50%</div>
+        <div style="width:120px;height:44px;background:#B51E6B;border-radius:30px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;">30px (pill)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

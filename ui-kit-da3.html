@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DA 3 — Impact & Données | UI Kit Twiga RH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Source Sans 3',sans-serif; background:#f5f5f7; color:#2a2a3a; }
+
+    .kit-header { background:linear-gradient(135deg,#A61E5C 0%,#E8A817 100%); color:#fff; padding:48px 40px 40px; position:relative; overflow:hidden; }
+    .kit-header::before { content:''; position:absolute; top:-60px; right:-60px; width:300px; height:300px; background:rgba(255,255,255,.08); border-radius:50%; }
+    .kit-header h1 { font-family:'Montserrat',sans-serif; font-size:2.6rem; font-weight:900; text-transform:uppercase; letter-spacing:1px; position:relative; }
+    .kit-header .da-badge { display:inline-block; background:rgba(0,0,0,.25); color:#fff; padding:4px 16px; border-radius:4px; font-size:.75rem; font-weight:700; margin-bottom:12px; letter-spacing:2px; text-transform:uppercase; }
+    .kit-header p { font-size:.95rem; color:rgba(255,255,255,.85); max-width:700px; line-height:1.7; margin-top:8px; position:relative; }
+    .kit-header .da-tags { display:flex; gap:8px; margin-top:16px; flex-wrap:wrap; position:relative; }
+    .kit-header .da-tags span { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25); padding:4px 14px; border-radius:4px; font-size:.78rem; color:#fff; font-weight:600; }
+
+    .kit-section { max-width:1200px; margin:0 auto; padding:48px 40px; }
+    .kit-section + .kit-section { border-top:1px solid #e0e0e4; }
+    .kit-section h2 { font-family:'Montserrat',sans-serif; font-size:1.3rem; font-weight:800; color:#2a2a3a; margin-bottom:8px; text-transform:uppercase; letter-spacing:.5px; }
+    .kit-section .section-desc { font-size:.88rem; color:#999; margin-bottom:32px; }
+
+    /* COLORS */
+    .color-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:16px; }
+    .color-swatch { border-radius:8px; overflow:hidden; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+    .color-swatch .swatch { height:80px; }
+    .color-swatch .info { padding:10px 12px; }
+    .color-swatch .info strong { display:block; font-size:.82rem; font-family:'Montserrat',sans-serif; font-weight:700; }
+    .color-swatch .info code { font-size:.72rem; color:#999; }
+
+    /* TYPOGRAPHY */
+    .type-sample { background:#fff; padding:28px; border-radius:8px; margin-bottom:16px; box-shadow:0 2px 8px rgba(0,0,0,.04); }
+    .type-sample .label { font-size:.7rem; text-transform:uppercase; letter-spacing:2px; color:#E8A817; font-weight:700; margin-bottom:8px; font-family:'Montserrat',sans-serif; }
+
+    /* BUTTONS */
+    .btn-row { display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-bottom:20px; }
+    .btn { display:inline-flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-weight:700; border:none; cursor:pointer; transition:all .25s; text-transform:uppercase; letter-spacing:1px; }
+    .btn-primary { background:linear-gradient(135deg,#A61E5C,#C82870); color:#fff; padding:14px 36px; border-radius:8px; font-size:.82rem; }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(166,30,92,.35); }
+    .btn-gold { background:linear-gradient(135deg,#E8A817,#F0C030); color:#fff; padding:14px 36px; border-radius:8px; font-size:.82rem; }
+    .btn-gold:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(232,168,23,.35); }
+    .btn-dark { background:#2a2a3a; color:#fff; padding:14px 36px; border-radius:8px; font-size:.82rem; }
+    .btn-dark:hover { background:#1a1a28; }
+    .btn-outline { background:transparent; color:#A61E5C; border:2px solid #A61E5C; padding:12px 34px; border-radius:8px; font-size:.82rem; }
+    .btn-outline:hover { background:#A61E5C; color:#fff; }
+    .btn-sm { padding:10px 20px; font-size:.75rem; }
+    .btn-lg { padding:16px 44px; font-size:.88rem; }
+
+    /* STAT CARDS */
+    .stat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .stat-card { background:#fff; border-radius:8px; padding:24px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,.05); position:relative; overflow:hidden; }
+    .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; }
+    .stat-card.magenta::before { background:linear-gradient(90deg,#A61E5C,#C82870); }
+    .stat-card.gold::before { background:linear-gradient(90deg,#E8A817,#F0C030); }
+    .stat-card.blue::before { background:linear-gradient(90deg,#1A3A8A,#2855A5); }
+    .stat-card.teal::before { background:linear-gradient(90deg,#0E7490,#12A3B8); }
+    .stat-number { font-family:'Montserrat',sans-serif; font-size:2.8rem; font-weight:900; line-height:1; margin-bottom:4px; }
+    .stat-card.magenta .stat-number { color:#A61E5C; }
+    .stat-card.gold .stat-number { color:#E8A817; }
+    .stat-card.blue .stat-number { color:#1A3A8A; }
+    .stat-card.teal .stat-number { color:#0E7490; }
+    .stat-label { font-size:.78rem; color:#888; line-height:1.4; }
+
+    /* PROCESS STEPS */
+    .process { display:flex; gap:0; position:relative; }
+    .process-step { flex:1; text-align:center; padding:20px 16px; position:relative; }
+    .process-step .step-num { width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; font-family:'Montserrat',sans-serif; font-weight:900; font-size:1.1rem; color:#fff; }
+    .process-step:nth-child(1) .step-num { background:#E8A817; }
+    .process-step:nth-child(2) .step-num { background:#A61E5C; }
+    .process-step:nth-child(3) .step-num { background:#1A3A8A; }
+    .process-step:nth-child(4) .step-num { background:#0E7490; }
+    .process-step:nth-child(5) .step-num { background:#C82870; }
+    .process-step h4 { font-family:'Montserrat',sans-serif; font-size:.82rem; font-weight:800; text-transform:uppercase; letter-spacing:.5px; margin-bottom:4px; color:#2a2a3a; }
+    .process-step p { font-size:.75rem; color:#999; }
+    .process-line { position:absolute; top:44px; left:12%; right:12%; height:3px; background:linear-gradient(90deg,#E8A817,#A61E5C,#1A3A8A,#0E7490,#C82870); border-radius:2px; z-index:0; }
+    .process-step .step-num { position:relative; z-index:1; }
+
+    /* ICON CARDS */
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; }
+    .icon-card { background:#fff; border-radius:8px; padding:24px; text-align:center; box-shadow:0 2px 12px rgba(0,0,0,.05); transition:all .25s; }
+    .icon-card:hover { transform:translateY(-4px); box-shadow:0 8px 30px rgba(0,0,0,.1); }
+    .icon-card img { height:52px; margin-bottom:14px; }
+    .icon-card h4 { font-family:'Montserrat',sans-serif; font-size:.85rem; font-weight:700; margin-bottom:6px; color:#2a2a3a; }
+    .icon-card p { font-size:.78rem; color:#999; line-height:1.5; }
+
+    /* HERO DEMO */
+    .hero-demo { border-radius:8px; overflow:hidden; position:relative; }
+    .hero-bg { background:linear-gradient(135deg,#1a1a2e 0%,#2a2a4a 100%); padding:48px 40px; position:relative; }
+    .hero-bg::before { content:''; position:absolute; right:-80px; top:-80px; width:400px; height:400px; background:radial-gradient(circle,rgba(232,168,23,.15) 0%,transparent 70%); }
+    .hero-bg::after { content:''; position:absolute; left:-60px; bottom:-60px; width:300px; height:300px; background:radial-gradient(circle,rgba(166,30,92,.15) 0%,transparent 70%); }
+    .hero-content { position:relative; z-index:1; display:flex; align-items:center; gap:40px; }
+    .hero-content .text { flex:1; color:#fff; }
+    .hero-content .text h3 { font-family:'Montserrat',sans-serif; font-size:.7rem; font-weight:700; text-transform:uppercase; letter-spacing:3px; color:#E8A817; margin-bottom:8px; }
+    .hero-content .text h2 { font-family:'Montserrat',sans-serif; font-size:2.2rem; font-weight:900; margin-bottom:12px; text-transform:uppercase; }
+    .hero-content .text p { font-size:.9rem; color:rgba(255,255,255,.65); line-height:1.6; margin-bottom:24px; }
+    .hero-content .visual { flex:0 0 160px; text-align:center; }
+    .hero-content .visual img { max-width:100%; filter:drop-shadow(0 8px 24px rgba(0,0,0,.3)); }
+
+    /* DIAGONAL SECTION */
+    .diagonal-demo { display:flex; border-radius:8px; overflow:hidden; }
+    .diagonal-left { flex:1; background:#8a8a9a; padding:40px; color:#fff; clip-path:polygon(0 0,100% 0,85% 100%,0 100%); }
+    .diagonal-right { flex:1; background:#fff; padding:40px 40px 40px 20px; }
+    .diagonal-left h3 { font-family:'Montserrat',sans-serif; font-size:1.2rem; font-weight:800; text-transform:uppercase; margin-bottom:12px; }
+    .diagonal-left p { font-size:.85rem; opacity:.8; line-height:1.6; }
+    .diagonal-right h3 { font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:800; text-transform:uppercase; color:#A61E5C; margin-bottom:12px; }
+    .diagonal-right p { font-size:.85rem; color:#777; line-height:1.6; }
+
+    /* NAVBAR */
+    .navbar-demo { background:#2a2a3a; padding:14px 28px; border-radius:8px; display:flex; align-items:center; justify-content:space-between; }
+    .navbar-demo .logo { display:flex; align-items:center; gap:10px; color:#fff; font-family:'Montserrat',sans-serif; font-weight:800; font-size:1.1rem; text-transform:uppercase; letter-spacing:1px; }
+    .navbar-demo .logo img { height:32px; }
+    .navbar-demo nav { display:flex; gap:24px; align-items:center; }
+    .navbar-demo nav a { font-size:.78rem; font-weight:600; color:rgba(255,255,255,.6); text-decoration:none; text-transform:uppercase; letter-spacing:.5px; }
+    .navbar-demo nav a:hover { color:#E8A817; }
+
+    /* SHADOWS */
+    .shadow-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+    .shadow-box { background:#fff; border-radius:8px; height:80px; display:flex; align-items:center; justify-content:center; font-size:.78rem; color:#999; font-family:'Montserrat',sans-serif; font-weight:600; }
+
+    @media(max-width:768px) {
+      .kit-section { padding:32px 20px; }
+      .stat-grid { grid-template-columns:repeat(2,1fr); }
+      .process { flex-direction:column; }
+      .process-line { display:none; }
+      .hero-content { flex-direction:column; }
+      .diagonal-demo { flex-direction:column; }
+      .diagonal-left { clip-path:none; }
+      .shadow-grid { grid-template-columns:repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="kit-header">
+  <div class="da-badge">Direction Artistique 3</div>
+  <h1>Impact & Données</h1>
+  <p>Inspirée du <strong>PPTX de présentation</strong>. Un style dynamique orienté résultats, riche en données chiffrées, icônes et infographies. Gradients vifs, typographie bold et hiérarchie visuelle forte.</p>
+  <div class="da-tags">
+    <span>Data-driven</span>
+    <span>Bold</span>
+    <span>Gradients</span>
+    <span>Infographie</span>
+    <span>Impact</span>
+  </div>
+</div>
+
+<!-- COLORS -->
+<div class="kit-section">
+  <h2>Palette de couleurs</h2>
+  <p class="section-desc">Couleurs vives et saturées. Gradients magenta/or pour les CTA. Bleu et teal pour les données.</p>
+  <div class="color-grid">
+    <div class="color-swatch"><div class="swatch" style="background:linear-gradient(135deg,#A61E5C,#C82870)"></div><div class="info"><strong>Magenta gradient</strong><code>#A61E5C → #C82870</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:linear-gradient(135deg,#E8A817,#F0C030)"></div><div class="info"><strong>Or gradient</strong><code>#E8A817 → #F0C030</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#1A3A8A"></div><div class="info"><strong>Bleu données</strong><code>#1A3A8A</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#0E7490"></div><div class="info"><strong>Teal accent</strong><code>#0E7490</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#2a2a3a"></div><div class="info"><strong>Fond sombre</strong><code>#2A2A3A</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#E8A817"></div><div class="info"><strong>Or pur</strong><code>#E8A817</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#A61E5C"></div><div class="info"><strong>Magenta pur</strong><code>#A61E5C</code></div></div>
+    <div class="color-swatch"><div class="swatch" style="background:#F5F5F7;border:1px solid #e0e0e4"></div><div class="info"><strong>Fond clair</strong><code>#F5F5F7</code></div></div>
+  </div>
+</div>
+
+<!-- TYPOGRAPHY -->
+<div class="kit-section">
+  <h2>Typographie</h2>
+  <p class="section-desc">Montserrat Black pour les titres (impact maximum), Source Sans 3 pour le corps.</p>
+  <div class="type-sample">
+    <div class="label">H1 — Titre choc</div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:3rem;font-weight:900;color:#2a2a3a;text-transform:uppercase;letter-spacing:1px;">Twiga <span style="color:#A61E5C;">RH</span></div>
+  </div>
+  <div class="type-sample">
+    <div class="label">H2 — Sous-titre</div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:1.8rem;font-weight:800;color:#2a2a3a;text-transform:uppercase;letter-spacing:.5px;">Réussir par l'Humain</div>
+  </div>
+  <div class="type-sample">
+    <div class="label">Chiffre clé</div>
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <span style="font-family:'Montserrat',sans-serif;font-size:4rem;font-weight:900;color:#A61E5C;">97</span>
+      <span style="font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:700;color:#A61E5C;">Mds €</span>
+      <span style="font-size:.9rem;color:#888;">coût annuel du désengagement</span>
+    </div>
+  </div>
+  <div class="type-sample">
+    <div class="label">Surtitre catégorie</div>
+    <div style="font-family:'Montserrat',sans-serif;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:#E8A817;">Votre contexte</div>
+  </div>
+  <div class="type-sample">
+    <div class="label">Corps de texte</div>
+    <div style="font-size:.95rem;color:#666;line-height:1.7;max-width:600px;">20% des nouveaux arrivants dans une entreprise ont envie de la quitter dès le 1er jour. 6% des salariés français s'estiment fortement engagés dans leur travail.</div>
+  </div>
+</div>
+
+<!-- BUTTONS -->
+<div class="kit-section">
+  <h2>Boutons</h2>
+  <p class="section-desc">Boutons avec gradients, typographie uppercase bold. Énergie et action.</p>
+  <div class="btn-row">
+    <button class="btn btn-primary btn-lg">Découvrir</button>
+    <button class="btn btn-gold btn-lg">En savoir plus</button>
+    <button class="btn btn-dark">Contactez-moi</button>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-outline">Notre méthode</button>
+    <button class="btn btn-primary btn-sm">Détails</button>
+    <button class="btn btn-gold btn-sm">Voir plus</button>
+  </div>
+</div>
+
+<!-- STAT CARDS -->
+<div class="kit-section">
+  <h2>Chiffres clés</h2>
+  <p class="section-desc">Cartes statistiques avec bande de couleur en haut et chiffre XXL. Style infographique.</p>
+  <div class="stat-grid">
+    <div class="stat-card magenta">
+      <div class="stat-number">20%</div>
+      <div class="stat-label">des nouveaux arrivants veulent quitter dès le 1er jour</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="stat-number">97 Mds</div>
+      <div class="stat-label">coût annuel du désengagement en France</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="stat-number">6%</div>
+      <div class="stat-label">des salariés s'estiment fortement engagés</div>
+    </div>
+    <div class="stat-card teal">
+      <div class="stat-number">30%</div>
+      <div class="stat-label">des métiers de 2030 n'existent pas encore</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="kit-section">
+  <h2>Process / Étapes</h2>
+  <p class="section-desc">Barre de progression horizontale avec étapes numérotées. La démarche TWIGA.</p>
+  <div style="position:relative;">
+    <div class="process-line"></div>
+    <div class="process">
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <h4>Écoute</h4>
+        <p>Comprendre vos enjeux</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <h4>Diagnostic</h4>
+        <p>Analyser la situation</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <h4>Stratégie</h4>
+        <p>Plan d'actions</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">4</div>
+        <h4>Actions</h4>
+        <p>Mise en place</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num">5</div>
+        <h4>Réajustements</h4>
+        <p>Adaptation continue</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ICON CARDS -->
+<div class="kit-section">
+  <h2>Cartes icônes</h2>
+  <p class="section-desc">Grille d'icônes avec labels. Utilisation des assets du PPTX.</p>
+  <div class="card-grid">
+    <div class="icon-card"><img src="assets/icone-ecoute-oreille.png" alt="Écoute"><h4>Écoute</h4><p>Attentive de vos problématiques</p></div>
+    <div class="icon-card"><img src="assets/icone-diagnostic-rapport.png" alt="Diagnostic"><h4>Diagnostic</h4><p>Situation de votre entreprise</p></div>
+    <div class="icon-card"><img src="assets/icone-boussole-direction.png" alt="Stratégie"><h4>Stratégie</h4><p>Leviers les plus pertinents</p></div>
+    <div class="icon-card"><img src="assets/icone-competences-reflexion.png" alt="Actions"><h4>Actions</h4><p>Concrètes et mesurables</p></div>
+    <div class="icon-card"><img src="assets/icone-strategie-presentation.png" alt="Résultats"><h4>Résultats</h4><p>Évaluation et ajustements</p></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<div class="kit-section">
+  <h2>Navigation</h2>
+  <p class="section-desc">Barre sombre, logo uppercase bold, liens lumineux au hover.</p>
+  <div class="navbar-demo">
+    <div class="logo">
+      <img src="assets/girafe-geometrique.png" alt="Logo">
+      Twiga RH
+    </div>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">Contexte</a>
+      <a href="#">Méthode</a>
+      <a href="#">Offre</a>
+      <button class="btn btn-gold btn-sm" style="border-radius:6px;">Contact</button>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="kit-section">
+  <h2>Section Hero</h2>
+  <p class="section-desc">Fond sombre avec halos lumineux, typographie massive, mascotte en drop-shadow.</p>
+  <div class="hero-demo">
+    <div class="hero-bg">
+      <div class="hero-content">
+        <div class="text">
+          <h3>Conseil RH externalisé</h3>
+          <h2>Réussir par<br>l'Humain</h2>
+          <p>Des actions pragmatiques pour des bénéfices tangibles. Parce que vos collaborateurs sont votre meilleur atout.</p>
+          <div style="display:flex;gap:12px;">
+            <button class="btn btn-gold">Découvrir</button>
+            <button class="btn btn-outline" style="color:#fff;border-color:rgba(255,255,255,.4);">Notre méthode</button>
+          </div>
+        </div>
+        <div class="visual">
+          <img src="assets/girafe-geometrique.png" alt="Girafe">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIAGONAL -->
+<div class="kit-section">
+  <h2>Section diagonale</h2>
+  <p class="section-desc">Mise en page avec découpe diagonale inspirée du fond PPTX gris/blanc.</p>
+  <div class="diagonal-demo">
+    <div class="diagonal-left">
+      <h3>Mon apport</h3>
+      <p>15 ans d'expérience, une vision extérieure et neutre, de la flexibilité et une orientation résultat.</p>
+    </div>
+    <div class="diagonal-right">
+      <h3>Ce que je ne suis pas</h3>
+      <p>Ni une charge salariale supplémentaire, ni une charge fixe, ni une porte-parole de la direction.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SHADOWS -->
+<div class="kit-section">
+  <h2>Ombres & Rayons</h2>
+  <p class="section-desc">Ombres colorées sur les CTA, ombres neutres sur les cartes. Coins modérés (8px).</p>
+  <div class="shadow-grid">
+    <div class="shadow-box" style="box-shadow:0 2px 8px rgba(0,0,0,.05);">Standard</div>
+    <div class="shadow-box" style="box-shadow:0 6px 20px rgba(166,30,92,.2);">Magenta</div>
+    <div class="shadow-box" style="box-shadow:0 6px 20px rgba(232,168,23,.25);">Or</div>
+    <div class="shadow-box" style="box-shadow:0 6px 20px rgba(26,58,138,.2);">Bleu</div>
+  </div>
+</div>
+
+</body>
+</html>

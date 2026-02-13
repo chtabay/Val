@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnostic RH — Évaluez votre maturité RH | Twiga RH</title>
+  <meta name="description" content="Évaluez votre maturité RH en 5 minutes. Diagnostic gratuit sur 5 axes : recrutement, rétention, management, conformité, culture.">
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --magenta: #9B2D5E;
+      --navy: #1a1a2e;
+      --gold: #C8962E;
+      --gold-light: #E8A817;
+      --text: #2c2c2c;
+      --text-light: #555;
+      --text-muted: #888;
+      --border: #eaeaea;
+      --bg: #fafafa;
+      --white: #fff;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-brand {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.2rem; color: var(--magenta);
+      text-decoration: none;
+    }
+    .topbar-back {
+      font-size: .78rem; color: var(--text-muted);
+      text-decoration: none; transition: color .2s;
+    }
+    .topbar-back:hover { color: var(--magenta); }
+
+    /* HERO */
+    .diag-hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2d1b3d 100%);
+      padding: 80px 48px 64px; text-align: center; color: #fff;
+    }
+    .diag-hero .label {
+      font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold-light); margin-bottom: 16px;
+    }
+    .diag-hero h1 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 2.4rem; margin-bottom: 12px;
+    }
+    .diag-hero p {
+      max-width: 560px; margin: 0 auto 32px;
+      font-size: .92rem; color: rgba(255,255,255,.6); line-height: 1.7;
+    }
+    .diag-hero .hero-meta {
+      display: flex; gap: 32px; justify-content: center;
+      font-size: .75rem; color: rgba(255,255,255,.4);
+    }
+    .diag-hero .hero-meta strong { color: rgba(255,255,255,.7); }
+
+    /* PROGRESS BAR */
+    .progress-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 48px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .progress-track {
+      flex: 1; height: 4px;
+      background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--magenta), var(--gold));
+      border-radius: 2px; transition: width .4s ease;
+    }
+    .progress-text {
+      font-size: .72rem; font-weight: 600;
+      color: var(--text-muted); white-space: nowrap;
+    }
+
+    /* QUESTION AREA */
+    .diag-body {
+      max-width: 680px; margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    .question-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px 36px;
+      margin-bottom: 24px;
+      animation: fadeUp .4s ease;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .question-axis {
+      display: inline-block;
+      font-size: .65rem; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: var(--magenta); margin-bottom: 12px;
+      padding: 4px 10px; background: rgba(155,45,94,.06); border-radius: 3px;
+    }
+    .question-number {
+      font-size: .72rem; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .question-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    /* LIKERT SCALE */
+    .likert {
+      display: flex; gap: 8px;
+    }
+    .likert-option {
+      flex: 1; text-align: center;
+      cursor: pointer; transition: all .2s;
+    }
+    .likert-option input { display: none; }
+    .likert-option label {
+      display: block; padding: 14px 8px;
+      border: 2px solid var(--border);
+      border-radius: 6px; cursor: pointer;
+      font-size: .72rem; font-weight: 600;
+      color: var(--text-muted); transition: all .2s;
+      line-height: 1.3;
+    }
+    .likert-option label:hover {
+      border-color: var(--magenta);
+      color: var(--magenta);
+    }
+    .likert-option input:checked + label {
+      border-color: var(--magenta);
+      background: rgba(155,45,94,.06);
+      color: var(--magenta);
+    }
+
+    /* NAVIGATION */
+    .diag-nav {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-top: 24px;
+    }
+    .diag-btn {
+      padding: 12px 28px; border-radius: 4px;
+      font-family: inherit; font-size: .82rem; font-weight: 700;
+      cursor: pointer; border: 2px solid var(--border);
+      background: transparent; color: var(--text-muted);
+      transition: all .2s;
+    }
+    .diag-btn:hover { border-color: var(--text); color: var(--text); }
+    .diag-btn.primary {
+      background: var(--magenta); color: #fff;
+      border-color: var(--magenta);
+    }
+    .diag-btn.primary:hover { background: #7E2048; border-color: #7E2048; }
+    .diag-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+    /* RESULTS PAGE */
+    .results-container {
+      max-width: 780px; margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: none;
+    }
+    .results-container.visible { display: block; }
+    .results-header {
+      text-align: center; margin-bottom: 48px;
+    }
+    .results-header h2 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 2rem; margin-bottom: 8px;
+    }
+    .results-header .score-badge {
+      display: inline-block;
+      font-size: 2.8rem; font-weight: 800;
+      color: var(--magenta); margin: 16px 0;
+    }
+    .results-header .score-label {
+      font-size: .85rem; color: var(--text-muted);
+    }
+    .results-header .level-badge {
+      display: inline-block; margin-top: 12px;
+      padding: 8px 24px; border-radius: 4px;
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* RADAR CHART */
+    .radar-section {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; margin-bottom: 48px; align-items: start;
+    }
+    .radar-canvas-wrap {
+      display: flex; justify-content: center;
+    }
+    .radar-canvas-wrap canvas { max-width: 320px; }
+    .axis-details { display: flex; flex-direction: column; gap: 12px; }
+    .axis-card {
+      padding: 16px; background: var(--white);
+      border: 1px solid var(--border); border-radius: 6px;
+    }
+    .axis-card-header {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 6px;
+    }
+    .axis-card-name {
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .5px;
+    }
+    .axis-card-score {
+      font-size: .82rem; font-weight: 800; color: var(--magenta);
+    }
+    .axis-card-bar {
+      height: 4px; background: var(--border);
+      border-radius: 2px; overflow: hidden;
+    }
+    .axis-card-bar-fill {
+      height: 100%; border-radius: 2px;
+      transition: width .6s ease;
+    }
+    .axis-card-tip {
+      margin-top: 8px; font-size: .72rem;
+      color: var(--text-muted); line-height: 1.5;
+    }
+
+    /* LADDER */
+    .ladder-section {
+      margin-bottom: 48px;
+    }
+    .ladder-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; margin-bottom: 16px;
+    }
+    .ladder-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .ladder-table th {
+      text-align: left; font-size: .68rem;
+      font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; color: var(--text-muted);
+      padding: 10px 16px; border-bottom: 2px solid var(--border);
+    }
+    .ladder-table td {
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      font-size: .82rem;
+    }
+    .ladder-table tr.you { background: rgba(155,45,94,.04); font-weight: 700; }
+    .ladder-table .rank { width: 48px; text-align: center; }
+    .ladder-table .rank-medal { font-size: 1.1rem; }
+    .ladder-score { font-weight: 700; color: var(--magenta); }
+
+    /* GATE CTA */
+    .gate-section {
+      background: linear-gradient(135deg, var(--navy), #2d1b3d);
+      border-radius: 8px; padding: 48px 36px;
+      color: #fff; text-align: center;
+      margin-bottom: 48px;
+    }
+    .gate-section h3 {
+      font-family: 'Kaushan Script', cursive;
+      font-size: 1.5rem; margin-bottom: 8px;
+    }
+    .gate-section p {
+      font-size: .85rem; color: rgba(255,255,255,.55);
+      max-width: 420px; margin: 0 auto 24px; line-height: 1.7;
+    }
+    .gate-form {
+      display: flex; gap: 10px;
+      max-width: 480px; margin: 0 auto;
+    }
+    .gate-input {
+      flex: 1; padding: 12px 16px;
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 4px;
+      background: rgba(255,255,255,.06);
+      color: #fff; font-family: inherit; font-size: .85rem;
+    }
+    .gate-input::placeholder { color: rgba(255,255,255,.3); }
+    .gate-input:focus { outline: none; border-color: var(--gold); }
+    .gate-submit {
+      padding: 12px 24px; border: none; border-radius: 4px;
+      background: var(--gold); color: #fff;
+      font-family: inherit; font-size: .82rem; font-weight: 700;
+      cursor: pointer; white-space: nowrap; transition: all .2s;
+    }
+    .gate-submit:hover { background: #b8851f; }
+    .gate-footnote {
+      font-size: .68rem; color: rgba(255,255,255,.3);
+      margin-top: 12px;
+    }
+    .gate-success {
+      display: none; padding: 16px;
+      background: rgba(76,175,80,.12); border-radius: 6px;
+      color: #4caf50; font-size: .85rem; font-weight: 600;
+      margin-top: 16px;
+    }
+    .gate-success.visible { display: block; }
+
+    /* BOTTOM ACTIONS */
+    .bottom-actions {
+      display: flex; gap: 16px; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .bottom-actions a {
+      padding: 12px 24px; border-radius: 4px;
+      font-size: .82rem; font-weight: 600;
+      text-decoration: none; transition: all .2s;
+    }
+    .bottom-actions .btn-primary {
+      background: var(--magenta); color: #fff;
+    }
+    .bottom-actions .btn-primary:hover { background: #7E2048; }
+    .bottom-actions .btn-outline {
+      border: 2px solid var(--border); color: var(--text-muted);
+    }
+    .bottom-actions .btn-outline:hover { border-color: var(--text); color: var(--text); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .topbar { padding: 12px 20px; }
+      .diag-hero { padding: 48px 24px 40px; }
+      .diag-hero h1 { font-size: 1.8rem; }
+      .progress-bar { padding: 10px 20px; }
+      .question-card { padding: 28px 20px; }
+      .likert { flex-wrap: wrap; gap: 6px; }
+      .likert-option { flex: 0 0 calc(50% - 4px); }
+      .radar-section { grid-template-columns: 1fr; }
+      .gate-form { flex-direction: column; }
+    }
+
+    /* BACK TO HUB */
+    .back-hub {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy); color: #fff;
+      padding: 10px 20px; border-radius: 4px;
+      font-size: .78rem; font-weight: 600;
+      text-decoration: none; z-index: 999;
+      transition: all .2s;
+    }
+    .back-hub:hover { background: var(--magenta); }
+  </style>
+</head>
+<body>
+
+<a href="hub.html" class="back-hub">&larr; Hub</a>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="landing-v4.html" class="topbar-brand">Twiga RH</a>
+  <a href="landing-v4.html#calculateur" class="topbar-back">&larr; Retour à la landing page</a>
+</div>
+
+<!-- HERO -->
+<div class="diag-hero">
+  <div class="label">Diagnostic gratuit</div>
+  <h1>Évaluez votre maturité RH</h1>
+  <p>15 questions, 5 axes d'analyse, 5 minutes. Découvrez vos forces, vos angles morts — et comparez-vous aux autres dirigeants.</p>
+  <div class="hero-meta">
+    <span><strong>15</strong> questions</span>
+    <span><strong>5</strong> axes</span>
+    <span><strong>~5 min</strong></span>
+    <span><strong>Gratuit</strong></span>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 15</div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="diag-body" id="diagBody">
+  <div id="questionContainer"></div>
+  <div class="diag-nav">
+    <button class="diag-btn" id="btnPrev" disabled>&larr; Précédent</button>
+    <button class="diag-btn primary" id="btnNext">Suivant &rarr;</button>
+  </div>
+</div>
+
+<!-- RESULTS (hidden until complete) -->
+<div class="results-container" id="resultsContainer">
+  <div class="results-header">
+    <h2>Votre profil RH</h2>
+    <div class="score-badge" id="totalScore"></div>
+    <div class="score-label">/ 75 points</div>
+    <div class="level-badge" id="levelBadge"></div>
+  </div>
+
+  <div class="radar-section">
+    <div class="radar-canvas-wrap">
+      <canvas id="radarCanvas" width="320" height="320"></canvas>
+    </div>
+    <div class="axis-details" id="axisDetails"></div>
+  </div>
+
+  <div class="ladder-section">
+    <h3>Classement des participants</h3>
+    <table class="ladder-table">
+      <thead>
+        <tr><th class="rank">#</th><th>Participant</th><th>Score</th><th>Niveau</th></tr>
+      </thead>
+      <tbody id="ladderBody"></tbody>
+    </table>
+  </div>
+
+  <div class="gate-section">
+    <h3>Recevez votre rapport détaillé</h3>
+    <p>Analyse complète par axe, recommandations personnalisées et plan d'action concret — directement dans votre boîte mail.</p>
+    <form class="gate-form" id="gateForm" onsubmit="return false;">
+      <input type="text" class="gate-input" id="gateName" placeholder="Votre prénom" required>
+      <input type="email" class="gate-input" id="gateEmail" placeholder="votre@email.com" required>
+      <button type="submit" class="gate-submit">Recevoir le rapport</button>
+    </form>
+    <div class="gate-footnote">Aucun spam. Vos données restent confidentielles.</div>
+    <div class="gate-success" id="gateSuccess">
+      ✓ Rapport envoyé ! Vérifiez votre boîte mail. En attendant, <a href="landing-v4.html#contact" style="color:#4caf50; font-weight:700;">échangeons sur vos résultats</a>.
+    </div>
+  </div>
+
+  <div class="bottom-actions">
+    <a href="landing-v4.html#contact" class="btn-primary">Échanger sur mes résultats</a>
+    <a href="landing-v4.html" class="btn-outline">Retour à l'accueil</a>
+  </div>
+</div>
+
+<script>
+  // =============================================
+  // QUESTIONS DATA — 5 axes x 3 questions
+  // =============================================
+  const axes = [
+    { id: 'recrutement', name: 'Recrutement', color: '#9B2D5E', tip: 'Structurer le processus de recrutement réduit les erreurs de casting de 40 %.' },
+    { id: 'retention', name: 'Rétention & Fidélisation', color: '#C82870', tip: 'Un programme de rétention actif peut réduire le turnover de 25 % en 12 mois.' },
+    { id: 'management', name: 'Management & Leadership', color: '#E8A817', tip: 'Les managers formés génèrent +21 % de productivité dans leurs équipes.' },
+    { id: 'conformite', name: 'Conformité & Obligations', color: '#6B3A7D', tip: 'Le non-respect des obligations sociales peut coûter jusqu\'à 5 % de la masse salariale en pénalités.' },
+    { id: 'culture', name: 'Culture & Engagement', color: '#16A085', tip: 'Les entreprises avec une culture forte surperforment de 33 % en revenus.' }
+  ];
+
+  const questions = [
+    // RECRUTEMENT
+    { axis: 0, text: "Votre processus de recrutement suit-il des étapes formalisées et documentées ?" },
+    { axis: 0, text: "Mesurez-vous le délai moyen de recrutement et le taux de réussite de vos embauches ?" },
+    { axis: 0, text: "Disposez-vous d'un parcours d'intégration structuré pour les nouveaux collaborateurs ?" },
+    // RÉTENTION
+    { axis: 1, text: "Connaissez-vous votre taux de turnover et ses causes principales ?" },
+    { axis: 1, text: "Réalisez-vous des entretiens de départ systématiques ?" },
+    { axis: 1, text: "Proposez-vous des parcours d'évolution ou de mobilité interne ?" },
+    // MANAGEMENT
+    { axis: 2, text: "Vos managers ont-ils été formés aux techniques de management et de feedback ?" },
+    { axis: 2, text: "Des entretiens individuels réguliers (hors entretien annuel) sont-ils pratiqués ?" },
+    { axis: 2, text: "Les conflits internes sont-ils traités rapidement avec une méthode claire ?" },
+    // CONFORMITÉ
+    { axis: 3, text: "Êtes-vous à jour sur vos obligations sociales (CSE, DUERP, affichage, etc.) ?" },
+    { axis: 3, text: "Disposez-vous d'un suivi juridique régulier de vos pratiques RH ?" },
+    { axis: 3, text: "Vos contrats, avenants et documents RH sont-ils centralisés et à jour ?" },
+    // CULTURE
+    { axis: 4, text: "Avez-vous défini et communiqué les valeurs de votre entreprise ?" },
+    { axis: 4, text: "Mesurez-vous régulièrement l'engagement ou la satisfaction de vos équipes ?" },
+    { axis: 4, text: "Les collaborateurs participent-ils activement aux décisions qui les concernent ?" }
+  ];
+
+  const likertLabels = [
+    'Pas du tout', 'Rarement', 'Partiellement', 'Souvent', 'Totalement'
+  ];
+
+  // =============================================
+  // STATE
+  // =============================================
+  let currentQ = 0;
+  const answers = new Array(questions.length).fill(null);
+
+  // =============================================
+  // RENDER
+  // =============================================
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const ax = axes[q.axis];
+    const container = document.getElementById('questionContainer');
+
+    container.innerHTML = `
+      <div class="question-card">
+        <div class="question-axis" style="color:${ax.color}; background:${ax.color}12;">${ax.name}</div>
+        <div class="question-number">Question ${currentQ + 1} / ${questions.length}</div>
+        <div class="question-text">${q.text}</div>
+        <div class="likert">
+          ${likertLabels.map((l, i) => `
+            <div class="likert-option">
+              <input type="radio" name="q${currentQ}" id="q${currentQ}_${i}" value="${i + 1}" ${answers[currentQ] === i + 1 ? 'checked' : ''}>
+              <label for="q${currentQ}_${i}">${l}</label>
+            </div>
+          `).join('')}
+        </div>
+      </div>`;
+
+    container.querySelectorAll('input[type=radio]').forEach(r => {
+      r.addEventListener('change', () => {
+        answers[currentQ] = parseInt(r.value);
+        updateProgress();
+      });
+    });
+
+    document.getElementById('btnPrev').disabled = currentQ === 0;
+    const btnNext = document.getElementById('btnNext');
+    btnNext.textContent = currentQ === questions.length - 1 ? 'Voir mes résultats →' : 'Suivant →';
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const answered = answers.filter(a => a !== null).length;
+    document.getElementById('progressFill').style.width = (answered / questions.length * 100) + '%';
+    document.getElementById('progressText').textContent = answered + ' / ' + questions.length;
+  }
+
+  // =============================================
+  // NAVIGATION
+  // =============================================
+  document.getElementById('btnPrev').addEventListener('click', () => {
+    if (currentQ > 0) { currentQ--; renderQuestion(); }
+  });
+
+  document.getElementById('btnNext').addEventListener('click', () => {
+    if (answers[currentQ] === null) {
+      const card = document.querySelector('.question-card');
+      card.style.borderColor = '#e74c3c';
+      setTimeout(() => card.style.borderColor = '', 600);
+      return;
+    }
+    if (currentQ < questions.length - 1) {
+      currentQ++;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      showResults();
+    }
+  });
+
+  // =============================================
+  // RESULTS
+  // =============================================
+  function showResults() {
+    document.getElementById('diagBody').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+    const rc = document.getElementById('resultsContainer');
+    rc.classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Compute axis scores
+    const axisScores = axes.map((ax, i) => {
+      const qs = questions.filter(q => q.axis === i);
+      const qIndices = questions.reduce((acc, q, idx) => { if (q.axis === i) acc.push(idx); return acc; }, []);
+      const sum = qIndices.reduce((s, idx) => s + (answers[idx] || 0), 0);
+      return { ...ax, score: sum, max: qs.length * 5 };
+    });
+
+    const total = axisScores.reduce((s, a) => s + a.score, 0);
+    document.getElementById('totalScore').textContent = total;
+
+    // Level
+    const pct = total / 75 * 100;
+    let level, levelColor;
+    if (pct >= 80) { level = 'Expert RH'; levelColor = '#16A085'; }
+    else if (pct >= 60) { level = 'Structuré'; levelColor = '#E8A817'; }
+    else if (pct >= 40) { level = 'En construction'; levelColor = '#C82870'; }
+    else { level = 'À risque'; levelColor = '#e74c3c'; }
+
+    const badge = document.getElementById('levelBadge');
+    badge.textContent = level;
+    badge.style.background = levelColor + '18';
+    badge.style.color = levelColor;
+
+    // Axis detail cards
+    const detailsEl = document.getElementById('axisDetails');
+    detailsEl.innerHTML = axisScores.map(a => {
+      const p = a.score / a.max * 100;
+      return `<div class="axis-card">
+        <div class="axis-card-header">
+          <span class="axis-card-name" style="color:${a.color}">${a.name}</span>
+          <span class="axis-card-score">${a.score}/${a.max}</span>
+        </div>
+        <div class="axis-card-bar">
+          <div class="axis-card-bar-fill" style="width:${p}%;background:${a.color}"></div>
+        </div>
+        <div class="axis-card-tip">${a.tip}</div>
+      </div>`;
+    }).join('');
+
+    // Radar chart
+    drawRadar(axisScores);
+
+    // Ladder
+    buildLadder(total, level);
+  }
+
+  // =============================================
+  // RADAR CHART (Canvas)
+  // =============================================
+  function drawRadar(axisScores) {
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const maxR = 120;
+    const n = axisScores.length;
+
+    ctx.clearRect(0, 0, W, H);
+
+    // Grid rings
+    for (let ring = 1; ring <= 5; ring++) {
+      const r = maxR * ring / 5;
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+        const x = cx + Math.cos(angle) * r;
+        const y = cy + Math.sin(angle) * r;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(0,0,0,.06)';
+      ctx.stroke();
+    }
+
+    // Axis lines + labels
+    axisScores.forEach((a, i) => {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const x = cx + Math.cos(angle) * maxR;
+      const y = cy + Math.sin(angle) * maxR;
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(x, y);
+      ctx.strokeStyle = 'rgba(0,0,0,.06)';
+      ctx.stroke();
+
+      // Label
+      const lx = cx + Math.cos(angle) * (maxR + 24);
+      const ly = cy + Math.sin(angle) * (maxR + 24);
+      ctx.fillStyle = a.color;
+      ctx.font = 'bold 10px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const shortName = a.name.length > 12 ? a.name.substring(0, 12) + '…' : a.name;
+      ctx.fillText(shortName, lx, ly);
+    });
+
+    // Data polygon
+    ctx.beginPath();
+    axisScores.forEach((a, i) => {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const r = maxR * (a.score / a.max);
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(155,45,94,.12)';
+    ctx.fill();
+    ctx.strokeStyle = '#9B2D5E';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Data points
+    axisScores.forEach((a, i) => {
+      const angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+      const r = maxR * (a.score / a.max);
+      const x = cx + Math.cos(angle) * r;
+      const y = cy + Math.sin(angle) * r;
+      ctx.beginPath();
+      ctx.arc(x, y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = a.color;
+      ctx.fill();
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  // =============================================
+  // LADDER (localStorage)
+  // =============================================
+  function buildLadder(userScore, userLevel) {
+    // Seed realistic fake entries
+    const fakeEntries = [
+      { name: 'Marie L.', score: 62, level: 'Expert RH' },
+      { name: 'Thomas D.', score: 55, level: 'Structuré' },
+      { name: 'Sophie M.', score: 51, level: 'Structuré' },
+      { name: 'Pierre G.', score: 44, level: 'Structuré' },
+      { name: 'Julie R.', score: 38, level: 'En construction' },
+      { name: 'Marc B.', score: 35, level: 'En construction' },
+      { name: 'Claire V.', score: 29, level: 'À risque' },
+      { name: 'Antoine P.', score: 24, level: 'À risque' }
+    ];
+
+    // Load saved entries from localStorage
+    let savedEntries = [];
+    try {
+      savedEntries = JSON.parse(localStorage.getItem('twiga-diag-ladder') || '[]');
+    } catch (e) {}
+
+    // Merge: fake + saved + current user
+    const allEntries = [...fakeEntries, ...savedEntries, { name: 'Vous', score: userScore, level: userLevel, isYou: true }];
+    allEntries.sort((a, b) => b.score - a.score);
+
+    // Keep top 10
+    const top = allEntries.slice(0, 10);
+
+    const body = document.getElementById('ladderBody');
+    body.innerHTML = top.map((e, i) => {
+      const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1);
+      return `<tr class="${e.isYou ? 'you' : ''}">
+        <td class="rank"><span class="rank-medal">${medal}</span></td>
+        <td>${e.name}${e.isYou ? ' ← c\'est vous' : ''}</td>
+        <td class="ladder-score">${e.score}/75</td>
+        <td>${e.level}</td>
+      </tr>`;
+    }).join('');
+
+    // Save user entry for persistence
+    savedEntries.push({ name: 'Anonyme', score: userScore, level: userLevel });
+    localStorage.setItem('twiga-diag-ladder', JSON.stringify(savedEntries.slice(-20)));
+  }
+
+  // =============================================
+  // GATE FORM
+  // =============================================
+  document.getElementById('gateForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('gateName').value.trim();
+    const email = document.getElementById('gateEmail').value.trim();
+    if (!name || !email) return;
+
+    // Simulate sending
+    document.getElementById('gateSuccess').classList.add('visible');
+    document.getElementById('gateForm').style.display = 'none';
+
+    // Update ladder with actual name
+    try {
+      let saved = JSON.parse(localStorage.getItem('twiga-diag-ladder') || '[]');
+      if (saved.length > 0) {
+        saved[saved.length - 1].name = name.split(' ')[0] + ' ' + (name.split(' ')[1] || '').charAt(0) + '.';
+      }
+      localStorage.setItem('twiga-diag-ladder', JSON.stringify(saved));
+    } catch (e) {}
+  });
+
+  // =============================================
+  // INIT
+  // =============================================
+  renderQuestion();
+</script>
+
+</body>
+</html>
