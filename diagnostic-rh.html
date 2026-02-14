@@ -124,32 +124,25 @@
       margin-bottom: 24px;
     }
 
-    /* LIKERT SCALE */
-    .likert {
-      display: flex; gap: 8px;
+    /* LEVEL OPTIONS */
+    .level-options { display: flex; flex-direction: column; gap: 8px; }
+    .level-option {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 16px; border: 2px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: all .2s; background: var(--white);
     }
-    .likert-option {
-      flex: 1; text-align: center;
-      cursor: pointer; transition: all .2s;
+    .level-option:hover { border-color: var(--magenta); }
+    .level-option.selected { border-color: var(--magenta); background: rgba(155,45,94,.04); }
+    .level-option input { display: none; }
+    .level-num {
+      flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .68rem; font-weight: 700;
+      border: 2px solid var(--border); color: var(--text-muted);
+      transition: all .2s;
     }
-    .likert-option input { display: none; }
-    .likert-option label {
-      display: block; padding: 14px 8px;
-      border: 2px solid var(--border);
-      border-radius: 6px; cursor: pointer;
-      font-size: .72rem; font-weight: 600;
-      color: var(--text-muted); transition: all .2s;
-      line-height: 1.3;
-    }
-    .likert-option label:hover {
-      border-color: var(--magenta);
-      color: var(--magenta);
-    }
-    .likert-option input:checked + label {
-      border-color: var(--magenta);
-      background: rgba(155,45,94,.06);
-      color: var(--magenta);
-    }
+    .level-option.selected .level-num { border-color: var(--magenta); color: var(--magenta); background: rgba(155,45,94,.08); }
+    .level-text { font-size: .82rem; line-height: 1.5; color: var(--text-light); }
 
     /* NAVIGATION */
     .diag-nav {
@@ -338,8 +331,8 @@
       .diag-hero h1 { font-size: 1.8rem; }
       .progress-bar { padding: 10px 20px; }
       .question-card { padding: 28px 20px; }
-      .likert { flex-wrap: wrap; gap: 6px; }
-      .likert-option { flex: 0 0 calc(50% - 4px); }
+      .level-option { padding: 12px 14px; }
+      .level-text { font-size: .78rem; }
       .radar-section { grid-template-columns: 1fr; }
       .gate-form { flex-direction: column; }
     }
@@ -368,13 +361,13 @@
 
 <!-- HERO -->
 <div class="diag-hero">
-  <div class="label">Diagnostic gratuit</div>
-  <h1>Évaluez votre maturité RH</h1>
-  <p>15 questions, 5 axes d'analyse, 5 minutes. Découvrez vos forces, vos angles morts — et comparez-vous aux autres dirigeants.</p>
+  <div class="label">Diagnostic organisationnel</div>
+  <h1>&Eacute;valuez la sant&eacute; RH de votre entreprise</h1>
+  <p>15 questions sur 5 axes. Pour chacune, choisissez la description qui correspond le mieux &agrave; votre r&eacute;alit&eacute;. D&eacute;couvrez vos forces et vos failles structurelles.</p>
   <div class="hero-meta">
     <span><strong>15</strong> questions</span>
     <span><strong>5</strong> axes</span>
-    <span><strong>~5 min</strong></span>
+    <span><strong>~6 min</strong></span>
     <span><strong>Gratuit</strong></span>
   </div>
 </div>
@@ -453,30 +446,180 @@
   ];
 
   const questions = [
-    // RECRUTEMENT
-    { axis: 0, text: "Votre processus de recrutement suit-il des étapes formalisées et documentées ?" },
-    { axis: 0, text: "Mesurez-vous le délai moyen de recrutement et le taux de réussite de vos embauches ?" },
-    { axis: 0, text: "Disposez-vous d'un parcours d'intégration structuré pour les nouveaux collaborateurs ?" },
-    // RÉTENTION
-    { axis: 1, text: "Connaissez-vous votre taux de turnover et ses causes principales ?" },
-    { axis: 1, text: "Réalisez-vous des entretiens de départ systématiques ?" },
-    { axis: 1, text: "Proposez-vous des parcours d'évolution ou de mobilité interne ?" },
-    // MANAGEMENT
-    { axis: 2, text: "Vos managers ont-ils été formés aux techniques de management et de feedback ?" },
-    { axis: 2, text: "Des entretiens individuels réguliers (hors entretien annuel) sont-ils pratiqués ?" },
-    { axis: 2, text: "Les conflits internes sont-ils traités rapidement avec une méthode claire ?" },
-    // CONFORMITÉ
-    { axis: 3, text: "Êtes-vous à jour sur vos obligations sociales (CSE, DUERP, affichage, etc.) ?" },
-    { axis: 3, text: "Disposez-vous d'un suivi juridique régulier de vos pratiques RH ?" },
-    { axis: 3, text: "Vos contrats, avenants et documents RH sont-ils centralisés et à jour ?" },
-    // CULTURE
-    { axis: 4, text: "Avez-vous défini et communiqué les valeurs de votre entreprise ?" },
-    { axis: 4, text: "Mesurez-vous régulièrement l'engagement ou la satisfaction de vos équipes ?" },
-    { axis: 4, text: "Les collaborateurs participent-ils activement aux décisions qui les concernent ?" }
-  ];
+    // === RECRUTEMENT (3) ===
+    {
+      axis: 0,
+      text: "Comment se déroule un recrutement dans votre entreprise ?",
+      levels: [
+        "On publie une annonce quand le besoin est urgent, sans processus défini.",
+        "On a un processus de base (annonce + entretiens) mais rien de formalisé.",
+        "Le processus est documenté : fiche de poste actualisée, grille d'évaluation, étapes claires.",
+        "Processus structuré et mesuré (délai, taux de réussite des embauches) avec amélioration régulière.",
+        "Le recrutement est un avantage compétitif : marque employeur, pipeline de candidats, analytics."
+      ]
+    },
+    {
+      axis: 0,
+      text: "Que se passe-t-il durant le premier mois d'un nouveau collaborateur ?",
+      levels: [
+        "Il/elle se débrouille, les collègues répondent aux questions au fil de l'eau.",
+        "On fait un tour de présentations et on confie les premières tâches.",
+        "Un programme d'intégration existe : accueil formel, formations, points réguliers.",
+        "Parcours structuré sur 90 jours avec mentor, objectifs à J+30/60/90, et feedback croisé.",
+        "L'onboarding est mesuré (satisfaction, time-to-productivity) et amélioré en continu."
+      ]
+    },
+    {
+      axis: 0,
+      text: "Suivez-vous des indicateurs liés au recrutement ?",
+      levels: [
+        "Non, on ne mesure rien.",
+        "On a une idée approximative du temps pour pourvoir un poste.",
+        "On suit le délai moyen de recrutement et le coût par embauche.",
+        "On mesure délai, coût, qualité (taux de confirmation en période d'essai) et source des candidats.",
+        "Dashboard complet avec analyse prédictive et benchmarks sectoriels."
+      ]
+    },
 
-  const likertLabels = [
-    'Pas du tout', 'Rarement', 'Partiellement', 'Souvent', 'Totalement'
+    // === RÉTENTION (3) ===
+    {
+      axis: 1,
+      text: "Comment gérez-vous les départs de collaborateurs ?",
+      levels: [
+        "Les gens partent, on recrute. Pas d'analyse particulière.",
+        "On connaît le nombre de départs mais pas vraiment les causes.",
+        "On suit le taux de turnover et on réalise des entretiens de départ ponctuels.",
+        "Entretiens de départ systématiques, analyse des causes, plan d'actions correctif.",
+        "Le turnover est piloté : analyse prédictive, plans de rétention ciblés, suivi des alumni."
+      ]
+    },
+    {
+      axis: 1,
+      text: "Quelle visibilité ont vos collaborateurs sur leur évolution ?",
+      levels: [
+        "Aucune — il n'y a pas de parcours de carrière défini.",
+        "L'évolution dépend des opportunités qui se présentent, au cas par cas.",
+        "Des entretiens professionnels sont réalisés mais les perspectives restent floues.",
+        "Des parcours d'évolution existent avec des passerelles identifiées et des formations associées.",
+        "Chaque collaborateur a un plan de développement personnalisé, suivi et financé."
+      ]
+    },
+    {
+      axis: 1,
+      text: "Comment reconnaissez-vous la contribution de vos équipes ?",
+      levels: [
+        "Le salaire est la reconnaissance — pas de pratique particulière.",
+        "Des remerciements informels de temps en temps.",
+        "Un système de primes ou bonus existe, lié aux résultats.",
+        "Reconnaissance multi-formes : feedback régulier, primes, moments collectifs, promotions visibles.",
+        "Une politique de reconnaissance structurée, mesurée (impact sur l'engagement) et alignée avec les valeurs."
+      ]
+    },
+
+    // === MANAGEMENT (3) ===
+    {
+      axis: 2,
+      text: "Quel accompagnement reçoivent vos managers ?",
+      levels: [
+        "Aucun — ils ont été promus pour leur expertise technique.",
+        "Quelques formations ponctuelles sur demande.",
+        "Un parcours de formation initiale existe pour les nouveaux managers.",
+        "Formation continue + coaching individuel ou collectif régulier.",
+        "Communauté managériale active, co-développement, feedback 360°, mentoring."
+      ]
+    },
+    {
+      axis: 2,
+      text: "À quelle fréquence les managers échangent-ils individuellement avec leurs collaborateurs ?",
+      levels: [
+        "Uniquement lors de l'entretien annuel.",
+        "Ponctuellement quand il y a un problème.",
+        "Des points informels réguliers, sans cadre défini.",
+        "Des entretiens individuels mensuels structurés avec suivi des actions.",
+        "Rituels managériaux formalisés : 1-to-1 hebdo/bi-mensuel + entretien de développement trimestriel."
+      ]
+    },
+    {
+      axis: 2,
+      text: "Comment sont traités les conflits internes ?",
+      levels: [
+        "On évite le sujet — ça finit par se régler tout seul (ou pas).",
+        "Le dirigeant intervient quand la situation devient critique.",
+        "Les managers sont sensibilisés à la gestion de conflit mais sans méthode formelle.",
+        "Un processus de médiation existe avec des étapes claires et un suivi.",
+        "Culture de feedback ouvert, médiation structurée, et les conflits sont vus comme des opportunités d'amélioration."
+      ]
+    },
+
+    // === CONFORMITÉ (3) ===
+    {
+      axis: 3,
+      text: "Quel est votre niveau de maîtrise des obligations sociales (CSE, DUERP, affichage, etc.) ?",
+      levels: [
+        "Je ne sais pas exactement ce qui s'applique à mon entreprise.",
+        "J'ai une idée générale mais je ne suis pas sûr d'être à jour.",
+        "Les obligations principales sont respectées, vérifiées ponctuellement.",
+        "Un suivi régulier est en place avec un calendrier des échéances sociales.",
+        "Veille juridique continue, audit social annuel, conformité proactive."
+      ]
+    },
+    {
+      axis: 3,
+      text: "Comment gérez-vous vos documents RH (contrats, avenants, registres) ?",
+      levels: [
+        "Dispersés dans des dossiers papier ou des emails — difficile à retrouver.",
+        "Fichiers classés dans un dossier partagé, sans structure homogène.",
+        "Les documents sont centralisés et classés, avec un modèle pour les contrats.",
+        "SIRH ou outil dédié avec modèles, alertes d'échéance, et accès sécurisé.",
+        "Dématérialisation complète, workflows de validation, coffre-fort numérique salarié."
+      ]
+    },
+    {
+      axis: 3,
+      text: "Disposez-vous d'un accompagnement juridique RH ?",
+      levels: [
+        "Non, je gère seul et je cherche sur internet quand j'ai un doute.",
+        "Je consulte un avocat ou expert-comptable ponctuellement en cas de problème.",
+        "Un interlocuteur juridique est identifié pour les questions RH courantes.",
+        "Accompagnement régulier avec veille juridique et validation des décisions sensibles.",
+        "Stratégie juridique RH intégrée : prévention, veille, formation des managers au droit social."
+      ]
+    },
+
+    // === CULTURE (3) ===
+    {
+      axis: 4,
+      text: "Comment vos valeurs d'entreprise vivent-elles au quotidien ?",
+      levels: [
+        "Nous n'avons pas formalisé de valeurs.",
+        "Des valeurs existent sur le papier mais peu de gens les connaissent.",
+        "Les valeurs sont communiquées et visibles (site, affichage, onboarding).",
+        "Les valeurs guident les décisions : recrutement, évaluation, promotion.",
+        "Les valeurs sont incarnées par le management, mesurées, et les écarts sont traités."
+      ]
+    },
+    {
+      axis: 4,
+      text: "Comment mesurez-vous le bien-être et l'engagement de vos équipes ?",
+      levels: [
+        "On ne mesure pas — on se fie au ressenti.",
+        "Des discussions informelles donnent une tendance.",
+        "Un baromètre annuel est réalisé (enquête de satisfaction).",
+        "Enquêtes régulières (trimestrielles) avec plan d'action et communication des résultats.",
+        "Mesure continue (pulse surveys), tableau de bord engagement, lien avec les indicateurs business."
+      ]
+    },
+    {
+      axis: 4,
+      text: "Quel rôle jouent les collaborateurs dans les décisions qui les concernent ?",
+      levels: [
+        "Les décisions sont prises par la direction, les collaborateurs sont informés.",
+        "On consulte parfois l'équipe de manière informelle.",
+        "Les collaborateurs sont consultés sur les sujets qui les impactent directement.",
+        "Des instances de participation existent (groupes de travail, ateliers, CSE actif).",
+        "Co-construction assumée : les collaborateurs participent à la stratégie, aux process, à l'amélioration continue."
+      ]
+    }
   ];
 
   // =============================================
@@ -498,19 +641,22 @@
         <div class="question-axis" style="color:${ax.color}; background:${ax.color}12;">${ax.name}</div>
         <div class="question-number">Question ${currentQ + 1} / ${questions.length}</div>
         <div class="question-text">${q.text}</div>
-        <div class="likert">
-          ${likertLabels.map((l, i) => `
-            <div class="likert-option">
-              <input type="radio" name="q${currentQ}" id="q${currentQ}_${i}" value="${i + 1}" ${answers[currentQ] === i + 1 ? 'checked' : ''}>
-              <label for="q${currentQ}_${i}">${l}</label>
+        <div class="level-options">
+          ${q.levels.map((l, i) => `
+            <div class="level-option ${answers[currentQ] === i + 1 ? 'selected' : ''}" data-val="${i + 1}">
+              <input type="radio" name="q${currentQ}" value="${i + 1}" ${answers[currentQ] === i + 1 ? 'checked' : ''}>
+              <div class="level-num">${i + 1}</div>
+              <div class="level-text">${l}</div>
             </div>
           `).join('')}
         </div>
       </div>`;
 
-    container.querySelectorAll('input[type=radio]').forEach(r => {
-      r.addEventListener('change', () => {
-        answers[currentQ] = parseInt(r.value);
+    container.querySelectorAll('.level-option').forEach(el => {
+      el.addEventListener('click', () => {
+        answers[currentQ] = parseInt(el.dataset.val);
+        container.querySelectorAll('.level-option').forEach(o => o.classList.remove('selected'));
+        el.classList.add('selected');
         updateProgress();
       });
     });

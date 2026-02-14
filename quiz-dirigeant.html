@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Testez vos réflexes RH — Twiga RH</title>
+  <meta name="description" content="12 mises en situation pour révéler vos angles morts en gestion RH. Gratuit, sans inscription. Par Twiga RH.">
+  <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --magenta: #9B2D5E;
+      --navy: #1a1a2e;
+      --gold: #C8962E;
+      --gold-light: #E8A817;
+      --green: #16A085;
+      --red: #C0392B;
+      --orange: #E67E22;
+      --text: #2c2c2c;
+      --text-light: #555;
+      --text-muted: #888;
+      --border: #eaeaea;
+      --bg: #fafafa;
+      --white: #fff;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+
+    /* TOPBAR */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; background: var(--white); border-bottom: 1px solid var(--border);
+    }
+    .topbar-brand { font-family: 'Kaushan Script', cursive; font-size: 1.2rem; color: var(--magenta); text-decoration: none; }
+    .topbar-back { font-size: .78rem; color: var(--text-muted); text-decoration: none; transition: color .2s; }
+    .topbar-back:hover { color: var(--magenta); }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, #2d1b3d 100%);
+      padding: 80px 48px 64px; text-align: center; color: #fff;
+    }
+    .hero .label {
+      font-size: .72rem; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--gold-light); margin-bottom: 16px;
+    }
+    .hero h1 { font-family: 'Kaushan Script', cursive; font-size: 2.4rem; margin-bottom: 12px; }
+    .hero p {
+      max-width: 540px; margin: 0 auto 32px;
+      font-size: .92rem; color: rgba(255,255,255,.6); line-height: 1.7;
+    }
+    .hero .meta { display: flex; gap: 32px; justify-content: center; font-size: .75rem; color: rgba(255,255,255,.4); }
+    .hero .meta strong { color: rgba(255,255,255,.7); }
+
+    /* PROGRESS */
+    .progress-bar {
+      position: sticky; top: 0; z-index: 100; background: var(--white);
+      border-bottom: 1px solid var(--border); padding: 12px 48px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .progress-track { flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--magenta), var(--gold)); border-radius: 2px; transition: width .4s ease; }
+    .progress-text { font-size: .72rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+
+    /* QUESTION */
+    .q-body { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+    .q-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+      padding: 40px 36px; margin-bottom: 24px; animation: fadeUp .4s ease;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+    .q-tag {
+      display: inline-block; font-size: .65rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--magenta); margin-bottom: 14px;
+      padding: 4px 10px; background: rgba(155,45,94,.06); border-radius: 3px;
+    }
+    .q-number { font-size: .72rem; color: var(--text-muted); margin-bottom: 8px; }
+    .q-situation {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .q-context {
+      font-size: .82rem; color: var(--text-light); line-height: 1.7;
+      margin-bottom: 24px; font-style: italic;
+    }
+
+    /* ANSWER OPTIONS */
+    .q-options { display: flex; flex-direction: column; gap: 10px; }
+    .q-option {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 16px 18px; border: 2px solid var(--border); border-radius: 6px;
+      cursor: pointer; transition: all .2s; background: var(--white);
+    }
+    .q-option:hover { border-color: var(--magenta); }
+    .q-option.selected { border-color: var(--magenta); background: rgba(155,45,94,.03); }
+    .q-option.locked { cursor: default; }
+    .q-option.optimal { border-color: var(--green); background: rgba(22,160,133,.06); }
+    .q-option.good { border-color: var(--gold); background: rgba(200,150,46,.06); }
+    .q-option.passable { border-color: var(--orange); background: rgba(230,126,34,.06); }
+    .q-option.bad { border-color: var(--red); background: rgba(192,57,43,.06); }
+
+    .q-option-letter {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .72rem; font-weight: 700; border: 2px solid var(--border);
+      color: var(--text-muted); transition: all .2s;
+    }
+    .q-option.selected .q-option-letter { border-color: var(--magenta); color: var(--magenta); background: rgba(155,45,94,.08); }
+    .q-option.optimal .q-option-letter { border-color: var(--green); color: var(--green); background: rgba(22,160,133,.12); }
+    .q-option.good .q-option-letter { border-color: var(--gold); color: var(--gold); }
+    .q-option.passable .q-option-letter { border-color: var(--orange); color: var(--orange); }
+    .q-option.bad .q-option-letter { border-color: var(--red); color: var(--red); }
+
+    .q-option-text { font-size: .85rem; line-height: 1.5; }
+
+    /* EXPLANATION */
+    .q-explanation {
+      margin-top: 20px; padding: 20px;
+      background: var(--navy); border-radius: 6px; color: #fff;
+      display: none; animation: fadeUp .3s ease;
+    }
+    .q-explanation.visible { display: block; }
+    .q-explanation .verdict {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .q-explanation .verdict.v-optimal { color: #2ecc71; }
+    .q-explanation .verdict.v-good { color: var(--gold-light); }
+    .q-explanation .verdict.v-passable { color: var(--orange); }
+    .q-explanation .verdict.v-bad { color: #e74c3c; }
+    .q-explanation p { font-size: .82rem; line-height: 1.7; color: rgba(255,255,255,.75); }
+    .q-explanation strong { color: #fff; }
+
+    /* NAV */
+    .q-nav { display: flex; justify-content: flex-end; margin-top: 20px; }
+    .q-btn {
+      padding: 12px 28px; border-radius: 4px;
+      font-family: inherit; font-size: .82rem; font-weight: 700;
+      cursor: pointer; border: none; background: var(--magenta); color: #fff; transition: all .2s;
+      display: none;
+    }
+    .q-btn.visible { display: inline-block; }
+    .q-btn:hover { background: #7E2048; }
+
+    /* RESULTS */
+    .results { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; display: none; }
+    .results.visible { display: block; }
+    .results-header { text-align: center; margin-bottom: 40px; }
+    .results-header h2 { font-family: 'Kaushan Script', cursive; font-size: 2rem; margin-bottom: 8px; }
+    .score-big { font-size: 3rem; font-weight: 800; color: var(--magenta); }
+    .score-sub { font-size: .85rem; color: var(--text-muted); margin-bottom: 12px; }
+    .level-badge {
+      display: inline-block; padding: 8px 24px; border-radius: 4px;
+      font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* CATEGORIES RECAP */
+    .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
+    .cat-card {
+      padding: 16px; background: var(--white); border: 1px solid var(--border);
+      border-radius: 6px; border-left: 3px solid var(--border);
+    }
+    .cat-card-name { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+    .cat-card-score { font-size: 1.1rem; font-weight: 800; color: var(--magenta); }
+    .cat-card-comment { font-size: .72rem; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+    /* BRIDGE CTA */
+    .bridge {
+      background: linear-gradient(135deg, var(--navy), #2d1b3d);
+      border-radius: 8px; padding: 48px 36px; color: #fff; text-align: center;
+      margin-bottom: 40px;
+    }
+    .bridge h3 { font-family: 'Kaushan Script', cursive; font-size: 1.5rem; margin-bottom: 8px; }
+    .bridge p { font-size: .85rem; color: rgba(255,255,255,.55); max-width: 420px; margin: 0 auto 24px; line-height: 1.7; }
+    .bridge-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .bridge-btn {
+      padding: 12px 28px; border-radius: 4px; font-size: .82rem; font-weight: 700;
+      text-decoration: none; transition: all .2s; cursor: pointer;
+    }
+    .bridge-btn.primary { background: var(--gold); color: #fff; border: none; }
+    .bridge-btn.primary:hover { background: #b8851f; }
+    .bridge-btn.secondary { background: transparent; color: rgba(255,255,255,.7); border: 2px solid rgba(255,255,255,.2); }
+    .bridge-btn.secondary:hover { border-color: #fff; color: #fff; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .topbar { padding: 12px 20px; }
+      .hero { padding: 48px 24px 40px; }
+      .hero h1 { font-size: 1.8rem; }
+      .q-card { padding: 28px 20px; }
+      .cat-grid { grid-template-columns: 1fr; }
+    }
+
+    /* BACK HUB */
+    .back-hub {
+      position: fixed; bottom: 24px; right: 24px;
+      background: var(--navy); color: #fff; padding: 10px 20px; border-radius: 4px;
+      font-size: .78rem; font-weight: 600; text-decoration: none; z-index: 999; transition: all .2s;
+    }
+    .back-hub:hover { background: var(--magenta); }
+  </style>
+</head>
+<body>
+
+<a href="hub.html" class="back-hub">&larr; Hub</a>
+
+<div class="topbar">
+  <a href="landing-v4.html" class="topbar-brand">Twiga RH</a>
+  <a href="landing-v4.html#calculateur" class="topbar-back">&larr; Retour</a>
+</div>
+
+<div class="hero">
+  <div class="label">Test de r&eacute;flexes RH</div>
+  <h1>Dirigeant, quel r&eacute;flexe RH avez-vous ?</h1>
+  <p>12 situations r&eacute;elles. &Agrave; chaque fois, 4 r&eacute;actions possibles. D&eacute;couvrez si vos r&eacute;flexes sont ceux d'un expert — ou s'ils vous co&ucirc;tent cher.</p>
+  <div class="meta">
+    <span><strong>12</strong> situations</span>
+    <span><strong>~4 min</strong></span>
+    <span><strong>R&eacute;ponse comment&eacute;e</strong></span>
+    <span><strong>Gratuit</strong></span>
+  </div>
+</div>
+
+<div class="progress-bar" id="progressBar">
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-text" id="progressText">0 / 12</div>
+</div>
+
+<div class="q-body" id="qBody">
+  <div id="qContainer"></div>
+  <div class="q-nav">
+    <button class="q-btn" id="btnNext">Question suivante &rarr;</button>
+  </div>
+</div>
+
+<div class="results" id="resultsPage">
+  <div class="results-header">
+    <h2>Votre profil de r&eacute;flexes RH</h2>
+    <div class="score-big" id="totalScore"></div>
+    <div class="score-sub">/ 36 points</div>
+    <div class="level-badge" id="levelBadge"></div>
+  </div>
+  <div class="cat-grid" id="catGrid"></div>
+  <div class="bridge">
+    <h3>Vos r&eacute;flexes r&eacute;v&egrave;lent vos angles morts.</h3>
+    <p>Maintenant, &eacute;valuez si votre <strong>entreprise</strong> est &eacute;quip&eacute;e pour compenser ces failles. Le diagnostic organisationnel mesure 5 axes de maturit&eacute; RH.</p>
+    <div class="bridge-actions">
+      <a href="diagnostic-rh.html" class="bridge-btn primary">&Eacute;valuer mon entreprise &rarr;</a>
+      <a href="landing-v4.html#contact" class="bridge-btn secondary">&Eacute;changer directement</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // =============================================
+  // DATA: 12 SITUATIONAL QUESTIONS
+  // =============================================
+  const categories = [
+    { id: 'recrutement', name: 'Recrutement & Intégration', color: '#9B2D5E' },
+    { id: 'management', name: 'Management & Conflits', color: '#E8A817' },
+    { id: 'juridique', name: 'Obligations & Juridique', color: '#6B3A7D' },
+    { id: 'retention', name: 'Rétention & Engagement', color: '#C82870' },
+    { id: 'culture', name: 'Culture & Bien-être', color: '#16A085' }
+  ];
+
+  const questions = [
+    // RECRUTEMENT (3)
+    {
+      cat: 0,
+      situation: "Vous devez recruter un responsable commercial.",
+      context: "Le poste est vacant depuis 2 semaines. La pression monte.",
+      options: [
+        { text: "Reprendre l'ancienne fiche de poste et publier sur un jobboard.", score: 1, level: 'passable', explain: "Réutiliser une fiche obsolète attire les mauvais profils. Sans actualisation ni réflexion sur les compétences clés, vous reproduisez les erreurs du passé." },
+        { text: "Définir les compétences clés, les critères objectifs de sélection, puis structurer le processus (annonce, grille d'entretien, étapes).", score: 3, level: 'optimal', explain: "C'est la démarche professionnelle. Un processus structuré réduit de 40 % les erreurs de casting (SHRM). Le temps investi en amont fait gagner des mois." },
+        { text: "Demander à votre réseau si quelqu'un connaît un bon profil.", score: 1, level: 'passable', explain: "La cooptation peut fonctionner mais elle limite le vivier, crée un biais de similarité, et ne dispense pas d'un processus d'évaluation objectif." },
+        { text: "Contacter un cabinet de recrutement pour aller vite.", score: 2, level: 'good', explain: "Externaliser est pertinent si le besoin est urgent ou technique. Mais sans brief structuré de votre part, même le meilleur cabinet ne peut cibler juste." }
+      ]
+    },
+    {
+      cat: 0,
+      situation: "Votre dernière recrue ne donne pas satisfaction après 3 mois.",
+      context: "Les retours de l'équipe sont mitigés. La période d'essai se termine dans 1 mois.",
+      options: [
+        { text: "Attendre la fin de la période d'essai pour décider.", score: 0, level: 'bad', explain: "L'attentisme aggrave la situation : le collaborateur ne progresse pas, l'équipe se démotive, et vous perdez un mois précieux. La période d'essai existe précisément pour agir tôt." },
+        { text: "Organiser un point factuel : clarifier les attentes, poser des objectifs mesurables, définir un plan de progrès avec un suivi hebdomadaire.", score: 3, level: 'optimal', explain: "La bonne pratique. Un cadre clair et un suivi rapproché permettent soit de redresser la situation, soit de documenter objectivement une décision de non-renouvellement." },
+        { text: "En parler avec l'équipe pour avoir leur avis avant d'agir.", score: 1, level: 'passable', explain: "Consulter l'équipe sur un collaborateur en difficulté crée un tribunal informel qui fragilise la personne et votre posture managériale. L'évaluation vous appartient." },
+        { text: "Rompre la période d'essai immédiatement pour ne pas perdre plus de temps.", score: 1, level: 'passable', explain: "Agir vite semble efficace, mais sans avoir donné sa chance ni documenté les faits, vous risquez un contentieux et vous ne comprenez pas ce qui n'a pas fonctionné." }
+      ]
+    },
+    {
+      cat: 0,
+      situation: "Un nouveau collaborateur arrive lundi.",
+      context: "C'est un profil expérimenté, recruté pour un poste clé.",
+      options: [
+        { text: "Son poste de travail est prêt, le reste se fera au fil de l'eau — il connaît le métier.", score: 0, level: 'bad', explain: "Même un expert a besoin de comprendre votre culture, vos outils, vos process. 20 % des départs ont lieu dans les 45 premiers jours (Workelo). L'intégration fait la différence." },
+        { text: "Un mail de bienvenue à l'équipe et un déjeuner le premier jour.", score: 1, level: 'passable', explain: "C'est convivial mais insuffisant. Sans parcours structuré, le nouveau se retrouve seul face à la complexité de l'organisation." },
+        { text: "Un parcours d'intégration sur 90 jours : mentor désigné, planning de formation, points réguliers à J+7, J+30, J+90.", score: 3, level: 'optimal', explain: "Un onboarding structuré augmente la rétention de 82 % et la productivité de 70 % (Glassdoor). C'est le standard des entreprises performantes." },
+        { text: "Lui confier un premier dossier concret dès le premier jour pour qu'il soit immédiatement opérationnel.", score: 2, level: 'good', explain: "La mise en action rapide est motivante, mais sans contexte ni repères, elle peut vite devenir source de stress. Il faut l'associer à un cadre d'accompagnement." }
+      ]
+    },
+
+    // MANAGEMENT (3)
+    {
+      cat: 1,
+      situation: "Deux collaborateurs sont en conflit ouvert depuis plusieurs semaines.",
+      context: "L'ambiance se dégrade, l'équipe prend parti. Ça affecte les projets.",
+      options: [
+        { text: "Les recadrer fermement tous les deux et exiger que ça cesse.", score: 1, level: 'passable', explain: "Le recadrage autoritaire stoppe le symptôme mais pas la cause. Le conflit resurgira sous une autre forme, souvent plus virulente." },
+        { text: "Attendre que ça se tasse — les adultes finissent par régler ça entre eux.", score: 0, level: 'bad', explain: "L'évitement est la pire stratégie. Un conflit non traité coûte en moyenne 8 heures de management par semaine (CPP Global). Il s'enkyste et contamine l'équipe." },
+        { text: "Les recevoir séparément pour écouter chaque version, puis ensemble avec un cadre d'échange structuré.", score: 3, level: 'optimal', explain: "La médiation structurée est la seule approche durable. Elle permet de nommer le problème, de clarifier les attentes mutuelles, et de poser des engagements concrets." },
+        { text: "Séparer les deux collaborateurs dans des équipes différentes.", score: 1, level: 'passable', explain: "La séparation évite l'escalade mais ne résout rien. Vous perdez en flexibilité organisationnelle et envoyez le message que les conflits ne se traitent pas." }
+      ]
+    },
+    {
+      cat: 1,
+      situation: "Un collaborateur fait du bon travail mais a un axe d'amélioration important.",
+      context: "Vous l'avez constaté à plusieurs reprises. L'entretien annuel est dans 6 mois.",
+      options: [
+        { text: "En parler lors de l'entretien annuel, c'est fait pour ça.", score: 0, level: 'bad', explain: "Attendre 6 mois pour un feedback, c'est laisser le problème s'installer et priver le collaborateur de la possibilité de progresser. Le feedback différé perd 90 % de son impact." },
+        { text: "Lui donner un feedback immédiat, factuel, en privé, avec des pistes concrètes d'amélioration.", score: 3, level: 'optimal', explain: "Le feedback continu est le levier n°1 de la performance managériale. Les équipes qui pratiquent le feedback régulier surperforment de 21 % (Gallup)." },
+        { text: "En parler à son manager direct et lui laisser gérer.", score: 2, level: 'good', explain: "Si c'est votre N-2, passer par son manager est logique. Mais assurez-vous que le message sera porté et suivez la mise en œuvre. La délégation sans suivi = l'abandon." },
+        { text: "Attendre que le problème se manifeste plus clairement pour avoir des faits indiscutables.", score: 1, level: 'passable', explain: "Accumuler les preuves avant d'agir transforme un feedback constructif en dossier d'accusation. C'est le poison de la relation managériale." }
+      ]
+    },
+    {
+      cat: 1,
+      situation: "Votre meilleur élément annonce sa démission.",
+      context: "C'est un choc. Cette personne est clé pour 2 projets en cours.",
+      options: [
+        { text: "Faire une contre-proposition salariale pour le/la retenir.", score: 1, level: 'passable', explain: "La contre-offre ne marche que dans 12 % des cas à long terme (Harvard Business Review). Si le problème est ailleurs (management, sens, évolution), l'argent ne résout rien." },
+        { text: "Mener un entretien approfondi pour comprendre les vraies raisons du départ, sans chercher à convaincre.", score: 3, level: 'optimal', explain: "Comprendre d'abord, réagir ensuite. L'écoute active permet d'identifier les causes systémiques (et pas seulement individuelles) — des informations cruciales pour la suite." },
+        { text: "Lancer immédiatement le recrutement de remplacement.", score: 2, level: 'good', explain: "L'efficacité opérationnelle est importante, mais sans comprendre pourquoi cette personne part, vous risquez de perdre la suivante pour les mêmes raisons." },
+        { text: "Essayer de le/la convaincre en jouant sur l'attachement à l'équipe et aux projets.", score: 0, level: 'bad', explain: "Jouer sur l'affect pour retenir quelqu'un, c'est de la manipulation émotionnelle. Cela crée de la culpabilité, pas de l'engagement. La personne restera… et se désengagera." }
+      ]
+    },
+
+    // JURIDIQUE (2)
+    {
+      cat: 2,
+      situation: "Votre entreprise vient de franchir le seuil de 11 salariés.",
+      context: "Un collaborateur vous demande quand auront lieu les élections du CSE.",
+      options: [
+        { text: "Répondre que vous allez vous renseigner, la loi est complexe.", score: 1, level: 'passable', explain: "L'honnêteté est appréciable, mais elle révèle un manque d'anticipation. Les obligations liées aux seuils doivent être anticipées, pas subies." },
+        { text: "Organiser les élections du CSE : informer le personnel, inviter les organisations syndicales, respecter le délai de 90 jours.", score: 3, level: 'optimal', explain: "C'est l'obligation légale. Le défaut d'organisation des élections du CSE constitue un délit d'entrave passible de sanctions pénales et financières." },
+        { text: "Attendre qu'un salarié en fasse la demande formelle pour déclencher le processus.", score: 1, level: 'passable', explain: "L'obligation d'organiser les élections incombe à l'employeur, pas aux salariés. Attendre la demande n'exonère pas et montre une posture réactive." },
+        { text: "Nommer un représentant du personnel parmi les volontaires.", score: 0, level: 'bad', explain: "Il est impossible de nommer un élu du personnel. Les membres du CSE doivent être élus au scrutin secret. Cette erreur constitue un délit d'entrave." }
+      ]
+    },
+    {
+      cat: 2,
+      situation: "Vous envisagez de licencier un salarié pour insuffisance professionnelle.",
+      context: "La décision est mûrement réfléchie. Vous voulez agir cette semaine.",
+      options: [
+        { text: "Lui annoncer la décision en face à face et lui remettre sa lettre de licenciement.", score: 0, level: 'bad', explain: "C'est un licenciement irrégulier. Sans convocation à entretien préalable ni respect des délais légaux, le licenciement sera requalifié en licenciement abusif aux prud'hommes." },
+        { text: "Le convoquer à un entretien préalable par lettre recommandée, en respectant le délai de 5 jours ouvrables, puis suivre la procédure légale.", score: 3, level: 'optimal', explain: "La procédure est impérative : convocation → délai de 5 jours → entretien → délai de réflexion de 2 jours → notification motivée par LRAR. Chaque étape omise est une irrégularité." },
+        { text: "Le prévenir oralement de vos intentions pour lui laisser une chance de se reprendre.", score: 1, level: 'passable', explain: "L'intention est louable mais périlleuse. Sans trace écrite, cet avertissement verbal n'a aucune valeur. Et s'il est interprété comme un licenciement verbal, vous êtes exposé." },
+        { text: "Proposer une rupture conventionnelle pour éviter le contentieux.", score: 2, level: 'good', explain: "La rupture conventionnelle peut être une solution élégante si le salarié est d'accord. Mais elle implique un accord mutuel — impossible à forcer. Et elle nécessite aussi un cadre formel." }
+      ]
+    },
+
+    // RÉTENTION (2)
+    {
+      cat: 3,
+      situation: "Vous sentez une baisse de motivation généralisée dans l'équipe.",
+      context: "Les résultats tiennent, mais l'énergie et l'initiative ont clairement baissé.",
+      options: [
+        { text: "Organiser un team building pour resserrer les liens.", score: 1, level: 'passable', explain: "Le team building traite le symptôme (cohésion) pas la cause (désengagement). C'est un pansement sur une fracture. Les gens veulent du sens, pas du karting." },
+        { text: "Lancer une enquête anonyme pour identifier les causes, puis construire un plan d'action avec l'équipe.", score: 3, level: 'optimal', explain: "Mesurer pour comprendre, puis agir avec les concernés. Les entreprises qui mesurent l'engagement et agissent voient une hausse de 21 % de la rentabilité (Gallup)." },
+        { text: "Revoir les primes et avantages à la hausse pour remotiver.", score: 1, level: 'passable', explain: "L'argent est un facteur d'hygiène, pas de motivation (Herzberg). Il évite l'insatisfaction mais ne crée pas l'engagement. L'effet d'une prime dure 3 mois maximum." },
+        { text: "C'est probablement conjoncturel — la charge actuelle est lourde, ça passera.", score: 0, level: 'bad', explain: "Le déni est le prélude du turnover. Quand un dirigeant « sent » la baisse de motivation et ne réagit pas, les départs suivent dans les 6 mois." }
+      ]
+    },
+    {
+      cat: 3,
+      situation: "Un collaborateur découvre qu'il est payé 15 % de moins que son collègue au même poste.",
+      context: "Il vous interpelle directement. L'équipe est au courant.",
+      options: [
+        { text: "Expliquer que les salaires sont confidentiels et que les situations individuelles ne se comparent pas.", score: 0, level: 'bad', explain: "La transparence salariale devient la norme (Directive européenne 2023). Jouer la confidentialité face à une inéquité avérée détruit la confiance et expose à un contentieux." },
+        { text: "Analyser objectivement les critères (ancienneté, performance, compétences, marché) et communiquer le résultat, que l'écart soit justifié ou non.", score: 3, level: 'optimal', explain: "L'équité se démontre par des critères objectifs. Si l'écart est injustifié, corriger. S'il est justifié, expliquer. Dans les deux cas, documenter. C'est la posture d'un employeur crédible." },
+        { text: "Promettre une augmentation au prochain budget pour rétablir l'équité.", score: 2, level: 'good', explain: "L'intention est bonne mais le différé est risqué. Promettre sans garantir fragilise votre crédibilité. Et pendant 6 mois, la frustration continue de travailler." },
+        { text: "Augmenter immédiatement pour éteindre le feu.", score: 1, level: 'passable', explain: "L'ajustement réactif crée un précédent : quiconque se plaint obtient une augmentation. Sans grille de rémunération, chaque ajustement en crée un nouveau." }
+      ]
+    },
+
+    // CULTURE (2)
+    {
+      cat: 4,
+      situation: "L'absentéisme a augmenté de 30 % sur les 6 derniers mois.",
+      context: "Les absences sont surtout des arrêts courts (1-3 jours), répartis sur toute l'équipe.",
+      options: [
+        { text: "Renforcer les contre-visites médicales pour dissuader les arrêts de complaisance.", score: 0, level: 'bad', explain: "Le contrôle punitif aggrave le climat social et ne traite pas la cause. Les arrêts courts et diffus sont le signal classique du mal-être au travail, pas de l'abus." },
+        { text: "Analyser les causes (conditions de travail, charge, management, ambiance) et mettre en place un plan QVT structuré.", score: 3, level: 'optimal', explain: "L'absentéisme est un symptôme, pas un problème. Les entreprises qui investissent dans la QVT réduisent l'absentéisme de 25 % en moyenne (ANACT). Il faut traiter la racine." },
+        { text: "Recruter des intérimaires pour compenser les absences et maintenir la charge.", score: 1, level: 'passable', explain: "Ça maintient la production mais à quel prix : surcoût, perte de qualité, démotivation des présents qui forment en boucle. Vous traitez la conséquence, pas la cause." },
+        { text: "Ce n'est probablement pas anormal pour la saison / le secteur.", score: 0, level: 'bad', explain: "+30 % n'est jamais normal. Normaliser un signal d'alerte, c'est laisser la situation se dégrader jusqu'au point de non-retour (départs en série, burn-out)." }
+      ]
+    },
+    {
+      cat: 4,
+      situation: "Un collaborateur quitte l'entreprise en bons termes après 3 ans.",
+      context: "C'est un bon élément qui part pour une opportunité externe.",
+      options: [
+        { text: "Lui souhaiter bonne continuation et organiser un pot de départ.", score: 1, level: 'passable', explain: "C'est humainement correct mais c'est une perte sèche d'information. Chaque départ est une opportunité d'apprentissage organisationnel que vous gaspillez." },
+        { text: "Organiser un entretien de départ structuré pour recueillir un feedback sincère, documenter la passation, et maintenir le lien.", score: 3, level: 'optimal', explain: "L'entretien de sortie est un outil stratégique sous-exploité. Il révèle ce que les salariés en poste n'osent pas dire. Les alumni deviennent prescripteurs si le départ est bien géré." },
+        { text: "Se concentrer sur la passation et le recrutement du remplaçant.", score: 2, level: 'good', explain: "L'efficacité opérationnelle est prioritaire, mais ne vous privez pas du feedback. 10 minutes d'entretien de sortie peuvent révéler des problèmes systémiques invisibles au quotidien." },
+        { text: "Rien de particulier — il/elle part, c'est la vie de l'entreprise.", score: 0, level: 'bad', explain: "L'indifférence face au départ envoie un message toxique aux restants : « ici, on est remplaçable ». C'est un accélérateur de turnover silencieux." }
+      ]
+    }
+  ];
+
+  // =============================================
+  // STATE
+  // =============================================
+  let currentQ = 0;
+  const answers = new Array(questions.length).fill(null);
+  let answered = false;
+
+  // =============================================
+  // RENDER
+  // =============================================
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const cat = categories[q.cat];
+    const container = document.getElementById('qContainer');
+    answered = false;
+    document.getElementById('btnNext').classList.remove('visible');
+
+    const letters = ['A', 'B', 'C', 'D'];
+    container.innerHTML = `
+      <div class="q-card">
+        <div class="q-tag" style="color:${cat.color};background:${cat.color}12;">${cat.name}</div>
+        <div class="q-number">Situation ${currentQ + 1} / ${questions.length}</div>
+        <div class="q-situation">${q.situation}</div>
+        <div class="q-context">${q.context}</div>
+        <div class="q-options">
+          ${q.options.map((opt, i) => `
+            <div class="q-option" data-idx="${i}">
+              <div class="q-option-letter">${letters[i]}</div>
+              <div class="q-option-text">${opt.text}</div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="q-explanation" id="qExplanation"></div>
+      </div>`;
+
+    container.querySelectorAll('.q-option').forEach(el => {
+      el.addEventListener('click', () => {
+        if (answered) return;
+        selectAnswer(parseInt(el.dataset.idx));
+      });
+    });
+
+    updateProgress();
+  }
+
+  function selectAnswer(idx) {
+    answered = true;
+    answers[currentQ] = idx;
+    const q = questions[currentQ];
+    const chosen = q.options[idx];
+
+    const options = document.querySelectorAll('.q-option');
+    options.forEach((el, i) => {
+      el.classList.add('locked');
+      el.classList.add(q.options[i].level);
+      if (i === idx) el.classList.add('selected');
+    });
+
+    const verdictLabels = { optimal: 'Réflexe expert', good: 'Bon réflexe', passable: 'Réflexe courant mais risqué', bad: 'Réflexe dangereux' };
+    const explEl = document.getElementById('qExplanation');
+    explEl.innerHTML = `
+      <div class="verdict v-${chosen.level}">${verdictLabels[chosen.level]} — ${chosen.score}/3</div>
+      <p>${chosen.explain}</p>`;
+    explEl.classList.add('visible');
+
+    document.getElementById('btnNext').classList.add('visible');
+    document.getElementById('btnNext').textContent = currentQ === questions.length - 1 ? 'Voir mon profil →' : 'Situation suivante →';
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = answers.filter(a => a !== null).length;
+    document.getElementById('progressFill').style.width = (done / questions.length * 100) + '%';
+    document.getElementById('progressText').textContent = done + ' / ' + questions.length;
+  }
+
+  // =============================================
+  // NAVIGATION
+  // =============================================
+  document.getElementById('btnNext').addEventListener('click', () => {
+    if (currentQ < questions.length - 1) {
+      currentQ++;
+      renderQuestion();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      showResults();
+    }
+  });
+
+  // =============================================
+  // RESULTS
+  // =============================================
+  function showResults() {
+    document.getElementById('qBody').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+    const rp = document.getElementById('resultsPage');
+    rp.classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    let total = 0;
+    const catScores = categories.map(() => ({ score: 0, max: 0 }));
+
+    questions.forEach((q, i) => {
+      if (answers[i] !== null) {
+        const s = q.options[answers[i]].score;
+        total += s;
+        catScores[q.cat].score += s;
+      }
+      catScores[q.cat].max += 3;
+    });
+
+    document.getElementById('totalScore').textContent = total;
+
+    const pct = total / 36 * 100;
+    let level, levelColor;
+    if (pct >= 80) { level = 'Réflexes d\'expert'; levelColor = '#16A085'; }
+    else if (pct >= 60) { level = 'Réflexes solides'; levelColor = '#E8A817'; }
+    else if (pct >= 40) { level = 'Angles morts significatifs'; levelColor = '#E67E22'; }
+    else { level = 'Réflexes à risque'; levelColor = '#C0392B'; }
+
+    const badge = document.getElementById('levelBadge');
+    badge.textContent = level;
+    badge.style.background = levelColor + '18';
+    badge.style.color = levelColor;
+
+    const comments = {
+      high: 'Vos réflexes sont solides sur ce volet.',
+      mid: 'Des réflexes corrects mais des points de vigilance.',
+      low: 'Axe de vulnérabilité identifié.'
+    };
+
+    const grid = document.getElementById('catGrid');
+    grid.innerHTML = categories.map((cat, i) => {
+      const cs = catScores[i];
+      if (cs.max === 0) return '';
+      const p = cs.score / cs.max * 100;
+      const comment = p >= 70 ? comments.high : p >= 40 ? comments.mid : comments.low;
+      return `<div class="cat-card" style="border-left-color:${cat.color}">
+        <div class="cat-card-name" style="color:${cat.color}">${cat.name}</div>
+        <div class="cat-card-score">${cs.score}/${cs.max}</div>
+        <div class="cat-card-comment">${comment}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // =============================================
+  // INIT
+  // =============================================
+  renderQuestion();
+</script>
+
+</body>
+</html>
