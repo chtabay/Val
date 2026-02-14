@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twiga RH &mdash; Personne ne vous a dit que diriger, c'&eacute;tait aussi &ccedil;a</title>
+<meta name="description" content="Vous dirigez une PME et les RH vous d&eacute;bordent. Val&eacute;rie Gaudel, 20 ans d'exp&eacute;rience, vous aide &agrave; reprendre le contr&ocirc;le. Z&eacute;ro jargon, z&eacute;ro distance.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Kaushan+Script&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RESET & TOKENS
+============================================= */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --magenta:#9B2D5E;--magenta-glow:rgba(155,45,94,.35);
+  --navy:#0f0f1a;--navy-mid:#1a1a2e;--navy-light:#252540;
+  --gold:#C8962E;--gold-light:#E8A817;
+  --purple:#6B3A7D;--blue:#1A3A8A;
+  --text:#2c2c2c;--text-light:#666;--text-muted:#999;
+  --border:#e4e4e4;--white:#fff;--cream:#fdfbf7;
+  --radius:8px;--radius-lg:14px;
+  --shadow-soft:0 4px 20px rgba(0,0,0,.04);
+  --transition:.3s cubic-bezier(.4,0,.2,1);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* =============================================
+   SCROLL REVEAL SYSTEM
+============================================= */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* =============================================
+   GLOBAL — column
+============================================= */
+.col{max-width:740px;margin:0 auto;padding:0 28px}
+
+/* =============================================
+   S1 — DARK HERO
+============================================= */
+.hero-dark{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  background:var(--navy);overflow:hidden;
+}
+/* Girafe watermark */
+.hero-dark::before{
+  content:'';position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:480px;height:640px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.08;pointer-events:none;
+  filter:brightness(1.5);
+}
+/* Gradient overlay */
+.hero-dark::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 70% 50%,rgba(155,45,94,.08),transparent 60%),
+             radial-gradient(ellipse at 20% 80%,rgba(232,168,23,.06),transparent 50%);
+  pointer-events:none;
+}
+.hero-dark .col{position:relative;z-index:2;padding-top:120px;padding-bottom:100px}
+
+/* Topbar inside hero */
+.topbar-dark{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:24px 28px;max-width:740px;margin:0 auto;
+}
+.topbar-dark .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar-dark .brand img{height:32px;width:auto;filter:brightness(1.2)}
+.topbar-dark .brand span{font-family:'Kaushan Script',cursive;font-size:1rem;color:rgba(255,255,255,.7)}
+.topbar-dark .tel{font-size:.72rem;color:rgba(255,255,255,.3);text-decoration:none;transition:color var(--transition)}
+.topbar-dark .tel:hover{color:var(--gold-light)}
+
+.hero-context{
+  font-size:.6rem;font-weight:600;letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold-light);margin-bottom:24px;opacity:.7;
+}
+.hero-dark h1{
+  font-family:'Playfair Display',serif;font-size:2.8rem;line-height:1.25;
+  color:#fff;margin-bottom:28px;max-width:600px;
+}
+/* Rotating word */
+.rotate-wrap{
+  display:inline-block;position:relative;overflow:hidden;
+  height:1.25em;vertical-align:bottom;min-width:200px;
+}
+.rotate-wrap .word{
+  display:block;height:1.25em;color:var(--gold-light);font-style:italic;
+  animation:rotateWords 16s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes rotateWords{
+  0%,18%{transform:translateY(0)}
+  22%,43%{transform:translateY(-1.25em)}
+  47%,68%{transform:translateY(-2.5em)}
+  72%,93%{transform:translateY(-3.75em)}
+  97%,100%{transform:translateY(-5em)}
+}
+.hero-pain{
+  font-size:1.02rem;color:rgba(255,255,255,.45);line-height:1.85;max-width:520px;margin-bottom:48px;
+}
+.hero-scroll-hint{
+  display:flex;align-items:center;gap:8px;
+  font-size:.68rem;color:rgba(255,255,255,.2);font-weight:500;
+}
+.hero-scroll-hint .line{width:24px;height:1px;background:rgba(255,255,255,.15)}
+.hero-scroll-hint .arrow{animation:float 2.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* Portrait in hero */
+.hero-portrait{
+  position:absolute;right:28px;bottom:80px;
+  width:90px;height:90px;border-radius:50%;overflow:hidden;
+  border:2px solid rgba(255,255,255,.1);z-index:2;
+}
+.hero-portrait img{width:100%;height:100%;object-fit:cover}
+
+/* =============================================
+   S2 — PAIN MESSAGES (still dark)
+============================================= */
+.pain-zone{
+  background:linear-gradient(180deg,var(--navy) 0%,#12121f 100%);
+  padding:80px 0 60px;
+}
+.pain-label{
+  font-size:.6rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  color:rgba(255,255,255,.2);margin-bottom:36px;
+}
+.pain-msg{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  border-radius:var(--radius-lg);padding:24px 28px;
+  margin-bottom:14px;position:relative;
+  transition:all var(--transition);
+}
+.pain-msg:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.1)}
+.pain-msg::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  border-radius:3px 0 0 3px;
+}
+.pain-msg:nth-child(2)::before{background:var(--gold-light)}
+.pain-msg:nth-child(3)::before{background:var(--magenta)}
+.pain-msg:nth-child(4)::before{background:var(--purple)}
+.pain-msg:nth-child(5)::before{background:var(--blue)}
+.pain-quote{font-size:.92rem;color:rgba(255,255,255,.7);line-height:1.7;font-style:italic;margin-bottom:8px}
+.pain-quote strong{color:#fff;font-style:normal}
+.pain-who{font-size:.62rem;color:rgba(255,255,255,.25);font-weight:500}
+
+/* Valérie's response */
+.valerie-response{
+  margin-top:32px;text-align:center;padding:0 20px;
+}
+.valerie-response p{
+  font-family:'Playfair Display',serif;font-size:1.2rem;font-style:italic;
+  color:rgba(255,255,255,.55);line-height:1.6;
+}
+.valerie-response em{color:var(--gold-light);font-style:normal;font-weight:700}
+
+/* =============================================
+   S3 — TRANSITION STRIP (dark → light)
+============================================= */
+.transition-strip{
+  position:relative;height:200px;overflow:hidden;
+}
+.transition-strip .photo-bg{
+  position:absolute;inset:0;
+  background:url('assets/photo-girafe-nb.jpg') no-repeat center 25%/cover;
+  filter:contrast(1.1);
+}
+.transition-strip::before{
+  content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,#12121f 0%,rgba(18,18,31,.4) 35%,rgba(255,255,255,.4) 65%,var(--cream) 100%);
+}
+
+/* =============================================
+   S4 — THE GUIDE (light zone)
+============================================= */
+.guide{
+  background:var(--cream);padding:64px 0 56px;
+}
+.guide-inner{
+  display:flex;align-items:flex-start;gap:28px;
+}
+.guide-photo{
+  width:100px;height:100px;border-radius:50%;overflow:hidden;flex-shrink:0;
+  border:3px solid var(--border);box-shadow:0 8px 32px rgba(0,0,0,.08);
+}
+.guide-photo img{width:100%;height:100%;object-fit:cover}
+.guide-text{flex:1}
+.guide-text blockquote{
+  font-family:'Playfair Display',serif;font-size:1.05rem;font-style:italic;
+  color:var(--text);line-height:1.85;margin-bottom:10px;position:relative;
+}
+.guide-text blockquote::before{
+  content:'\201C';font-size:3rem;color:var(--magenta);
+  position:absolute;left:-4px;top:-16px;line-height:1;opacity:.3;
+}
+.guide-sig{font-size:.72rem;color:var(--text-muted)}
+.guide-sig strong{color:var(--text)}
+
+/* =============================================
+   S5 — CHIFFRE CHOC
+============================================= */
+.chiffre-choc{
+  background:var(--cream);padding:0 0 48px;text-align:center;
+}
+.chiffre-choc .number-big{
+  font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;
+  color:var(--navy);line-height:1;margin-bottom:10px;
+}
+.chiffre-choc .number-big span{color:var(--magenta)}
+.chiffre-choc .number-sub{font-size:.88rem;color:var(--text-light);max-width:420px;margin:0 auto 6px}
+.chiffre-choc .number-cue{font-size:.72rem;color:var(--text-muted);font-weight:600}
+
+/* =============================================
+   S6 — CALCULATOR
+============================================= */
+.calculator{
+  background:var(--white);padding:56px 0 48px;border-top:1px solid var(--border);
+}
+.calc-label-intro{font-size:.82rem;color:var(--text-muted);margin-bottom:28px}
+.calc-body{
+  background:var(--cream);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:32px 28px;
+}
+.calc-field{margin-bottom:22px}
+.calc-field-label{display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;margin-bottom:10px}
+.calc-field-val{color:var(--magenta);font-weight:800;font-size:.88rem}
+.calc-slider{
+  width:100%;height:6px;-webkit-appearance:none;appearance:none;
+  background:linear-gradient(90deg,var(--border),var(--border));
+  border-radius:3px;outline:none;cursor:pointer;
+}
+.calc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:var(--magenta);cursor:pointer;border:3px solid var(--white);
+  box-shadow:0 2px 10px rgba(155,45,94,.3);transition:box-shadow var(--transition);
+}
+.calc-slider::-webkit-slider-thumb:hover{box-shadow:0 2px 16px rgba(155,45,94,.5)}
+.calc-slider::-moz-range-thumb{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--magenta);cursor:pointer;border:3px solid var(--white);
+}
+.calc-result{
+  position:relative;overflow:hidden;
+  background:var(--navy);border-radius:var(--radius);padding:28px 24px;
+  text-align:center;margin:28px 0 24px;
+}
+.calc-result::before{
+  content:'';position:absolute;right:-20px;bottom:-30px;
+  width:120px;height:160px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.06;pointer-events:none;
+}
+.calc-result-tag{font-size:.58rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold-light);margin-bottom:8px;position:relative}
+.calc-result-num{font-size:2.8rem;font-weight:800;color:#fff;position:relative}
+.calc-result-detail{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:4px;position:relative}
+.calc-bar{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:16px;overflow:hidden;position:relative}
+.calc-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-light),var(--magenta),#e74c3c);border-radius:2px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.calc-insight{
+  font-size:.82rem;color:var(--text-light);line-height:1.8;
+  padding:18px 20px;border-left:3px solid var(--gold-light);
+  background:rgba(232,168,23,.04);border-radius:0 var(--radius) var(--radius) 0;
+}
+.calc-insight strong{color:var(--text)}
+
+/* =============================================
+   S7 — TESTIMONIALS (staggered)
+============================================= */
+.testimonials{
+  background:var(--white);padding:56px 0 48px;border-top:1px solid var(--border);
+}
+.testimonials .label{
+  font-size:.6rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:28px;
+}
+.testi-stack{display:flex;flex-direction:column;gap:16px}
+.testi{
+  position:relative;background:var(--cream);
+  border-radius:var(--radius-lg);padding:28px 28px 24px;
+  border:1px solid var(--border);overflow:hidden;
+  transition:box-shadow var(--transition);
+}
+.testi:hover{box-shadow:var(--shadow-soft)}
+.testi::before{
+  content:'';position:absolute;top:0;left:0;bottom:0;width:4px;
+}
+.testi:nth-child(1)::before{background:linear-gradient(180deg,var(--gold-light),var(--gold))}
+.testi:nth-child(2)::before{background:linear-gradient(180deg,var(--magenta),var(--purple))}
+.testi:nth-child(3)::before{background:linear-gradient(180deg,var(--purple),var(--blue))}
+.testi-context{font-size:.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--magenta);margin-bottom:12px}
+.testi blockquote{font-size:.85rem;color:var(--text-light);line-height:1.85;font-style:italic;margin-bottom:16px}
+.testi blockquote strong{color:var(--text);font-style:normal}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--border)}
+.testi-avatar img{width:100%;height:100%;object-fit:cover}
+.testi-name{font-size:.75rem;font-weight:700;color:var(--text)}
+.testi-role{font-size:.6rem;color:var(--text-muted)}
+
+/* =============================================
+   S8 — OFFERS
+============================================= */
+.offers{
+  background:var(--white);padding:48px 0;border-top:1px solid var(--border);
+}
+.offers .label{font-size:.6rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:24px}
+.offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.offer-card{
+  background:var(--cream);border:1px solid var(--border);
+  border-radius:var(--radius-lg);overflow:hidden;
+  transition:all var(--transition);
+}
+.offer-card:hover{box-shadow:var(--shadow-soft);transform:translateY(-2px)}
+.offer-bar{height:4px}
+.offer-card:nth-child(1) .offer-bar{background:linear-gradient(90deg,var(--gold-light),var(--gold))}
+.offer-card:nth-child(2) .offer-bar{background:linear-gradient(90deg,var(--magenta),var(--purple))}
+.offer-card:nth-child(3) .offer-bar{background:linear-gradient(90deg,var(--navy-mid),var(--navy))}
+.offer-body{padding:22px 20px}
+.offer-card h3{font-family:'Playfair Display',serif;font-size:.9rem;color:var(--navy);margin-bottom:8px}
+.offer-desc{font-size:.75rem;color:var(--text-light);line-height:1.75;margin-bottom:10px}
+.offer-for{font-size:.62rem;color:var(--text-muted);font-weight:600;font-style:italic}
+
+/* =============================================
+   S8.5 — BRIDGE TOOLS (subtle)
+============================================= */
+.bridge{padding:32px 0 40px}
+.bridge-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.bridge-link{
+  display:flex;align-items:center;gap:12px;
+  background:var(--cream);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;text-decoration:none;color:var(--text);
+  transition:all var(--transition);
+}
+.bridge-link:hover{border-color:var(--magenta);box-shadow:var(--shadow-soft)}
+.bridge-link .ico{font-size:1.2rem;flex-shrink:0}
+.bridge-link .info{flex:1}
+.bridge-link .ttl{font-size:.75rem;font-weight:700;color:var(--navy)}
+.bridge-link .meta{font-size:.6rem;color:var(--text-muted)}
+.bridge-link .arr{color:var(--text-muted);transition:color var(--transition)}
+.bridge-link:hover .arr{color:var(--magenta)}
+
+/* =============================================
+   S9 — CTA FINAL (dark, warm)
+============================================= */
+.cta-dark{
+  position:relative;overflow:hidden;
+  background:var(--navy);padding:80px 0;
+}
+/* Full girafe, more visible this time */
+.cta-dark::before{
+  content:'';position:absolute;right:-30px;top:50%;transform:translateY(-50%);
+  width:280px;height:380px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.12;pointer-events:none;filter:brightness(1.3);
+}
+.cta-dark .col{position:relative;z-index:2}
+.cta-dark h2{
+  font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin-bottom:12px;
+}
+.cta-dark .sub{font-size:.88rem;color:rgba(255,255,255,.4);line-height:1.7;margin-bottom:36px;max-width:440px}
+.cta-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.btn{
+  display:inline-block;padding:14px 32px;font-family:inherit;font-size:.78rem;font-weight:700;
+  border-radius:var(--radius);cursor:pointer;text-decoration:none;transition:all var(--transition);
+  border:2px solid transparent;
+}
+.btn-gold{background:var(--gold-light);color:#fff;border-color:var(--gold-light)}
+.btn-gold:hover{background:var(--gold);border-color:var(--gold)}
+.btn-ghost{background:transparent;color:rgba(255,255,255,.6);border-color:rgba(255,255,255,.15)}
+.btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.cta-phone{font-size:.78rem;color:rgba(255,255,255,.3)}
+.cta-phone a{color:var(--gold-light);text-decoration:none;font-weight:600}
+.cta-phone a:hover{color:#fff}
+.cta-where{font-size:.65rem;color:rgba(255,255,255,.18);margin-top:8px}
+
+/* =============================================
+   FOOTER
+============================================= */
+.footer{
+  background:var(--navy);text-align:center;padding:0 0 40px;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.footer-logo{height:40px;width:auto;opacity:.2;margin-bottom:8px;filter:brightness(2)}
+.footer-text{font-size:.58rem;color:rgba(255,255,255,.15)}
+
+/* =============================================
+   DOTS SEPARATOR
+============================================= */
+.dots{display:flex;justify-content:center;gap:6px;padding:28px 0}
+.dots i{width:5px;height:5px;border-radius:50%;display:block}
+.dots i:nth-child(1){background:var(--gold-light);opacity:.5}
+.dots i:nth-child(2){background:var(--magenta);opacity:.4}
+.dots i:nth-child(3){background:var(--purple);opacity:.3}
+.dots-dark i:nth-child(1){opacity:.3}
+.dots-dark i:nth-child(2){opacity:.2}
+.dots-dark i:nth-child(3){opacity:.15}
+
+/* =============================================
+   BACK-HUB
+============================================= */
+.back-hub{
+  position:fixed;bottom:20px;right:20px;
+  background:rgba(15,15,26,.85);backdrop-filter:blur(8px);
+  color:rgba(255,255,255,.7);padding:8px 16px;border-radius:var(--radius);
+  font-size:.68rem;font-weight:600;text-decoration:none;z-index:999;
+  transition:all var(--transition);border:1px solid rgba(255,255,255,.08);
+}
+.back-hub:hover{background:var(--magenta);color:#fff;border-color:var(--magenta)}
+
+/* =============================================
+   RESPONSIVE
+============================================= */
+@media(max-width:640px){
+  .col{padding:0 20px}
+  .hero-dark::before{width:280px;height:380px;right:-40px;opacity:.05}
+  .hero-dark .col{padding-top:100px;padding-bottom:72px}
+  .hero-dark h1{font-size:1.9rem}
+  .rotate-wrap{display:block;min-width:0}
+  .hero-portrait{width:70px;height:70px;right:20px;bottom:60px}
+  .topbar-dark{padding:18px 20px}
+  .pain-zone{padding:56px 0 40px}
+  .pain-msg{padding:20px 22px}
+  .transition-strip{height:140px}
+  .guide{padding:48px 0 40px}
+  .guide-inner{flex-direction:column;align-items:center;text-align:center}
+  .guide-photo{width:88px;height:88px}
+  .guide-text blockquote::before{left:50%;transform:translateX(-50%);top:-20px}
+  .chiffre-choc .number-big{font-size:2.8rem}
+  .calculator{padding:40px 0 36px}
+  .calc-body{padding:24px 20px}
+  .testimonials{padding:40px 0 36px}
+  .offers{padding:36px 0}
+  .offer-grid{grid-template-columns:1fr}
+  .bridge-row{grid-template-columns:1fr}
+  .cta-dark{padding:56px 0}
+  .cta-dark h2{font-size:1.5rem}
+  .cta-dark::before{width:180px;height:240px;opacity:.08}
+  .back-hub{bottom:12px;right:12px;font-size:.62rem;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<a href="hub.html" class="back-hub">&larr; Hub</a>
+
+<!-- ================================================ -->
+<!-- S1 — DARK HERO                                   -->
+<!-- ================================================ -->
+<section class="hero-dark">
+  <div class="topbar-dark col">
+    <a href="#" class="brand">
+      <img src="assets/girafe-geometrique.png" alt="Twiga">
+      <span>Twiga RH</span>
+    </a>
+    <a href="tel:+33756999249" class="tel">07 56 99 92 49</a>
+  </div>
+
+  <div class="col">
+    <div class="hero-context reveal">Pour les dirigeants de PME sans DRH</div>
+    <h1 class="reveal reveal-delay-1">
+      Personne ne vous a dit<br>que diriger, c'&eacute;tait aussi<br>
+      <span class="rotate-wrap">
+        <span class="word">g&eacute;rer les conflits<br>recruter dans l'urgence<br>recevoir les prud'hommes<br>perdre ses meilleurs &eacute;l&eacute;ments<br>g&eacute;rer les conflits</span>
+      </span>
+    </h1>
+    <p class="hero-pain reveal reveal-delay-2">Et pourtant, c'est vous qui d&eacute;cidez. Seul. Souvent la nuit. Avec des enjeux que vous n'avez jamais appris &agrave; g&eacute;rer.</p>
+    <div class="hero-scroll-hint reveal reveal-delay-3">
+      <span class="line"></span>
+      <span class="arrow">&darr;</span>
+      Mais il y a une autre fa&ccedil;on de faire
+    </div>
+  </div>
+
+  <div class="hero-portrait">
+    <img src="assets/photo-portrait-valerie.png" alt="Val&eacute;rie Gaudel">
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S2 — PAIN MESSAGES                               -->
+<!-- ================================================ -->
+<section class="pain-zone">
+  <div class="col">
+    <div class="pain-label reveal">Ce que me disent les dirigeants au premier rendez-vous</div>
+
+    <div class="pain-msg reveal reveal-delay-1">
+      <div class="pain-quote">&laquo;&nbsp;<strong>Mon meilleur dev a d&eacute;missionn&eacute;</strong>. Le troisi&egrave;me cette ann&eacute;e. Et je n'ai aucune id&eacute;e de ce qui cloche.&nbsp;&raquo;</div>
+      <div class="pain-who">Dirigeant &middot; PME tech &middot; 45 salari&eacute;s</div>
+    </div>
+
+    <div class="pain-msg reveal reveal-delay-2">
+      <div class="pain-quote">&laquo;&nbsp;J'ai <strong>un manager qui terrorise son &eacute;quipe</strong>, mais c'est lui qui ram&egrave;ne 40% du chiffre. Qu'est-ce que je fais&nbsp;?&nbsp;&raquo;</div>
+      <div class="pain-who">Fondatrice &middot; SaaS B2B &middot; 28 salari&eacute;s</div>
+    </div>
+
+    <div class="pain-msg reveal reveal-delay-3">
+      <div class="pain-quote">&laquo;&nbsp;J'ai re&ccedil;u <strong>une convocation aux prud'hommes</strong>. Mon expert-comptable m'a dit de voir un avocat. L'avocat m'a dit de voir un RH.&nbsp;&raquo;</div>
+      <div class="pain-who">G&eacute;rant &middot; Bureau d'&eacute;tudes &middot; 18 salari&eacute;s</div>
+    </div>
+
+    <div class="pain-msg reveal reveal-delay-4">
+      <div class="pain-quote">&laquo;&nbsp;On doit <strong>recruter 8 personnes en 6 mois</strong> et on n'a ni process, ni marque employeur, ni le temps.&nbsp;&raquo;</div>
+      <div class="pain-who">Directeur g&eacute;n&eacute;ral &middot; Industrie &middot; 120 salari&eacute;s</div>
+    </div>
+
+    <div class="dots dots-dark"><i></i><i></i><i></i></div>
+
+    <div class="valerie-response reveal">
+      <p>Je connais ces situations par c&oelig;ur.<br>Et je sais <em>exactement</em> quoi faire.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S3 — TRANSITION (dark → light)                   -->
+<!-- ================================================ -->
+<div class="transition-strip" role="presentation">
+  <div class="photo-bg"></div>
+</div>
+
+<!-- ================================================ -->
+<!-- S4 — THE GUIDE                                   -->
+<!-- ================================================ -->
+<section class="guide">
+  <div class="col">
+    <div class="guide-inner reveal">
+      <div class="guide-photo">
+        <img src="assets/photo-portrait-valerie.png" alt="Val&eacute;rie Gaudel">
+      </div>
+      <div class="guide-text">
+        <blockquote>Je suis Val&eacute;rie. Depuis 20&nbsp;ans, j'aide les dirigeants de PME &agrave; reprendre le contr&ocirc;le de ce qu'ils n'osent pas appeler &laquo;&nbsp;les RH&nbsp;&raquo;. Les contrats flous, les conflits qui tra&icirc;nent, les recrutements rat&eacute;s. Mon m&eacute;tier, c'est de d&eacute;miner &ccedil;a. Sans jargon, sans slides, sans distance.</blockquote>
+        <div class="guide-sig"><strong>Val&eacute;rie Gaudel</strong> &mdash; Fondatrice de Twiga RH</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S5 — CHIFFRE CHOC                                -->
+<!-- ================================================ -->
+<section class="chiffre-choc">
+  <div class="col" style="text-align:center">
+    <div class="dots"><i></i><i></i><i></i></div>
+    <div class="number-big reveal">50<span>%</span></div>
+    <div class="number-sub reveal reveal-delay-1">C'est le co&ucirc;t moyen d'un d&eacute;part, rapport&eacute; au salaire brut annuel du poste. Recrutement, int&eacute;gration, perte de productivit&eacute;, d&eacute;sorganisation.</div>
+    <div class="number-cue reveal reveal-delay-2">&darr;&ensp;Calculez les v&ocirc;tres</div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S6 — CALCULATOR                                  -->
+<!-- ================================================ -->
+<section class="calculator">
+  <div class="col">
+    <div class="calc-label-intro reveal">Trois curseurs. Trente secondes. Un chiffre que vous n'oublierez pas.</div>
+    <div class="calc-body reveal">
+      <div class="calc-field">
+        <div class="calc-field-label"><span>Nombre de salari&eacute;s</span><span class="calc-field-val" id="vEmpl">25</span></div>
+        <input type="range" class="calc-slider" id="sEmpl" min="5" max="200" value="25" step="5">
+      </div>
+      <div class="calc-field">
+        <div class="calc-field-label"><span>Taux de turnover annuel</span><span class="calc-field-val" id="vTurn">15 %</span></div>
+        <input type="range" class="calc-slider" id="sTurn" min="5" max="40" value="15">
+      </div>
+      <div class="calc-field">
+        <div class="calc-field-label"><span>Salaire moyen brut annuel</span><span class="calc-field-val" id="vSal">35 000 &euro;</span></div>
+        <input type="range" class="calc-slider" id="sSal" min="20000" max="80000" value="35000" step="1000">
+      </div>
+      <div class="calc-result">
+        <div class="calc-result-tag">Co&ucirc;t annuel estim&eacute; du turnover</div>
+        <div class="calc-result-num" id="rTotal">65 625 &euro;</div>
+        <div class="calc-result-detail">soit <span id="rHead">17 500 &euro;</span> par d&eacute;part &middot; <span id="rDep">4</span> d&eacute;parts/an</div>
+        <div class="calc-bar"><div class="calc-bar-fill" id="rBar" style="width:30%"></div></div>
+      </div>
+      <div class="calc-insight" id="rInsight">C'est l'&eacute;quivalent de <strong id="rMonths">16</strong> mois d'accompagnement par une DRH &agrave; temps partag&eacute;. Et si vous transformiez ce co&ucirc;t subi en investissement choisi&nbsp;?</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S7 — TESTIMONIALS                                -->
+<!-- ================================================ -->
+<section class="testimonials">
+  <div class="col">
+    <div class="label reveal">Des dirigeants comme vous en parlent</div>
+    <div class="testi-stack">
+
+      <div class="testi reveal">
+        <div class="testi-context">Recrutement &middot; 400 collaborateurs</div>
+        <blockquote>Notre collaboration s'est concentr&eacute;e sur <strong>le d&eacute;veloppement de la marque employeur et le recrutement de plus de 400 personnes</strong>. Val&eacute;rie a apport&eacute; un accompagnement &agrave; la fois structur&eacute; et profond&eacute;ment humain. Ce qui m'a marqu&eacute;, c'est sa capacit&eacute; &agrave; comprendre nos enjeux m&eacute;tier avant de proposer des solutions.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="assets/avatar-magalie.png" alt="Magalie Houllier"></div>
+          <div><div class="testi-name">Magalie Houllier</div><div class="testi-role">RSE, Communication, Membre du CODIR</div></div>
+        </div>
+      </div>
+
+      <div class="testi reveal">
+        <div class="testi-context">Structuration RH &middot; PME en croissance</div>
+        <blockquote>Val&eacute;rie a su <strong>structurer notre service RH de A &agrave; Z</strong>, avec une approche pragmatique et bienveillante. Elle a f&eacute;d&eacute;r&eacute; l'ensemble de nos &eacute;quipes, y compris les plus r&eacute;ticentes au changement. Aujourd'hui, nos processus tiennent la route et nos managers sont autonomes.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="assets/avatar-aude.png" alt="Aude Martin"></div>
+          <div><div class="testi-name">Aude Martin</div><div class="testi-role">Directrice G&eacute;n&eacute;rale</div></div>
+        </div>
+      </div>
+
+      <div class="testi reveal">
+        <div class="testi-context">Agilit&eacute; startup &middot; Scale-up</div>
+        <blockquote>Ce qui m'a frapp&eacute;, c'est <strong>sa capacit&eacute; &agrave; s'adapter &agrave; notre rythme de startup</strong> tout en apportant la rigueur RH dont nous avions besoin. Elle n'a pas essay&eacute; de plaquer un mod&egrave;le grand groupe&nbsp;&mdash;&nbsp;elle a construit quelque chose qui nous ressemble.</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar"><img src="assets/avatar-frederic.png" alt="Fr&eacute;d&eacute;ric Dupont"></div>
+          <div><div class="testi-name">Fr&eacute;d&eacute;ric Dupont</div><div class="testi-role">CEO &amp; Co-fondateur</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================ -->
+<!-- S8 — OFFERS                                      -->
+<!-- ================================================ -->
+<section class="offers">
+  <div class="col">
+    <div class="label reveal">Trois fa&ccedil;ons de travailler ensemble</div>
+    <div class="offer-grid">
+      <div class="offer-card reveal">
+        <div class="offer-bar"></div>
+        <div class="offer-body">
+          <h3>DRH &agrave; temps partag&eacute;</h3>
+          <p class="offer-desc">Je deviens votre DRH un ou deux jours par semaine. Recrutement, conformit&eacute;, management, CSE. Tout ce qu'un DRH fait, sans le poste &agrave; temps plein.</p>
+          <div class="offer-for">Pour les PME qui grandissent.</div>
+        </div>
+      </div>
+      <div class="offer-card reveal reveal-delay-1">
+        <div class="offer-bar"></div>
+        <div class="offer-body">
+          <h3>Conseil ponctuel</h3>
+          <p class="offer-desc">Un probl&egrave;me pr&eacute;cis, une r&eacute;ponse pr&eacute;cise. Audit, conflit, licenciement, CSE. J'interviens, je livre, vous &ecirc;tes arm&eacute;.</p>
+          <div class="offer-for">Pour une urgence ou un besoin cibl&eacute;.</div>
+        </div>
+      </div>
+      <div class="offer-card reveal reveal-delay-2">
+        <div class="offer-bar"></div>
+        <div class="offer-body">
+          <h3>Coaching dirigeant</h3>
+          <p class="offer-desc">En t&ecirc;te-&agrave;-t&ecirc;te, pour muscler votre posture de leader sur les sujets humains. Aussi pour vos managers cl&eacute;s.</p>
+          <div class="offer-for">Pour ceux qui veulent progresser.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bridge tools (subtle) -->
+<div class="bridge">
+  <div class="col">
+    <div class="bridge-row">
+      <a href="quiz-dirigeant.html" class="bridge-link reveal">
+        <span class="ico">&#x1F9E0;</span>
+        <span class="info"><span class="ttl">Testez vos r&eacute;flexes RH</span><span class="meta">12 situations &middot; 4 min</span></span>
+        <span class="arr">&rarr;</span>
+      </a>
+      <a href="diagnostic-rh.html" class="bridge-link reveal reveal-delay-1">
+        <span class="ico">&#x1F3AF;</span>
+        <span class="info"><span class="ttl">Diagnostic sant&eacute; RH</span><span class="meta">15 questions &middot; 5 axes &middot; 6 min</span></span>
+        <span class="arr">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================ -->
+<!-- S9 — CTA FINAL                                   -->
+<!-- ================================================ -->
+<section class="cta-dark">
+  <div class="col">
+    <h2 class="reveal">On en parle&nbsp;?</h2>
+    <p class="sub reveal reveal-delay-1">Quinze minutes. En visio ou par t&eacute;l&eacute;phone.<br>Vous me racontez, je vous dis ce que je ferais. Sans engagement, sans pitch commercial.</p>
+    <div class="cta-btns reveal reveal-delay-2">
+      <a href="mailto:valerie@twiga-rh.fr" class="btn btn-gold">M'&eacute;crire</a>
+      <a href="tel:+33756999249" class="btn btn-ghost">Appeler</a>
+    </div>
+    <div class="cta-phone reveal reveal-delay-3">ou directement : <a href="tel:+33756999249">07 56 99 92 49</a></div>
+    <div class="cta-where reveal reveal-delay-3">Pr&egrave;s de Toulouse &middot; Partout en visio</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img src="assets/logo-twiga-rh-complet.png" alt="Twiga RH" class="footer-logo">
+  <div class="footer-text">&copy; 2025 Twiga RH &mdash; Val&eacute;rie Gaudel &mdash; Tous droits r&eacute;serv&eacute;s</div>
+</footer>
+
+<!-- ================================================ -->
+<!-- SCRIPTS                                          -->
+<!-- ================================================ -->
+<script>
+// Scroll reveal (Intersection Observer)
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Calculator
+const sEmpl = document.getElementById('sEmpl');
+const sTurn = document.getElementById('sTurn');
+const sSal  = document.getElementById('sSal');
+
+function calc() {
+  const e = parseInt(sEmpl.value);
+  const t = parseInt(sTurn.value);
+  const s = parseInt(sSal.value);
+
+  document.getElementById('vEmpl').textContent = e;
+  document.getElementById('vTurn').textContent = t + ' %';
+  document.getElementById('vSal').textContent = s.toLocaleString('fr-FR') + ' \u20AC';
+
+  const dep = Math.round(e * t / 100);
+  const perHead = Math.round(s * 0.5);
+  const total = dep * perHead;
+  const months = Math.max(1, Math.round(total / 4000));
+
+  document.getElementById('rTotal').textContent = total.toLocaleString('fr-FR') + ' \u20AC';
+  document.getElementById('rHead').textContent = perHead.toLocaleString('fr-FR') + ' \u20AC';
+  document.getElementById('rDep').textContent = dep;
+  document.getElementById('rMonths').textContent = months;
+
+  const max = 200 * 0.4 * 80000 * 0.5;
+  document.getElementById('rBar').style.width = Math.min(100, total / max * 100) + '%';
+}
+
+sEmpl.addEventListener('input', calc);
+sTurn.addEventListener('input', calc);
+sSal.addEventListener('input', calc);
+calc();
+</script>
+</body>
+</html>
