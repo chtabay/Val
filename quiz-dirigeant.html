@@ -557,7 +557,12 @@
   // =============================================
   // INIT
   // =============================================
-  renderQuestion();
+  try {
+    renderQuestion();
+  } catch(e) {
+    console.error('RENDER ERROR:', e);
+    document.getElementById('qContainer').innerHTML = '<p style="color:red;padding:20px;">Erreur JS: ' + e.message + '</p>';
+  }
 </script>
 
 </body>
