@@ -76,16 +76,30 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 .hero-photo img{width:100%;height:100%;object-fit:cover}
 
 /* =============================================
-   PORTAL GRID
+   SECTION LABELS
 ============================================= */
-.portals{
+.section-label{
+  font-size:.62rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:14px;
+}
+
+/* =============================================
+   TIER 1 — ACTION PORTALS (big)
+============================================= */
+.portals-action{
   display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
-  padding:0 0 20px;
+  padding:0 0 12px;position:relative;
+}
+/* progression line behind cards */
+.portals-action::before{
+  content:'';position:absolute;top:50%;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,var(--gold-light),var(--magenta),#6B3A7D);
+  opacity:.15;z-index:0;
 }
 .portal{
   position:relative;background:var(--white);border:1px solid var(--border);
   border-radius:var(--radius-lg);padding:24px 20px;cursor:pointer;
-  transition:all var(--transition);overflow:hidden;
+  transition:all var(--transition);overflow:hidden;z-index:1;
 }
 .portal::before{
   content:'';position:absolute;top:0;left:0;right:0;height:3px;
@@ -96,24 +110,53 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
 .portal.active{border-color:var(--magenta);box-shadow:0 0 0 1px var(--magenta)}
 .portal.active::before{height:4px}
 
-.portal-icon{font-size:1.5rem;margin-bottom:10px;display:block}
-.portal-title{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;margin-bottom:6px;color:var(--navy)}
-.portal-desc{font-size:.72rem;color:var(--text-muted);line-height:1.5}
-.portal-badge{
-  position:absolute;top:14px;right:14px;
-  font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
-  padding:3px 8px;border-radius:3px;
+.portal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.portal-step{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:800;color:var(--white);flex-shrink:0;
 }
-.portal-badge.inline{background:var(--magenta-light);color:var(--magenta)}
-.portal-badge.page{background:rgba(22,160,133,.08);color:#16A085}
+.portal-step.s1{background:var(--gold-light)}
+.portal-step.s2{background:var(--magenta)}
+.portal-step.s3{background:#6B3A7D}
+.portal-duration{
+  font-size:.58rem;font-weight:600;color:var(--text-muted);
+  padding:2px 8px;background:var(--bg);border-radius:10px;
+}
+.portal-icon{font-size:1.4rem;display:block;margin-bottom:8px}
+.portal-title{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;margin-bottom:4px;color:var(--navy)}
+.portal-desc{font-size:.72rem;color:var(--text-muted);line-height:1.5;margin-bottom:8px}
+.portal-action{
+  font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  color:var(--magenta);display:flex;align-items:center;gap:4px;
+}
+.portal-action .arrow{font-size:.8rem}
 
-/* Color accents per portal */
-.portal:nth-child(1)::before{background:var(--gold-light)}
-.portal:nth-child(2)::before{background:var(--magenta)}
-.portal:nth-child(3)::before{background:#6B3A7D}
-.portal:nth-child(4)::before{background:#16A085}
-.portal:nth-child(5)::before{background:#C82870}
-.portal:nth-child(6)::before{background:var(--navy)}
+/* Color accents per action portal */
+.portals-action .portal:nth-child(1)::before{background:var(--gold-light)}
+.portals-action .portal:nth-child(2)::before{background:var(--magenta)}
+.portals-action .portal:nth-child(3)::before{background:#6B3A7D}
+
+/* =============================================
+   TIER 2 — DISCOVER PORTALS (small)
+============================================= */
+.portals-discover{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  padding:0 0 12px;
+}
+.portal-sm{
+  position:relative;background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px 16px;cursor:pointer;
+  transition:all var(--transition);display:flex;align-items:center;gap:12px;
+}
+.portal-sm:hover{box-shadow:var(--shadow);border-color:var(--magenta)}
+.portal-sm.active{border-color:var(--magenta);background:var(--magenta-light)}
+.portal-sm-icon{font-size:1.2rem;flex-shrink:0}
+.portal-sm-body{flex:1;min-width:0}
+.portal-sm-title{font-size:.78rem;font-weight:700;color:var(--navy);margin-bottom:1px}
+.portal-sm-desc{font-size:.62rem;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.portal-sm-arrow{font-size:.72rem;color:var(--text-muted);flex-shrink:0;transition:color var(--transition)}
+.portal-sm:hover .portal-sm-arrow{color:var(--magenta)}
 
 /* =============================================
    EXPAND PANEL (inline content)
@@ -130,6 +173,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
   color:var(--text-muted);cursor:pointer;transition:color var(--transition);
 }
 .expand-close:hover{color:var(--magenta)}
+/* contextual bridge */
+.panel-bridge{
+  margin-top:20px;padding:14px 16px;
+  background:var(--navy);border-radius:var(--radius);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.panel-bridge p{font-size:.75rem;color:rgba(255,255,255,.6);line-height:1.5;flex:1}
+.panel-bridge strong{color:#fff}
+.panel-bridge a{
+  flex-shrink:0;padding:8px 18px;font-size:.68rem;font-weight:700;
+  background:var(--gold-light);color:#fff;border-radius:var(--radius);
+  text-decoration:none;text-transform:uppercase;letter-spacing:.5px;
+  transition:background var(--transition);white-space:nowrap;
+}
+.panel-bridge a:hover{background:var(--gold)}
 
 /* =============================================
    CALCULATOR (inside expand)
@@ -273,30 +331,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-
   .hero-photo{width:100px;height:100px;margin:0 auto}
   .hero h1{font-size:1.6rem}
   .hero-actions{justify-content:center}
-  .portals{grid-template-columns:1fr 1fr;gap:10px}
+  .portals-action{grid-template-columns:1fr;gap:10px}
+  .portals-action::before{display:none}
+  .portals-discover{grid-template-columns:1fr;gap:8px}
   .portal{padding:18px 14px}
-  .portal-icon{font-size:1.3rem;margin-bottom:8px}
+  .portal-icon{font-size:1.2rem;margin-bottom:6px}
   .portal-title{font-size:.82rem}
-  .portal-badge{display:none}
   .expand-panel.open{padding:20px 16px}
   .offers-grid{grid-template-columns:1fr}
   .profile-grid{grid-template-columns:1fr;text-align:center}
   .profile-photo-sm{margin:0 auto}
   .contact-bar{grid-template-columns:1fr;text-align:center;gap:16px}
   .contact-actions{justify-content:center}
+  .panel-bridge{flex-direction:column;text-align:center}
   .skin-switcher{bottom:12px;left:12px;border-radius:8px}
   .skin-btn{padding:6px 10px;font-size:.58rem}
   .back-hub{bottom:12px;right:12px;padding:6px 12px;font-size:.65rem}
 }
 @media(max-width:480px){
-  .portals{grid-template-columns:1fr;gap:8px}
-  .portal{display:flex;align-items:center;gap:14px;padding:16px}
-  .portal-icon{margin-bottom:0;font-size:1.4rem;flex-shrink:0}
-  .portal-info{flex:1}
-  .portal-title{font-size:.82rem;margin-bottom:2px}
-  .portal-desc{font-size:.68rem}
   .hero h1{font-size:1.4rem}
   .hero-sub{font-size:.8rem}
+  .portal-sm-desc{display:none}
 }
 
 /* =============================================
@@ -315,9 +370,18 @@ body.da1 .btn-outline{color:#B51E6B;border-color:#B51E6B;border-radius:30px}
 body.da1 .btn-outline:hover{background:#B51E6B;color:#fff}
 body.da1 .portal{border-radius:16px}
 body.da1 .portal.active{border-color:#B51E6B}
+body.da1 .portal-sm{border-radius:16px}
+body.da1 .portal-sm.active{border-color:#B51E6B;background:rgba(181,30,107,.04)}
+body.da1 .portal-sm:hover{border-color:#B51E6B}
+body.da1 .portal-sm-arrow,.portal-sm:hover .portal-sm-arrow{color:#B51E6B}
 body.da1 .portal-title{font-family:'Dancing Script',cursive;font-size:1rem;color:#2D2D2D}
-body.da1 .portal-badge.inline{background:rgba(181,30,107,.06);color:#B51E6B}
+body.da1 .portal-action{color:#B51E6B}
+body.da1 .portal-step.s1{background:#E8A817}
+body.da1 .portal-step.s2{background:#B51E6B}
+body.da1 .portal-step.s3{background:#1A3A8A}
 body.da1 .expand-panel{border-radius:0 0 16px 16px}
+body.da1 .panel-bridge{background:#2D2D2D;border-radius:12px}
+body.da1 .panel-bridge a{background:#E8A817;border-radius:30px}
 body.da1 .calc-value{color:#B51E6B}
 body.da1 .calc-slider::-webkit-slider-thumb{background:#B51E6B}
 body.da1 .calc-result-box{background:#2D2D2D;border-radius:12px}
@@ -350,9 +414,15 @@ body.da3 .btn-outline{color:#A61E5C;border-color:#A61E5C;border-radius:8px;text-
 body.da3 .btn-outline:hover{background:#A61E5C}
 body.da3 .portal{border-radius:8px}
 body.da3 .portal.active{border-color:#A61E5C}
+body.da3 .portal-sm{border-radius:8px}
+body.da3 .portal-sm.active{border-color:#A61E5C;background:rgba(166,30,92,.04)}
+body.da3 .portal-sm:hover{border-color:#A61E5C}
+body.da3 .portal-sm-arrow,.portal-sm:hover .portal-sm-arrow{color:#A61E5C}
 body.da3 .portal-title{font-family:'Montserrat',sans-serif;font-weight:800;text-transform:uppercase;font-size:.78rem;letter-spacing:.3px;color:#2a2a3a}
-body.da3 .portal-badge.inline{background:rgba(166,30,92,.06);color:#A61E5C}
+body.da3 .portal-action{color:#A61E5C;font-family:'Montserrat',sans-serif;letter-spacing:1px}
 body.da3 .expand-panel{border-radius:0 0 8px 8px}
+body.da3 .panel-bridge{background:linear-gradient(135deg,#2a2a3a,#1a1a28);border-radius:8px}
+body.da3 .panel-bridge a{background:linear-gradient(135deg,#A61E5C,#C82870);border-radius:8px}
 body.da3 .calc-value{color:#A61E5C;font-family:'Montserrat',sans-serif;font-weight:800}
 body.da3 .calc-slider::-webkit-slider-thumb{background:#A61E5C}
 body.da3 .calc-result-box{background:linear-gradient(135deg,#2a2a3a,#1a1a28);border-radius:8px}
@@ -406,67 +476,49 @@ body.da3 .footer{border-top-color:#e0e0e4}
     </div>
   </div>
 
-  <!-- PORTAL GRID -->
-  <div class="portals" id="portals">
+  <!-- ============================================= -->
+  <!-- TIER 1 — EXPLOREZ (action cards with progression) -->
+  <!-- ============================================= -->
+  <div class="section-label" id="portals">&#x1F50D; Explorez &mdash; testez, chiffrez, &eacute;valuez</div>
+
+  <div class="portals-action">
 
     <div class="portal" data-panel="calc" data-type="inline">
-      <span class="portal-badge inline">interactif</span>
-      <div class="portal-icon">&#x1F4CA;</div>
-      <div class="portal-info">
-        <div class="portal-title">Calculez le co&ucirc;t de votre turnover</div>
-        <div class="portal-desc">3 curseurs, 1 r&eacute;alit&eacute; chiffr&eacute;e. 30 secondes.</div>
+      <div class="portal-head">
+        <span class="portal-step s1">1</span>
+        <span class="portal-duration">30 sec</span>
       </div>
+      <div class="portal-icon">&#x1F4CA;</div>
+      <div class="portal-title">Calculez votre co&ucirc;t turnover</div>
+      <div class="portal-desc">3 curseurs, 1 r&eacute;alit&eacute; chiffr&eacute;e. D&eacute;couvrez ce que vous co&ucirc;tent vos d&eacute;parts.</div>
+      <div class="portal-action">Ouvrir le calculateur <span class="arrow">&darr;</span></div>
     </div>
 
     <div class="portal" data-panel="none" data-type="page" data-href="quiz-dirigeant.html">
-      <span class="portal-badge page">12 situations</span>
-      <div class="portal-icon">&#x1F9E0;</div>
-      <div class="portal-info">
-        <div class="portal-title">Testez vos r&eacute;flexes RH</div>
-        <div class="portal-desc">Quel dirigeant &ecirc;tes-vous face aux situations critiques ?</div>
+      <div class="portal-head">
+        <span class="portal-step s2">2</span>
+        <span class="portal-duration">4 min</span>
       </div>
+      <div class="portal-icon">&#x1F9E0;</div>
+      <div class="portal-title">Testez vos r&eacute;flexes de dirigeant</div>
+      <div class="portal-desc">12 situations r&eacute;elles, 4 choix possibles. D&eacute;couvrez vos forces et vos angles morts.</div>
+      <div class="portal-action">D&eacute;marrer le test <span class="arrow">&rarr;</span></div>
     </div>
 
     <div class="portal" data-panel="none" data-type="page" data-href="diagnostic-rh.html">
-      <span class="portal-badge page">5 axes</span>
+      <div class="portal-head">
+        <span class="portal-step s3">3</span>
+        <span class="portal-duration">6 min</span>
+      </div>
       <div class="portal-icon">&#x1F3AF;</div>
-      <div class="portal-info">
-        <div class="portal-title">&Eacute;valuez la sant&eacute; RH de votre entreprise</div>
-        <div class="portal-desc">15 questions, radar de maturit&eacute;, rapport personnalis&eacute;.</div>
-      </div>
-    </div>
-
-    <div class="portal" data-panel="offers" data-type="inline">
-      <span class="portal-badge inline">3 formules</span>
-      <div class="portal-icon">&#x1F4BC;</div>
-      <div class="portal-info">
-        <div class="portal-title">L'offre Twiga</div>
-        <div class="portal-desc">DRH partag&eacute;e, conseil ponctuel, coaching.</div>
-      </div>
-    </div>
-
-    <div class="portal" data-panel="voices" data-type="inline">
-      <span class="portal-badge inline">t&eacute;moignages</span>
-      <div class="portal-icon">&#x1F4AC;</div>
-      <div class="portal-info">
-        <div class="portal-title">Ils en parlent</div>
-        <div class="portal-desc">3 dirigeants racontent leur exp&eacute;rience.</div>
-      </div>
-    </div>
-
-    <div class="portal" data-panel="profile" data-type="inline">
-      <span class="portal-badge inline">parcours</span>
-      <div class="portal-icon">&#x1F9D1;</div>
-      <div class="portal-info">
-        <div class="portal-title">Qui est Val&eacute;rie</div>
-        <div class="portal-desc">20 ans, +400 recrutements, un regard neutre.</div>
-      </div>
+      <div class="portal-title">Diagnostiquez votre entreprise</div>
+      <div class="portal-desc">15 questions, 5 axes, radar de maturit&eacute;. Identifiez vos priorit&eacute;s RH.</div>
+      <div class="portal-action">Lancer le diagnostic <span class="arrow">&rarr;</span></div>
     </div>
 
   </div>
 
-  <!-- EXPAND PANELS (hidden by default, appear below grid) -->
-
+  <!-- EXPAND: Calculator (after Tier 1) -->
   <div class="expand-panel" id="panel-calc">
     <div class="calc-field">
       <div class="calc-label"><span>Nombre de salari&eacute;s</span><span class="calc-value" id="calcEmplVal">25</span></div>
@@ -487,9 +539,51 @@ body.da3 .footer{border-top-color:#e0e0e4}
       <div class="calc-result-bar"><div class="calc-result-bar-fill" id="calcBar" style="width:30%"></div></div>
     </div>
     <div class="calc-insight">Et si une partie de cette somme &eacute;tait r&eacute;investie dans l'accompagnement RH ? Un regard ext&eacute;rieur structur&eacute; co&ucirc;te une fraction de ces pertes.</div>
+    <!-- Bridge: Calc → Quiz -->
+    <div class="panel-bridge">
+      <p>Ce chiffre vous interpelle ? <strong>Testez vos r&eacute;flexes de dirigeant</strong> pour comprendre si vos d&eacute;cisions aggravent ou r&eacute;duisent ce co&ucirc;t.</p>
+      <a href="quiz-dirigeant.html">&Eacute;tape suivante &rarr;</a>
+    </div>
     <div class="expand-close" data-close="calc">&times; Fermer</div>
   </div>
 
+  <!-- ============================================= -->
+  <!-- TIER 2 — DECOUVREZ TWIGA (info cards, compact) -->
+  <!-- ============================================= -->
+  <div class="section-label">&#x1F4A1; D&eacute;couvrez Twiga</div>
+
+  <div class="portals-discover">
+
+    <div class="portal-sm" data-panel="offers" data-type="inline">
+      <div class="portal-sm-icon">&#x1F4BC;</div>
+      <div class="portal-sm-body">
+        <div class="portal-sm-title">L'offre</div>
+        <div class="portal-sm-desc">3 formules adapt&eacute;es</div>
+      </div>
+      <div class="portal-sm-arrow">&darr;</div>
+    </div>
+
+    <div class="portal-sm" data-panel="voices" data-type="inline">
+      <div class="portal-sm-icon">&#x1F4AC;</div>
+      <div class="portal-sm-body">
+        <div class="portal-sm-title">T&eacute;moignages</div>
+        <div class="portal-sm-desc">3 dirigeants t&eacute;moignent</div>
+      </div>
+      <div class="portal-sm-arrow">&darr;</div>
+    </div>
+
+    <div class="portal-sm" data-panel="profile" data-type="inline">
+      <div class="portal-sm-icon">&#x1F9D1;</div>
+      <div class="portal-sm-body">
+        <div class="portal-sm-title">Qui est Val&eacute;rie</div>
+        <div class="portal-sm-desc">20 ans &middot; +400 recrutements</div>
+      </div>
+      <div class="portal-sm-arrow">&darr;</div>
+    </div>
+
+  </div>
+
+  <!-- EXPAND: Offers -->
   <div class="expand-panel" id="panel-offers">
     <div class="offers-grid">
       <div class="offer-card">
@@ -514,9 +608,15 @@ body.da3 .footer{border-top-color:#e0e0e4}
         </div>
       </div>
     </div>
+    <!-- Bridge: Offers → Contact -->
+    <div class="panel-bridge">
+      <p>Une formule vous parle ? <strong>Parlons-en en 15 minutes</strong>, sans engagement.</p>
+      <a href="#contact">Prendre rendez-vous &rarr;</a>
+    </div>
     <div class="expand-close" data-close="offers">&times; Fermer</div>
   </div>
 
+  <!-- EXPAND: Testimonials -->
   <div class="expand-panel" id="panel-voices">
     <div class="testimonials-grid">
       <div class="testimonial-card">
@@ -544,9 +644,15 @@ body.da3 .footer{border-top-color:#e0e0e4}
         </div>
       </div>
     </div>
+    <!-- Bridge: Voices → Offers -->
+    <div class="panel-bridge">
+      <p>Convaincu par ces retours ? <strong>D&eacute;couvrez les formules</strong> qui ont permis ces r&eacute;sultats.</p>
+      <a href="#" class="bridge-open-panel" data-target="offers">Voir l'offre &rarr;</a>
+    </div>
     <div class="expand-close" data-close="voices">&times; Fermer</div>
   </div>
 
+  <!-- EXPAND: Profile -->
   <div class="expand-panel" id="panel-profile">
     <div class="profile-grid">
       <div class="profile-photo-sm">
@@ -555,13 +661,18 @@ body.da3 .footer{border-top-color:#e0e0e4}
       <div>
         <div class="profile-name">Val&eacute;rie Gaudel</div>
         <div class="profile-role">Fondatrice de Twiga RH &middot; 20 ans d'exp&eacute;rience</div>
-        <p class="profile-bio">Pass&iacute;onn&eacute;e par le potentiel humain et convaincue qu'il est le moteur de la r&eacute;ussite des entreprises. Mon regard ext&eacute;rieur, neutre et bienveillant, apporte la s&eacute;r&eacute;nit&eacute; n&eacute;cessaire pour transformer vos d&eacute;fis RH en leviers de performance.</p>
+        <p class="profile-bio">Passionn&eacute;e par le potentiel humain et convaincue qu'il est le moteur de la r&eacute;ussite des entreprises. Mon regard ext&eacute;rieur, neutre et bienveillant, apporte la s&eacute;r&eacute;nit&eacute; n&eacute;cessaire pour transformer vos d&eacute;fis RH en leviers de performance.</p>
         <ul class="achievements">
           <li><strong>+400 recrutements</strong> accompagn&eacute;s en France et en Europe</li>
           <li><strong>Cr&eacute;ation de services RH</strong> dans des secteurs vari&eacute;s &mdash; startups, PME, grands groupes</li>
           <li><strong>Approche neutre</strong> et bienveillante, jamais porte-parole de la direction</li>
         </ul>
       </div>
+    </div>
+    <!-- Bridge: Profile → Contact -->
+    <div class="panel-bridge">
+      <p>Envie d'en discuter ? <strong>Rencontrez Val&eacute;rie</strong> pour un premier &eacute;change libre.</p>
+      <a href="#contact">Prendre contact &rarr;</a>
     </div>
     <div class="expand-close" data-close="profile">&times; Fermer</div>
   </div>
@@ -585,47 +696,51 @@ body.da3 .footer{border-top-color:#e0e0e4}
 
 <script>
 // =============================================
-// PORTAL INTERACTION
+// PORTAL INTERACTION (both tiers)
 // =============================================
-const portals = document.querySelectorAll('.portal');
+const actionPortals = document.querySelectorAll('.portals-action .portal');
+const discoverPortals = document.querySelectorAll('.portal-sm');
+const allPortals = [...actionPortals, ...discoverPortals];
 const panels = document.querySelectorAll('.expand-panel');
 let activePanel = null;
 
-portals.forEach(portal => {
-  portal.addEventListener('click', () => {
-    const type = portal.dataset.type;
-    const panelId = portal.dataset.panel;
+function openPanel(panelId, trigger) {
+  const panel = document.getElementById('panel-' + panelId);
+  if (!panel) return;
 
-    // External page link
-    if (type === 'page') {
+  if (activePanel === panel) {
+    panel.classList.remove('open');
+    trigger.classList.remove('active');
+    activePanel = null;
+  } else {
+    // Close all
+    panels.forEach(p => p.classList.remove('open'));
+    allPortals.forEach(p => p.classList.remove('active'));
+
+    // Open new
+    panel.classList.add('open');
+    trigger.classList.add('active');
+    activePanel = panel;
+
+    setTimeout(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+}
+
+actionPortals.forEach(portal => {
+  portal.addEventListener('click', () => {
+    if (portal.dataset.type === 'page') {
       window.location.href = portal.dataset.href;
       return;
     }
+    openPanel(portal.dataset.panel, portal);
+  });
+});
 
-    // Inline panel toggle
-    const panel = document.getElementById('panel-' + panelId);
-    if (!panel) return;
-
-    if (activePanel === panel) {
-      // Close current
-      panel.classList.remove('open');
-      portal.classList.remove('active');
-      activePanel = null;
-    } else {
-      // Close previous
-      panels.forEach(p => p.classList.remove('open'));
-      portals.forEach(p => p.classList.remove('active'));
-
-      // Open new
-      panel.classList.add('open');
-      portal.classList.add('active');
-      activePanel = panel;
-
-      // Scroll panel into view
-      setTimeout(() => {
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    }
+discoverPortals.forEach(portal => {
+  portal.addEventListener('click', () => {
+    openPanel(portal.dataset.panel, portal);
   });
 });
 
@@ -636,10 +751,36 @@ document.querySelectorAll('.expand-close').forEach(btn => {
     const panelId = btn.dataset.close;
     const panel = document.getElementById('panel-' + panelId);
     if (panel) panel.classList.remove('open');
-    portals.forEach(p => {
+    allPortals.forEach(p => {
       if (p.dataset.panel === panelId) p.classList.remove('active');
     });
     activePanel = null;
+  });
+});
+
+// Bridge links (open another panel from within a panel)
+document.querySelectorAll('.bridge-open-panel').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const targetId = link.dataset.target;
+
+    // Close current panel
+    panels.forEach(p => p.classList.remove('open'));
+    allPortals.forEach(p => p.classList.remove('active'));
+    activePanel = null;
+
+    // Open target
+    const targetPanel = document.getElementById('panel-' + targetId);
+    const targetTrigger = document.querySelector('[data-panel="' + targetId + '"]');
+    if (targetPanel && targetTrigger) {
+      targetPanel.classList.add('open');
+      targetTrigger.classList.add('active');
+      activePanel = targetPanel;
+      setTimeout(() => {
+        targetPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
   });
 });
 
