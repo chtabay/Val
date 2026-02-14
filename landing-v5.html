@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twiga RH &mdash; Les RH, simplement</title>
+<meta name="description" content="DRH externalis&eacute;e pour PME techniques. Structurez vos RH avec un regard expert, humain et direct.">
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@700&family=Montserrat:wght@400;700;800;900&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+/* =============================================
+   RESET & TOKENS
+============================================= */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --magenta:#9B2D5E;--magenta-light:rgba(155,45,94,.06);
+  --navy:#1a1a2e;--navy-light:#2d2d44;
+  --gold:#C8962E;--gold-light:#E8A817;
+  --text:#2c2c2c;--text-light:#555;--text-muted:#888;
+  --border:#eaeaea;--bg:#fafafa;--white:#fff;
+  --radius:6px;--radius-lg:10px;
+  --shadow:0 2px 12px rgba(0,0,0,.06);
+  --shadow-hover:0 6px 24px rgba(0,0,0,.1);
+  --transition:.25s ease;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+
+/* =============================================
+   LAYOUT
+============================================= */
+.page{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* =============================================
+   TOPBAR
+============================================= */
+.topbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-bottom:1px solid var(--border);
+}
+.topbar-brand{font-family:'Kaushan Script',cursive;font-size:1.15rem;color:var(--magenta);text-decoration:none}
+.topbar-cta{
+  padding:8px 20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  background:var(--magenta);color:#fff;border:none;border-radius:var(--radius);cursor:pointer;
+  text-decoration:none;transition:background var(--transition);
+}
+.topbar-cta:hover{background:#7E2048}
+
+/* =============================================
+   HERO (compact: ~40vh)
+============================================= */
+.hero{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:center;
+  padding:48px 0 40px;
+}
+.hero-content{max-width:560px}
+.hero-label{
+  font-size:.65rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;
+  color:var(--gold-light);margin-bottom:12px;
+}
+.hero h1{
+  font-family:'Playfair Display',serif;font-size:2rem;line-height:1.25;
+  margin-bottom:12px;color:var(--navy);
+}
+.hero h1 em{font-style:normal;color:var(--magenta)}
+.hero-sub{font-size:.88rem;color:var(--text-light);line-height:1.7;margin-bottom:20px}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:10px 22px;font-family:inherit;font-size:.78rem;font-weight:700;
+  border-radius:var(--radius);cursor:pointer;text-decoration:none;transition:all var(--transition);border:2px solid transparent;
+}
+.btn-primary{background:var(--magenta);color:#fff;border-color:var(--magenta)}
+.btn-primary:hover{background:#7E2048;border-color:#7E2048}
+.btn-outline{background:transparent;color:var(--magenta);border-color:var(--magenta)}
+.btn-outline:hover{background:var(--magenta);color:#fff}
+.hero-photo{width:140px;height:140px;border-radius:50%;overflow:hidden;border:3px solid var(--border);flex-shrink:0}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+
+/* =============================================
+   PORTAL GRID
+============================================= */
+.portals{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
+  padding:0 0 20px;
+}
+.portal{
+  position:relative;background:var(--white);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:24px 20px;cursor:pointer;
+  transition:all var(--transition);overflow:hidden;
+}
+.portal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--magenta);transition:height var(--transition);
+}
+.portal:hover{box-shadow:var(--shadow-hover);transform:translateY(-2px)}
+.portal:hover::before{height:4px}
+.portal.active{border-color:var(--magenta);box-shadow:0 0 0 1px var(--magenta)}
+.portal.active::before{height:4px}
+
+.portal-icon{font-size:1.5rem;margin-bottom:10px;display:block}
+.portal-title{font-family:'Playfair Display',serif;font-size:.92rem;font-weight:700;margin-bottom:6px;color:var(--navy)}
+.portal-desc{font-size:.72rem;color:var(--text-muted);line-height:1.5}
+.portal-badge{
+  position:absolute;top:14px;right:14px;
+  font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+  padding:3px 8px;border-radius:3px;
+}
+.portal-badge.inline{background:var(--magenta-light);color:var(--magenta)}
+.portal-badge.page{background:rgba(22,160,133,.08);color:#16A085}
+
+/* Color accents per portal */
+.portal:nth-child(1)::before{background:var(--gold-light)}
+.portal:nth-child(2)::before{background:var(--magenta)}
+.portal:nth-child(3)::before{background:#6B3A7D}
+.portal:nth-child(4)::before{background:#16A085}
+.portal:nth-child(5)::before{background:#C82870}
+.portal:nth-child(6)::before{background:var(--navy)}
+
+/* =============================================
+   EXPAND PANEL (inline content)
+============================================= */
+.expand-panel{
+  max-height:0;overflow:hidden;transition:max-height .5s ease,padding .3s ease;
+  background:var(--white);border:1px solid var(--border);border-top:none;
+  border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  margin:-14px 0 14px;
+}
+.expand-panel.open{max-height:2000px;padding:28px 24px}
+.expand-close{
+  display:inline-block;margin-top:16px;font-size:.72rem;font-weight:600;
+  color:var(--text-muted);cursor:pointer;transition:color var(--transition);
+}
+.expand-close:hover{color:var(--magenta)}
+
+/* =============================================
+   CALCULATOR (inside expand)
+============================================= */
+.calc-field{margin-bottom:18px}
+.calc-label{display:flex;justify-content:space-between;font-size:.78rem;font-weight:600;margin-bottom:6px}
+.calc-value{color:var(--magenta);font-weight:800}
+.calc-slider{
+  width:100%;height:4px;-webkit-appearance:none;appearance:none;
+  background:var(--border);border-radius:2px;outline:none;
+}
+.calc-slider::-webkit-slider-thumb{
+  -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--magenta);cursor:pointer;border:2px solid #fff;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
+}
+.calc-slider::-moz-range-thumb{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--magenta);cursor:pointer;border:2px solid #fff;
+}
+.calc-result-box{
+  background:var(--navy);border-radius:var(--radius);padding:20px;
+  color:#fff;text-align:center;margin:20px 0 16px;
+}
+.calc-result-label{font-size:.68rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--gold-light);margin-bottom:6px}
+.calc-result-number{font-size:2rem;font-weight:800}
+.calc-result-sub{font-size:.72rem;color:rgba(255,255,255,.5);margin-top:2px}
+.calc-result-bar{height:4px;background:rgba(255,255,255,.15);border-radius:2px;margin-top:12px;overflow:hidden}
+.calc-result-bar-fill{height:100%;background:linear-gradient(90deg,var(--gold-light),#e74c3c);border-radius:2px;transition:width .4s}
+.calc-insight{
+  font-size:.78rem;color:var(--text-light);line-height:1.7;
+  padding:14px 16px;border-left:3px solid var(--gold-light);
+  background:rgba(200,150,46,.04);border-radius:0 var(--radius) var(--radius) 0;
+}
+
+/* =============================================
+   OFFERS GRID (inside expand)
+============================================= */
+.offers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.offer-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.offer-card .card-top{height:3px}
+.offer-card:nth-child(1) .card-top{background:var(--gold-light)}
+.offer-card:nth-child(2) .card-top{background:var(--magenta)}
+.offer-card:nth-child(3) .card-top{background:#1A3A8A}
+.offer-card .card-body{padding:16px}
+.offer-card h3{font-family:'Playfair Display',serif;font-size:.88rem;margin-bottom:6px;color:var(--navy)}
+.offer-card p{font-size:.72rem;color:var(--text-light);line-height:1.6}
+
+/* =============================================
+   TESTIMONIALS (inside expand)
+============================================= */
+.testimonials-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.testimonial-card{
+  position:relative;background:var(--bg);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px 20px 16px;overflow:hidden;
+}
+.testimonial-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.testimonial-card:nth-child(1)::before{background:var(--gold-light)}
+.testimonial-card:nth-child(2)::before{background:var(--magenta)}
+.testimonial-card:nth-child(3)::before{background:#1A3A8A}
+.testimonial-card .context{font-size:.62rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--magenta);margin-bottom:8px}
+.testimonial-card blockquote{font-size:.78rem;color:var(--text-light);line-height:1.7;font-style:italic;margin-bottom:12px}
+.testimonial-card blockquote strong{color:var(--text);font-style:normal}
+.author{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--border)}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.author-name{font-size:.72rem;font-weight:700;color:var(--text)}
+.author-role{font-size:.62rem;color:var(--text-muted)}
+
+/* =============================================
+   PROFILE (inside expand)
+============================================= */
+.profile-grid{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start}
+.profile-photo-sm{width:100px;height:auto;border-radius:var(--radius);overflow:hidden}
+.profile-photo-sm img{width:100%;display:block}
+.profile-name{font-family:'Kaushan Script',cursive;font-size:1.3rem;color:var(--navy);margin-bottom:2px}
+.profile-role{font-size:.72rem;font-weight:600;color:var(--magenta);margin-bottom:10px}
+.profile-bio{font-size:.78rem;color:var(--text-light);line-height:1.7;margin-bottom:12px}
+.achievements{list-style:none;font-size:.75rem;color:var(--text-light);line-height:1.7}
+.achievements li{padding-left:16px;position:relative;margin-bottom:4px}
+.achievements li::before{content:'';position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--gold-light)}
+.achievements li strong{color:var(--text)}
+
+/* =============================================
+   CONTACT BAR (compact, always visible)
+============================================= */
+.contact-bar{
+  display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center;
+  padding:32px 0;border-top:1px solid var(--border);margin-top:8px;
+}
+.contact-info h2{font-family:'Kaushan Script',cursive;font-size:1.3rem;color:var(--navy);margin-bottom:4px}
+.contact-info p{font-size:.78rem;color:var(--text-light);line-height:1.6}
+.contact-info a{color:var(--magenta);text-decoration:none;font-weight:600}
+.contact-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* =============================================
+   FOOTER
+============================================= */
+.footer{
+  text-align:center;padding:20px 0;border-top:1px solid var(--border);
+  font-size:.65rem;color:var(--text-muted);
+}
+
+/* =============================================
+   BACK-HUB
+============================================= */
+.back-hub{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--navy);color:#fff;padding:8px 16px;border-radius:var(--radius);
+  font-size:.72rem;font-weight:600;text-decoration:none;z-index:999;transition:all var(--transition);
+}
+.back-hub:hover{background:var(--magenta)}
+
+/* =============================================
+   SKIN SWITCHER
+============================================= */
+.skin-switcher{
+  position:fixed;bottom:24px;left:24px;z-index:300;display:flex;gap:0;
+  background:#fff;border-radius:var(--radius-lg);box-shadow:0 4px 24px rgba(0,0,0,.15);
+  overflow:hidden;border:1px solid #e0e0e0;
+}
+.skin-btn{
+  padding:8px 14px;font-size:.65rem;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;cursor:pointer;border:none;background:#fff;
+  color:#888;font-family:inherit;transition:all var(--transition);
+  border-right:1px solid #eee;white-space:nowrap;
+}
+.skin-btn:last-child{border-right:none}
+.skin-btn:hover{background:#f5f5f5;color:#333}
+.skin-btn.active{color:#fff}
+.skin-btn[data-skin="da1"].active{background:#E8A817}
+.skin-btn[data-skin="da2"].active{background:#9B2D5E}
+.skin-btn[data-skin="da3"].active{background:linear-gradient(135deg,#A61E5C,#E8A817)}
+
+/* =============================================
+   RESPONSIVE — MOBILE FIRST
+============================================= */
+@media(max-width:768px){
+  .page{padding:0 16px}
+  .hero{grid-template-columns:1fr;text-align:center;padding:32px 0 28px;gap:20px}
+  .hero-photo{width:100px;height:100px;margin:0 auto}
+  .hero h1{font-size:1.6rem}
+  .hero-actions{justify-content:center}
+  .portals{grid-template-columns:1fr 1fr;gap:10px}
+  .portal{padding:18px 14px}
+  .portal-icon{font-size:1.3rem;margin-bottom:8px}
+  .portal-title{font-size:.82rem}
+  .portal-badge{display:none}
+  .expand-panel.open{padding:20px 16px}
+  .offers-grid{grid-template-columns:1fr}
+  .profile-grid{grid-template-columns:1fr;text-align:center}
+  .profile-photo-sm{margin:0 auto}
+  .contact-bar{grid-template-columns:1fr;text-align:center;gap:16px}
+  .contact-actions{justify-content:center}
+  .skin-switcher{bottom:12px;left:12px;border-radius:8px}
+  .skin-btn{padding:6px 10px;font-size:.58rem}
+  .back-hub{bottom:12px;right:12px;padding:6px 12px;font-size:.65rem}
+}
+@media(max-width:480px){
+  .portals{grid-template-columns:1fr;gap:8px}
+  .portal{display:flex;align-items:center;gap:14px;padding:16px}
+  .portal-icon{margin-bottom:0;font-size:1.4rem;flex-shrink:0}
+  .portal-info{flex:1}
+  .portal-title{font-size:.82rem;margin-bottom:2px}
+  .portal-desc{font-size:.68rem}
+  .hero h1{font-size:1.4rem}
+  .hero-sub{font-size:.8rem}
+}
+
+/* =============================================
+   DA1 — CHALEUR & HUMANITE
+============================================= */
+body.da1{font-family:'Poppins',sans-serif;background:#fdf6e3}
+body.da1 .topbar{border-bottom-color:#e8e0d0}
+body.da1 .topbar-brand{color:#B51E6B}
+body.da1 .topbar-cta{background:#B51E6B;border-radius:30px}
+body.da1 .hero h1{font-family:'Dancing Script',cursive;font-size:2.2rem;color:#2D2D2D}
+body.da1 .hero h1 em{color:#E8A817}
+body.da1 .hero-label{color:#E8A817}
+body.da1 .btn-primary{background:#B51E6B;border-color:#B51E6B;border-radius:30px}
+body.da1 .btn-primary:hover{background:#8E1553;border-color:#8E1553}
+body.da1 .btn-outline{color:#B51E6B;border-color:#B51E6B;border-radius:30px}
+body.da1 .btn-outline:hover{background:#B51E6B;color:#fff}
+body.da1 .portal{border-radius:16px}
+body.da1 .portal.active{border-color:#B51E6B}
+body.da1 .portal-title{font-family:'Dancing Script',cursive;font-size:1rem;color:#2D2D2D}
+body.da1 .portal-badge.inline{background:rgba(181,30,107,.06);color:#B51E6B}
+body.da1 .expand-panel{border-radius:0 0 16px 16px}
+body.da1 .calc-value{color:#B51E6B}
+body.da1 .calc-slider::-webkit-slider-thumb{background:#B51E6B}
+body.da1 .calc-result-box{background:#2D2D2D;border-radius:12px}
+body.da1 .calc-result-label{color:#E8A817}
+body.da1 .calc-insight{border-left-color:#E8A817;background:rgba(181,30,107,.04)}
+body.da1 .offer-card{border-radius:16px}
+body.da1 .offer-card h3{font-family:'Dancing Script',cursive;font-size:1rem}
+body.da1 .testimonial-card{border-radius:16px}
+body.da1 .testimonial-card .context{color:#B51E6B}
+body.da1 .profile-name{font-family:'Dancing Script',cursive}
+body.da1 .profile-role{color:#B51E6B}
+body.da1 .contact-info h2{font-family:'Dancing Script',cursive}
+body.da1 .contact-info a{color:#B51E6B}
+body.da1 .back-hub{background:#2D2D2D;border-radius:30px}
+body.da1 .back-hub:hover{background:#B51E6B}
+body.da1 .footer{border-top-color:#e8e0d0}
+
+/* =============================================
+   DA3 — IMPACT & DONNEES
+============================================= */
+body.da3{font-family:'Source Sans 3',sans-serif;background:#f5f5f7}
+body.da3 .topbar{border-bottom-color:#e0e0e4}
+body.da3 .topbar-brand{color:#A61E5C;font-family:'Montserrat',sans-serif;font-weight:900;text-transform:uppercase;font-size:.9rem;letter-spacing:1px}
+body.da3 .topbar-cta{background:linear-gradient(135deg,#A61E5C,#C82870);border-radius:8px;text-transform:uppercase;letter-spacing:1px}
+body.da3 .hero h1{font-family:'Montserrat',sans-serif;font-weight:900;text-transform:uppercase;letter-spacing:.5px;font-size:1.8rem;color:#2a2a3a}
+body.da3 .hero h1 em{color:#E8A817;font-style:normal}
+body.da3 .hero-label{color:#E8A817;letter-spacing:3px;font-family:'Montserrat',sans-serif}
+body.da3 .btn-primary{background:linear-gradient(135deg,#A61E5C,#C82870);border-color:transparent;border-radius:8px;text-transform:uppercase;letter-spacing:1px}
+body.da3 .btn-outline{color:#A61E5C;border-color:#A61E5C;border-radius:8px;text-transform:uppercase;letter-spacing:1px}
+body.da3 .btn-outline:hover{background:#A61E5C}
+body.da3 .portal{border-radius:8px}
+body.da3 .portal.active{border-color:#A61E5C}
+body.da3 .portal-title{font-family:'Montserrat',sans-serif;font-weight:800;text-transform:uppercase;font-size:.78rem;letter-spacing:.3px;color:#2a2a3a}
+body.da3 .portal-badge.inline{background:rgba(166,30,92,.06);color:#A61E5C}
+body.da3 .expand-panel{border-radius:0 0 8px 8px}
+body.da3 .calc-value{color:#A61E5C;font-family:'Montserrat',sans-serif;font-weight:800}
+body.da3 .calc-slider::-webkit-slider-thumb{background:#A61E5C}
+body.da3 .calc-result-box{background:linear-gradient(135deg,#2a2a3a,#1a1a28);border-radius:8px}
+body.da3 .calc-result-label{color:#E8A817;font-family:'Montserrat',sans-serif}
+body.da3 .calc-result-number{font-family:'Montserrat',sans-serif;font-weight:900}
+body.da3 .calc-insight{border-left-color:#E8A817;background:rgba(166,30,92,.04)}
+body.da3 .offer-card{border-radius:8px}
+body.da3 .offer-card h3{font-family:'Montserrat',sans-serif;font-weight:800;text-transform:uppercase;font-size:.8rem}
+body.da3 .testimonial-card{border-radius:8px}
+body.da3 .testimonial-card .context{color:#A61E5C;font-family:'Montserrat',sans-serif;font-weight:700}
+body.da3 .profile-name{font-family:'Montserrat',sans-serif;font-weight:900;text-transform:uppercase}
+body.da3 .profile-role{color:#A61E5C;font-family:'Montserrat',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:1px;font-size:.68rem}
+body.da3 .contact-info h2{font-family:'Montserrat',sans-serif;font-weight:900;text-transform:uppercase}
+body.da3 .contact-info a{color:#A61E5C}
+body.da3 .back-hub{background:#2a2a3a;border-radius:8px}
+body.da3 .back-hub:hover{background:#A61E5C}
+body.da3 .footer{border-top-color:#e0e0e4}
+</style>
+</head>
+<body>
+
+<a href="hub.html" class="back-hub">&larr; Hub</a>
+
+<div class="skin-switcher">
+  <button class="skin-btn" data-skin="da1">Chaleur</button>
+  <button class="skin-btn active" data-skin="da2">Corporate</button>
+  <button class="skin-btn" data-skin="da3">Impact</button>
+</div>
+
+<div class="page">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <a href="#" class="topbar-brand">Twiga RH</a>
+    <a href="#contact" class="topbar-cta">Parlons-en</a>
+  </div>
+
+  <!-- HERO compact -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-label">DRH externalis&eacute;e pour PME</div>
+      <h1>Vos probl&egrave;mes RH sont <em>techniques</em>.<br>Mes solutions sont <em>humaines</em>.</h1>
+      <p class="hero-sub">Recrutement, conformit&eacute;, turnover, management&nbsp;&mdash; je structure ce qui d&eacute;borde, avec rigueur et sans jargon. 20 ans d'exp&eacute;rience, z&eacute;ro distance.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary">Planifier un &eacute;change</a>
+        <a href="#portals" class="btn btn-outline">Explorer les outils &darr;</a>
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="assets/photo-portrait-valerie.png" alt="Val&eacute;rie Gaudel">
+    </div>
+  </div>
+
+  <!-- PORTAL GRID -->
+  <div class="portals" id="portals">
+
+    <div class="portal" data-panel="calc" data-type="inline">
+      <span class="portal-badge inline">interactif</span>
+      <div class="portal-icon">&#x1F4CA;</div>
+      <div class="portal-info">
+        <div class="portal-title">Calculez le co&ucirc;t de votre turnover</div>
+        <div class="portal-desc">3 curseurs, 1 r&eacute;alit&eacute; chiffr&eacute;e. 30 secondes.</div>
+      </div>
+    </div>
+
+    <div class="portal" data-panel="none" data-type="page" data-href="quiz-dirigeant.html">
+      <span class="portal-badge page">12 situations</span>
+      <div class="portal-icon">&#x1F9E0;</div>
+      <div class="portal-info">
+        <div class="portal-title">Testez vos r&eacute;flexes RH</div>
+        <div class="portal-desc">Quel dirigeant &ecirc;tes-vous face aux situations critiques ?</div>
+      </div>
+    </div>
+
+    <div class="portal" data-panel="none" data-type="page" data-href="diagnostic-rh.html">
+      <span class="portal-badge page">5 axes</span>
+      <div class="portal-icon">&#x1F3AF;</div>
+      <div class="portal-info">
+        <div class="portal-title">&Eacute;valuez la sant&eacute; RH de votre entreprise</div>
+        <div class="portal-desc">15 questions, radar de maturit&eacute;, rapport personnalis&eacute;.</div>
+      </div>
+    </div>
+
+    <div class="portal" data-panel="offers" data-type="inline">
+      <span class="portal-badge inline">3 formules</span>
+      <div class="portal-icon">&#x1F4BC;</div>
+      <div class="portal-info">
+        <div class="portal-title">L'offre Twiga</div>
+        <div class="portal-desc">DRH partag&eacute;e, conseil ponctuel, coaching.</div>
+      </div>
+    </div>
+
+    <div class="portal" data-panel="voices" data-type="inline">
+      <span class="portal-badge inline">t&eacute;moignages</span>
+      <div class="portal-icon">&#x1F4AC;</div>
+      <div class="portal-info">
+        <div class="portal-title">Ils en parlent</div>
+        <div class="portal-desc">3 dirigeants racontent leur exp&eacute;rience.</div>
+      </div>
+    </div>
+
+    <div class="portal" data-panel="profile" data-type="inline">
+      <span class="portal-badge inline">parcours</span>
+      <div class="portal-icon">&#x1F9D1;</div>
+      <div class="portal-info">
+        <div class="portal-title">Qui est Val&eacute;rie</div>
+        <div class="portal-desc">20 ans, +400 recrutements, un regard neutre.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- EXPAND PANELS (hidden by default, appear below grid) -->
+
+  <div class="expand-panel" id="panel-calc">
+    <div class="calc-field">
+      <div class="calc-label"><span>Nombre de salari&eacute;s</span><span class="calc-value" id="calcEmplVal">25</span></div>
+      <input type="range" class="calc-slider" id="calcEmpl" min="5" max="200" value="25" step="5">
+    </div>
+    <div class="calc-field">
+      <div class="calc-label"><span>Taux de turnover annuel</span><span class="calc-value" id="calcTurnVal">15 %</span></div>
+      <input type="range" class="calc-slider" id="calcTurn" min="5" max="40" value="15">
+    </div>
+    <div class="calc-field">
+      <div class="calc-label"><span>Salaire moyen brut annuel</span><span class="calc-value" id="calcSalVal">35 000 &euro;</span></div>
+      <input type="range" class="calc-slider" id="calcSal" min="20000" max="80000" value="35000" step="1000">
+    </div>
+    <div class="calc-result-box">
+      <div class="calc-result-label">Co&ucirc;t annuel estim&eacute; du turnover</div>
+      <div class="calc-result-number" id="calcResult">65 625 &euro;</div>
+      <div class="calc-result-sub">soit <span id="calcPerHead">17 500 &euro;</span> par d&eacute;part</div>
+      <div class="calc-result-bar"><div class="calc-result-bar-fill" id="calcBar" style="width:30%"></div></div>
+    </div>
+    <div class="calc-insight">Et si une partie de cette somme &eacute;tait r&eacute;investie dans l'accompagnement RH ? Un regard ext&eacute;rieur structur&eacute; co&ucirc;te une fraction de ces pertes.</div>
+    <div class="expand-close" data-close="calc">&times; Fermer</div>
+  </div>
+
+  <div class="expand-panel" id="panel-offers">
+    <div class="offers-grid">
+      <div class="offer-card">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <h3>DRH &agrave; temps partag&eacute;</h3>
+          <p>Accompagnement long terme, ajust&eacute; &agrave; votre rythme. S&eacute;curisez vos RH avec un regard expert, sans la charge d'un poste &agrave; temps plein.</p>
+        </div>
+      </div>
+      <div class="offer-card">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <h3>Conseil ponctuel</h3>
+          <p>Expertise cibl&eacute;e : audit RH, gestion de conflit, &eacute;lections CSE, conformit&eacute; juridique. Je cible le besoin et je livre.</p>
+        </div>
+      </div>
+      <div class="offer-card">
+        <div class="card-top"></div>
+        <div class="card-body">
+          <h3>Coaching</h3>
+          <p>Individuel ou collectif, pour d&eacute;velopper les comp&eacute;tences de vos managers et renforcer la coh&eacute;sion.</p>
+        </div>
+      </div>
+    </div>
+    <div class="expand-close" data-close="offers">&times; Fermer</div>
+  </div>
+
+  <div class="expand-panel" id="panel-voices">
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="context">Recrutement &middot; 400 collaborateurs</div>
+        <blockquote>Notre collaboration s'est concentr&eacute;e sur <strong>le d&eacute;veloppement de la marque employeur et le recrutement de plus de 400 personnes</strong>. Un accompagnement structur&eacute; et humain.</blockquote>
+        <div class="author">
+          <div class="avatar"><img src="assets/avatar-magalie.png" alt="Magalie Houllier"></div>
+          <div><div class="author-name">Magalie Houllier</div><div class="author-role">RSE, Communication, Membre du CODIR</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="context">Structuration RH &middot; PME en croissance</div>
+        <blockquote>Val&eacute;rie a su <strong>structurer notre service RH de A &agrave; Z</strong>, avec une approche pragmatique et bienveillante qui a f&eacute;d&eacute;r&eacute; l'ensemble de nos &eacute;quipes.</blockquote>
+        <div class="author">
+          <div class="avatar"><img src="assets/avatar-aude.png" alt="Aude Martin"></div>
+          <div><div class="author-name">Aude Martin</div><div class="author-role">Directrice G&eacute;n&eacute;rale</div></div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="context">Agilit&eacute; startup &middot; Scale-up</div>
+        <blockquote>Ce qui m'a frapp&eacute;, c'est <strong>sa capacit&eacute; &agrave; s'adapter &agrave; notre rythme de startup</strong> tout en apportant la rigueur RH dont nous avions besoin.</blockquote>
+        <div class="author">
+          <div class="avatar"><img src="assets/avatar-frederic.png" alt="Fr&eacute;d&eacute;ric Dupont"></div>
+          <div><div class="author-name">Fr&eacute;d&eacute;ric Dupont</div><div class="author-role">CEO &amp; Co-fondateur</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="expand-close" data-close="voices">&times; Fermer</div>
+  </div>
+
+  <div class="expand-panel" id="panel-profile">
+    <div class="profile-grid">
+      <div class="profile-photo-sm">
+        <img src="assets/photo-portrait-valerie.png" alt="Val&eacute;rie Gaudel">
+      </div>
+      <div>
+        <div class="profile-name">Val&eacute;rie Gaudel</div>
+        <div class="profile-role">Fondatrice de Twiga RH &middot; 20 ans d'exp&eacute;rience</div>
+        <p class="profile-bio">Pass&iacute;onn&eacute;e par le potentiel humain et convaincue qu'il est le moteur de la r&eacute;ussite des entreprises. Mon regard ext&eacute;rieur, neutre et bienveillant, apporte la s&eacute;r&eacute;nit&eacute; n&eacute;cessaire pour transformer vos d&eacute;fis RH en leviers de performance.</p>
+        <ul class="achievements">
+          <li><strong>+400 recrutements</strong> accompagn&eacute;s en France et en Europe</li>
+          <li><strong>Cr&eacute;ation de services RH</strong> dans des secteurs vari&eacute;s &mdash; startups, PME, grands groupes</li>
+          <li><strong>Approche neutre</strong> et bienveillante, jamais porte-parole de la direction</li>
+        </ul>
+      </div>
+    </div>
+    <div class="expand-close" data-close="profile">&times; Fermer</div>
+  </div>
+
+  <!-- CONTACT BAR -->
+  <div class="contact-bar" id="contact">
+    <div class="contact-info">
+      <h2>Rencontrons-nous</h2>
+      <p>En face &agrave; face pr&egrave;s de Toulouse ou en visio. Premier &eacute;change sans engagement.<br>
+      Ou appelez directement : <a href="tel:+33756999249">07 56 99 92 49</a></p>
+    </div>
+    <div class="contact-actions">
+      <a href="mailto:valerie@twiga-rh.fr" class="btn btn-primary">M'&eacute;crire</a>
+      <a href="tel:+33756999249" class="btn btn-outline">Appeler</a>
+    </div>
+  </div>
+
+  <div class="footer">&copy; 2025 Twiga RH &mdash; Val&eacute;rie Gaudel &mdash; Tous droits r&eacute;serv&eacute;s</div>
+
+</div>
+
+<script>
+// =============================================
+// PORTAL INTERACTION
+// =============================================
+const portals = document.querySelectorAll('.portal');
+const panels = document.querySelectorAll('.expand-panel');
+let activePanel = null;
+
+portals.forEach(portal => {
+  portal.addEventListener('click', () => {
+    const type = portal.dataset.type;
+    const panelId = portal.dataset.panel;
+
+    // External page link
+    if (type === 'page') {
+      window.location.href = portal.dataset.href;
+      return;
+    }
+
+    // Inline panel toggle
+    const panel = document.getElementById('panel-' + panelId);
+    if (!panel) return;
+
+    if (activePanel === panel) {
+      // Close current
+      panel.classList.remove('open');
+      portal.classList.remove('active');
+      activePanel = null;
+    } else {
+      // Close previous
+      panels.forEach(p => p.classList.remove('open'));
+      portals.forEach(p => p.classList.remove('active'));
+
+      // Open new
+      panel.classList.add('open');
+      portal.classList.add('active');
+      activePanel = panel;
+
+      // Scroll panel into view
+      setTimeout(() => {
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 100);
+    }
+  });
+});
+
+// Close buttons
+document.querySelectorAll('.expand-close').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const panelId = btn.dataset.close;
+    const panel = document.getElementById('panel-' + panelId);
+    if (panel) panel.classList.remove('open');
+    portals.forEach(p => {
+      if (p.dataset.panel === panelId) p.classList.remove('active');
+    });
+    activePanel = null;
+  });
+});
+
+// =============================================
+// CALCULATOR
+// =============================================
+const calcEmpl = document.getElementById('calcEmpl');
+const calcTurn = document.getElementById('calcTurn');
+const calcSal = document.getElementById('calcSal');
+
+function updateCalc() {
+  const empl = parseInt(calcEmpl.value);
+  const turn = parseInt(calcTurn.value);
+  const sal = parseInt(calcSal.value);
+
+  document.getElementById('calcEmplVal').textContent = empl;
+  document.getElementById('calcTurnVal').textContent = turn + ' %';
+  document.getElementById('calcSalVal').textContent = sal.toLocaleString('fr-FR') + ' \u20AC';
+
+  const departures = Math.round(empl * turn / 100);
+  const costPerHead = Math.round(sal * 0.5);
+  const totalCost = departures * costPerHead;
+
+  document.getElementById('calcResult').textContent = totalCost.toLocaleString('fr-FR') + ' \u20AC';
+  document.getElementById('calcPerHead').textContent = costPerHead.toLocaleString('fr-FR') + ' \u20AC';
+
+  const maxCost = 200 * 0.4 * 80000 * 0.5;
+  const pct = Math.min(100, (totalCost / maxCost) * 100);
+  document.getElementById('calcBar').style.width = pct + '%';
+}
+
+calcEmpl.addEventListener('input', updateCalc);
+calcTurn.addEventListener('input', updateCalc);
+calcSal.addEventListener('input', updateCalc);
+updateCalc();
+
+// =============================================
+// SKIN SWITCHER
+// =============================================
+const skinBtns = document.querySelectorAll('.skin-btn');
+skinBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const skin = btn.dataset.skin;
+    document.body.classList.remove('da1', 'da2', 'da3');
+    if (skin !== 'da2') document.body.classList.add(skin);
+    skinBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    localStorage.setItem('twiga-skin', skin);
+  });
+});
+const saved = localStorage.getItem('twiga-skin');
+if (saved && saved !== 'da2') {
+  document.body.classList.add(saved);
+  skinBtns.forEach(b => b.classList.toggle('active', b.dataset.skin === saved));
+}
+</script>
+</body>
+</html>
