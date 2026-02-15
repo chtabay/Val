@@ -47,18 +47,19 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   position:relative;min-height:100vh;display:flex;align-items:center;
   background:var(--navy);overflow:hidden;
 }
-/* Girafe watermark */
+/* Girafe — MASSIVE, proud, fills the right half */
 .hero-dark::before{
-  content:'';position:absolute;right:-60px;top:50%;transform:translateY(-50%);
-  width:480px;height:640px;
+  content:'';position:absolute;right:-20px;top:50%;transform:translateY(-52%);
+  width:55vw;max-width:600px;height:90vh;
   background:url('assets/girafe-geometrique.png') no-repeat center/contain;
-  opacity:.08;pointer-events:none;
-  filter:brightness(1.5);
+  opacity:.14;pointer-events:none;
+  filter:brightness(1.6) saturate(1.2);
 }
-/* Gradient overlay */
+/* Color glow behind the giraffe */
 .hero-dark::after{
   content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 70% 50%,rgba(155,45,94,.08),transparent 60%),
+  background:radial-gradient(ellipse at 65% 45%,rgba(155,45,94,.12),transparent 50%),
+             radial-gradient(ellipse at 55% 65%,rgba(107,58,125,.08),transparent 40%),
              radial-gradient(ellipse at 20% 80%,rgba(232,168,23,.06),transparent 50%);
   pointer-events:none;
 }
@@ -71,7 +72,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   padding:24px 28px;max-width:740px;margin:0 auto;
 }
 .topbar-dark .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.topbar-dark .brand img{height:32px;width:auto;filter:brightness(1.2)}
+.topbar-dark .brand img{height:44px;width:auto;filter:brightness(1.3) drop-shadow(0 0 12px rgba(155,45,94,.2))}
 .topbar-dark .brand span{font-family:'Kaushan Script',cursive;font-size:1rem;color:rgba(255,255,255,.7)}
 .topbar-dark .tel{font-size:.72rem;color:rgba(255,255,255,.3);text-decoration:none;transition:color var(--transition)}
 .topbar-dark .tel:hover{color:var(--gold-light)}
@@ -124,7 +125,18 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
 ============================================= */
 .pain-zone{
   background:linear-gradient(180deg,var(--navy) 0%,#12121f 100%);
-  padding:80px 0 60px;
+  padding:80px 0 60px;position:relative;
+}
+/* Giraffe-spot texture (CSS organic spots in brand colors) */
+.pain-zone::before{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:.35;
+  background:
+    radial-gradient(ellipse 80px 60px at 12% 20%,rgba(232,168,23,.06),transparent),
+    radial-gradient(ellipse 60px 90px at 85% 15%,rgba(155,45,94,.05),transparent),
+    radial-gradient(ellipse 100px 70px at 70% 55%,rgba(107,58,125,.04),transparent),
+    radial-gradient(ellipse 50px 80px at 25% 75%,rgba(26,58,138,.04),transparent),
+    radial-gradient(ellipse 70px 50px at 55% 85%,rgba(232,168,23,.05),transparent),
+    radial-gradient(ellipse 90px 60px at 40% 40%,rgba(155,45,94,.03),transparent);
 }
 .pain-label{
   font-size:.6rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;
@@ -163,24 +175,39 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
    S3 — TRANSITION STRIP (dark → light)
 ============================================= */
 .transition-strip{
-  position:relative;height:200px;overflow:hidden;
+  position:relative;height:280px;overflow:hidden;
 }
 .transition-strip .photo-bg{
   position:absolute;inset:0;
-  background:url('assets/photo-girafe-nb.jpg') no-repeat center 25%/cover;
-  filter:contrast(1.1);
+  background:url('assets/photo-girafe-nb.jpg') no-repeat center 30%/cover;
+  filter:contrast(1.15) brightness(1.05);
 }
 .transition-strip::before{
   content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(180deg,#12121f 0%,rgba(18,18,31,.4) 35%,rgba(255,255,255,.4) 65%,var(--cream) 100%);
+  background:linear-gradient(180deg,#12121f 0%,rgba(18,18,31,.25) 30%,rgba(253,251,247,.25) 70%,var(--cream) 100%);
+}
+/* Girafe géométrique en surimpression sur le strip */
+.transition-strip::after{
+  content:'';position:absolute;z-index:2;
+  right:10%;top:50%;transform:translateY(-50%);
+  width:180px;height:240px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.18;filter:brightness(1.5);pointer-events:none;
 }
 
 /* =============================================
    S4 — THE GUIDE (light zone)
 ============================================= */
 .guide{
-  background:var(--cream);padding:64px 0 56px;
+  background:var(--cream);padding:64px 0 56px;position:relative;overflow:hidden;
 }
+/* Photo girafe N&B as full background with cream veil */
+.guide::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/photo-girafe-nb.jpg') no-repeat right 20%/auto 140%;
+  opacity:.04;pointer-events:none;
+}
+.guide .col{position:relative;z-index:1}
 .guide-inner{
   display:flex;align-items:flex-start;gap:28px;
 }
@@ -205,7 +232,14 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
    S5 — CHIFFRE CHOC
 ============================================= */
 .chiffre-choc{
-  background:var(--cream);padding:0 0 48px;text-align:center;
+  background:var(--cream);padding:0 0 48px;text-align:center;position:relative;
+}
+/* Subtle giraffe silhouette behind the big number */
+.chiffre-choc::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:200px;height:260px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.035;pointer-events:none;
 }
 .chiffre-choc .number-big{
   font-family:'Playfair Display',serif;font-size:4rem;font-weight:700;
@@ -250,10 +284,10 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   text-align:center;margin:28px 0 24px;
 }
 .calc-result::before{
-  content:'';position:absolute;right:-20px;bottom:-30px;
-  width:120px;height:160px;
+  content:'';position:absolute;right:-10px;bottom:-20px;
+  width:180px;height:240px;
   background:url('assets/girafe-geometrique.png') no-repeat center/contain;
-  opacity:.06;pointer-events:none;
+  opacity:.1;pointer-events:none;filter:brightness(1.4);
 }
 .calc-result-tag{font-size:.58rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--gold-light);margin-bottom:8px;position:relative}
 .calc-result-num{font-size:2.8rem;font-weight:800;color:#fff;position:relative}
@@ -299,6 +333,25 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
 .testi-avatar img{width:100%;height:100%;object-fit:cover}
 .testi-name{font-size:.75rem;font-weight:700;color:var(--text)}
 .testi-role{font-size:.6rem;color:var(--text-muted)}
+
+/* =============================================
+   GIRAFE BAND (between testimonials & offers)
+============================================= */
+.girafe-band{
+  position:relative;height:100px;overflow:hidden;
+  background:var(--cream);
+}
+.girafe-band::before{
+  content:'';position:absolute;inset:0;
+  background:url('assets/photo-girafe-nb.jpg') no-repeat center 35%/cover;
+  opacity:.06;
+}
+.girafe-band::after{
+  content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:60px;height:80px;
+  background:url('assets/girafe-geometrique.png') no-repeat center/contain;
+  opacity:.25;filter:brightness(1.2);
+}
 
 /* =============================================
    S8 — OFFERS
@@ -349,12 +402,20 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   position:relative;overflow:hidden;
   background:var(--navy);padding:80px 0;
 }
-/* Full girafe, more visible this time */
+/* Full girafe — PROUD, LARGE, clearly visible */
 .cta-dark::before{
-  content:'';position:absolute;right:-30px;top:50%;transform:translateY(-50%);
-  width:280px;height:380px;
+  content:'';position:absolute;right:-10px;top:50%;transform:translateY(-52%);
+  width:45vw;max-width:420px;height:80%;
   background:url('assets/girafe-geometrique.png') no-repeat center/contain;
-  opacity:.12;pointer-events:none;filter:brightness(1.3);
+  opacity:.2;pointer-events:none;
+  filter:brightness(1.5) saturate(1.1);
+}
+/* Colored glow behind the CTA girafe */
+.cta-dark::after{
+  content:'';position:absolute;right:5%;top:40%;
+  width:300px;height:300px;
+  background:radial-gradient(circle,rgba(155,45,94,.1),transparent 60%);
+  pointer-events:none;
 }
 .cta-dark .col{position:relative;z-index:2}
 .cta-dark h2{
@@ -383,7 +444,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   background:var(--navy);text-align:center;padding:0 0 40px;
   border-top:1px solid rgba(255,255,255,.05);
 }
-.footer-logo{height:40px;width:auto;opacity:.2;margin-bottom:8px;filter:brightness(2)}
+.footer-logo{height:72px;width:auto;opacity:.35;margin-bottom:12px;filter:brightness(1.8)}
 .footer-text{font-size:.58rem;color:rgba(255,255,255,.15)}
 
 /* =============================================
@@ -415,7 +476,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
 ============================================= */
 @media(max-width:640px){
   .col{padding:0 20px}
-  .hero-dark::before{width:280px;height:380px;right:-40px;opacity:.05}
+  .hero-dark::before{width:70vw;height:70vh;right:-30px;opacity:.1}
   .hero-dark .col{padding-top:100px;padding-bottom:72px}
   .hero-dark h1{font-size:1.9rem}
   .rotate-wrap{display:block;min-width:0}
@@ -423,7 +484,8 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   .topbar-dark{padding:18px 20px}
   .pain-zone{padding:56px 0 40px}
   .pain-msg{padding:20px 22px}
-  .transition-strip{height:140px}
+  .transition-strip{height:180px}
+  .transition-strip::after{width:100px;height:130px;right:5%}
   .guide{padding:48px 0 40px}
   .guide-inner{flex-direction:column;align-items:center;text-align:center}
   .guide-photo{width:88px;height:88px}
@@ -437,7 +499,7 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
   .bridge-row{grid-template-columns:1fr}
   .cta-dark{padding:56px 0}
   .cta-dark h2{font-size:1.5rem}
-  .cta-dark::before{width:180px;height:240px;opacity:.08}
+  .cta-dark::before{width:60vw;height:70%;opacity:.15}
   .back-hub{bottom:12px;right:12px;font-size:.62rem;padding:6px 12px}
 }
 </style>
@@ -618,6 +680,9 @@ body{font-family:'Inter',sans-serif;background:var(--white);color:var(--text);li
     </div>
   </div>
 </section>
+
+<!-- GIRAFE BAND — visual signature between sections -->
+<div class="girafe-band" role="presentation"></div>
 
 <!-- ================================================ -->
 <!-- S8 — OFFERS                                      -->
